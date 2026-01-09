@@ -1,9 +1,11 @@
 package presentation;
 
+import presentation.invoice.InvoiceManagement;
+
 import java.util.Scanner;
 
 public class MainMenu {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         do {
             try {

@@ -6,7 +6,11 @@ import util.DBUtil;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvoiceDAOImpl implements IInvoiceDAO {
 
@@ -21,11 +25,40 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
             callSt.registerOutParameter(2, Types.INTEGER);
             callSt.execute();
             return callSt.getInt(2);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn,callSt);
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
         }
         return 0;
+    }
+
+    @Override
+    public List<Invoice> getAllInvoices() {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Invoice> invoices = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_all_invoices()}");
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                invoices = new ArrayList<>();
+                while (rs.next()) {
+                    Invoice invoice = new Invoice();
+                    invoice.setId(rs.getInt("id"));
+                    invoice.setCustomerId(rs.getInt("customer_id"));
+                    invoice.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime().toLocalDate());
+                    invoice.setTotalAmount(rs.getDouble("total_amount"));
+                    invoices.add(invoice);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return invoices;
     }
 }

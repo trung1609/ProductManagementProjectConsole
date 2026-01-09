@@ -56,5 +56,20 @@ public class InvoiceDetails {
         this.price = price;
     }
 
+    public static void printHeader() {
+        System.out.println("┌─────┬────────────┬────────────┬──────────┬───────────────┐");
+        System.out.printf("│ %-3s │ %-10s │ %-10s │ %-8s │ %-13s │%n",
+                "ID", "Invoice ID", "Product ID", "Quantity", "Unit Price");
+        System.out.println("├─────┼────────────┼────────────┼──────────┼───────────────┤");
+    }
 
+    public static void printFooter() {
+        System.out.println("└─────┴────────────┴────────────┴──────────┴───────────────┘");
+    }
+
+    @Override
+    public String toString() {
+        return String.format("│ %-3d │ %-10d │ %-10d │ %-8d │ %13.2f │",
+                id, invoice_id, product_id, quantity, price);
+    }
 }

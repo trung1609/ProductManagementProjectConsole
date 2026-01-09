@@ -52,9 +52,21 @@ public class Invoice {
         this.totalAmount = totalAmount;
     }
 
+    public static void printHeader() {
+        System.out.println("┌─────┬──────────────┬──────────────┬─────────────────┐");
+        System.out.printf("│ %-3s │ %-12s │ %-12s │ %-15s │%n",
+                "ID", "Customer ID", "Created At", "Total Amount");
+        System.out.println("├─────┼──────────────┼──────────────┼─────────────────┤");
+    }
+
+    public static void printFooter() {
+        System.out.println("└─────┴──────────────┴──────────────┴─────────────────┘");
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return String.format("ID: %d - Customer ID: %d - Created At: %s - Total Amount: %.2f", id, customerId, createdAt.format(dtf), totalAmount);
+        return String.format("│ %-3d │ %-12d │ %-12s │ %15.2f │",
+                id, customerId, createdAt.format(dtf), totalAmount);
     }
 }
