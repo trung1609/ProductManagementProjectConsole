@@ -39,14 +39,45 @@ public class CustomerDAOImpl implements ICustomerDAO {
         return false;
     }
 
+
     @Override
     public boolean updateCustomer(Customer customer) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("call update_customer(?,?,?,?,?)");
+            callSt.setInt(1, customer.getId());
+            callSt.setString(2, customer.getName());
+            callSt.setString(3, customer.getPhone());
+            callSt.setString(4, customer.getEmail());
+            callSt.setString(5, customer.getAddress());
+            callSt.execute();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn,callSt);
+        }
         return false;
     }
 
     @Override
     public boolean deleteCustomer(int index) {
-        return false;
+        Connection conn = null;
+        CallableStatement callSt = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("call delete_customer(?)");
+            callSt.setInt(1, index);
+            callSt.execute();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn,callSt);
+        }
+        return true;
     }
 
     @Override

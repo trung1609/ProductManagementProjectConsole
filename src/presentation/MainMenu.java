@@ -24,6 +24,7 @@ public class MainMenu {
                         CustomerManagement.main(args);
                         break;
                     case 3:
+                        InvoiceManagement.main(args);
                         break;
                     case 4:
                         break;
