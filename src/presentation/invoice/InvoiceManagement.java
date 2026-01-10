@@ -43,7 +43,7 @@ public class InvoiceManagement {
                         break;
                     case 4:
                         MainMenu.main(args);
-                        return; // ✅ rất quan trọng
+                        return;
                     default:
                         System.err.println("Vui lòng nhập lại lựa chọn phù hợp.");
                 }
@@ -66,32 +66,41 @@ public class InvoiceManagement {
      * */
 
     public static void addInvoice(Scanner sc) {
-        System.out.println("--- Danh sách khách hàng ---");
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-        List<Customer> customers = customerDAO.getAllCustomers();
+        System.out.println("****************** DANH SÁCH KHÁCH HÀNG ******************");
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        List<Customer> customers = customerService.findAllCustomers();
         if (customers.isEmpty() || customers == null) {
             System.out.println("Chưa có khách hàng");
             return;
         }
-        customers.forEach(System.out::println);
+        Customer customer = new Customer();
+        customer.printCustomerHeader();
+        for (Customer c : customers) {
+            c.printCustomerRow(c);
+        }
+        customer.printCustomerFooter();
         System.out.print("Nhập mã khách hàng: ");
         int customerId = Integer.parseInt(sc.nextLine());
 
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
-        Customer customer = customerService.findCustomerById(customerId);
+        customer = customerService.findCustomerById(customerId);
         if (customer == null) {
             System.err.println("Không tìm thấy mã khách hàng.");
             return;
         }
 
-        ProductDAOImpl productDAO = new ProductDAOImpl();
-        System.out.println("--- Danh sách sản phẩm ---");
-        List<Product> productList = productDAO.displayAllProducts();
+        ProductServiceImpl productService = new ProductServiceImpl();
+        System.out.println("****************** DANH SÁCH SẢN PHẨM ******************");
+        List<Product> productList = productService.getALlProducts();
         if (productList == null || productList.isEmpty()) {
             System.err.println("Không có sản phẩm nào!");
             return;
         }
-        productList.forEach(System.out::println);
+        Product p_print = new Product();
+        p_print.printProductHeader();
+        for (Product p : productList) {
+            p.printProductRow(p);
+        }
+        p_print.printProductFooter();
 
         //Tạo stock tạm -> check stock ngay khi add
         Map<Integer, Integer> stockTmp = new HashMap<>();
@@ -103,7 +112,6 @@ public class InvoiceManagement {
         List<Integer> quantities = new ArrayList<>();
         List<Double> prices = new ArrayList<>();
         double totalAmount = 0;
-        ProductServiceImpl productService = new ProductServiceImpl();
         do {
             System.out.print("Chọn id sản phẩm cần thêm hoặc nhập 0 để dừng chọn: ");
             int productId = Integer.parseInt(sc.nextLine());

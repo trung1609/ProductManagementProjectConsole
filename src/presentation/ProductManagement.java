@@ -67,8 +67,8 @@ public class ProductManagement {
     public static void addProduct(Scanner sc) {
         Product product = new Product();
         product.input(sc);
-        ProductDAOImpl productDAO = new ProductDAOImpl();
-        boolean result = productDAO.addProduct(product);
+        ProductServiceImpl productService = new ProductServiceImpl();
+        boolean result = productService.addProduct(product);
         if (result) {
             System.out.println("Thêm sản phẩm thành công");
         } else {
@@ -77,8 +77,8 @@ public class ProductManagement {
     }
 
     public static void displayAllProducts() {
-        ProductDAOImpl productDAO = new ProductDAOImpl();
-        List<Product> productList = productDAO.displayAllProducts();
+        ProductServiceImpl productService = new ProductServiceImpl();
+        List<Product> productList = productService.getALlProducts();
         if (productList.isEmpty()) {
             System.out.println("Chưa có sản phẩm.");
         } else {
@@ -93,7 +93,6 @@ public class ProductManagement {
     }
 
     public static void updateProduct() {
-        ProductDAOImpl productDAO = new ProductDAOImpl();
         ProductServiceImpl productService = new ProductServiceImpl();
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập id sản phẩm cần cập nhật: ");
@@ -173,7 +172,7 @@ public class ProductManagement {
             }
         } while (isExist);
 
-        boolean updateProductResult = productDAO.updateProduct(product);
+        boolean updateProductResult = productService.updateProduct(product);
         if (updateProductResult) {
             System.out.println("Cập nhật thông tin sản phẩm thành công.");
         } else {
@@ -182,7 +181,6 @@ public class ProductManagement {
     }
 
     public static void deleteProduct(Scanner sc) {
-        ProductDAOImpl productDAO = new ProductDAOImpl();
         ProductServiceImpl productService = new ProductServiceImpl();
         System.out.print("Nhập id sản phẩm cần xóa: ");
         int id = Integer.parseInt(sc.nextLine());
@@ -196,7 +194,7 @@ public class ProductManagement {
         if (choice.equalsIgnoreCase("N")) {
             System.out.println("Đã hủy xóa sản phẩm thành công");
         } else if (choice.equalsIgnoreCase("Y")) {
-            productDAO.deleteProduct(id);
+            productService.deleteProduct(id);
             System.out.println("Xóa sản phẩm thành công");
         }
     }

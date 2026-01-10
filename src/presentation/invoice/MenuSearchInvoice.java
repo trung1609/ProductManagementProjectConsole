@@ -1,5 +1,6 @@
 package presentation.invoice;
 
+import business.impl.invoice.InvoiceDetailsServiceImpl;
 import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import entity.InvoiceDetails;
 import presentation.menuUtil.MenuUtil;
@@ -48,10 +49,10 @@ public class MenuSearchInvoice {
 
     public static void searchByCustomerName() {
         Scanner sc = new Scanner(System.in);
-        InvoiceDetailsDAOImpl invoiceDAO = new InvoiceDetailsDAOImpl();
+        InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         System.out.print("Nhập tên khach hàng cần tìm: ");
         String customerName = sc.nextLine();
-        List<InvoiceDetails> invoiceDetailsList = invoiceDAO.getAllInvoiceDetailsByCustomerName(customerName);
+        List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByCustomerName(customerName);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
@@ -67,7 +68,7 @@ public class MenuSearchInvoice {
     public static void searchByinvoiceDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Scanner sc = new Scanner(System.in);
-        InvoiceDetailsDAOImpl invoiceDAO = new InvoiceDetailsDAOImpl();
+        InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         LocalDate invoiceDate;
         do {
             try {
@@ -78,7 +79,7 @@ public class MenuSearchInvoice {
                 System.err.println("Vui lòng nhập lại đúng định dạng ngày tháng năm");
             }
         } while (true);
-        List<InvoiceDetails> invoiceDetailsList = invoiceDAO.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
+        List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {

@@ -1,7 +1,6 @@
 package presentation;
 
 import business.impl.customer.CustomerServiceImpl;
-import dao.impl.customer.CustomerDAOImpl;
 import entity.Customer;
 import presentation.menuUtil.MenuUtil;
 
@@ -56,8 +55,8 @@ public class CustomerManagement {
         Scanner sc = new Scanner(System.in);
         Customer customer = new Customer();
         customer.input(sc);
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-        boolean result = customerDAO.addCustomer(customer);
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        boolean result = customerService.createCustomer(customer);
         if (result) {
             System.out.println("Thêm khách hàng thành công.");
         } else {
@@ -66,8 +65,8 @@ public class CustomerManagement {
     }
 
     public static void getAllCustomers() {
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-        List<Customer> customerList = customerDAO.getAllCustomers();
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        List<Customer> customerList = customerService.findAllCustomers();
         if (customerList.isEmpty()) {
             System.out.println("Chưa có khách hàng được thêm.");
         } else {
@@ -83,7 +82,6 @@ public class CustomerManagement {
 
     public static void updateCustomer(Scanner sc) {
         CustomerServiceImpl customerService = new CustomerServiceImpl();
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         System.out.print("Nhập mã khách hàng cần cập nhật: ");
         int id = Integer.parseInt(sc.nextLine());
         Customer customer = customerService.findCustomerById(id);
@@ -158,7 +156,7 @@ public class CustomerManagement {
             }
         } while (isExist);
 
-        boolean result = customerDAO.updateCustomer(customer);
+        boolean result = customerService.updateCustomer(customer);
         if (result) {
             System.out.println("Cập nhật thông tin khách hàng thành công.");
         } else {
@@ -168,7 +166,6 @@ public class CustomerManagement {
 
     public static void deleteCustomer(Scanner sc) {
         CustomerServiceImpl customerService = new CustomerServiceImpl();
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         System.out.print("Nhập mã khách hàng cần xóa: ");
         int id = Integer.parseInt(sc.nextLine());
         Customer customer = customerService.findCustomerById(id);
@@ -181,7 +178,7 @@ public class CustomerManagement {
         if (choice.equalsIgnoreCase("N")) {
             System.out.println("Đã hủy xóa khách hàng thành công.");
         } else if (choice.equalsIgnoreCase("Y")) {
-            customerDAO.deleteCustomer(id);
+            customerService.deleteCustomer(id);
             System.out.println("Xóa khách hàng thành công.");
         }
     }

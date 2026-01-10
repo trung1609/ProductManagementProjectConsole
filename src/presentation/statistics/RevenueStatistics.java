@@ -1,6 +1,6 @@
 package presentation.statistics;
 
-import dao.impl.revenue.StatisticsRevenueDAOImpl;
+import business.impl.statistics.StatisticsServiceImpl;
 import presentation.MainMenu;
 import presentation.menuUtil.MenuUtil;
 
@@ -43,7 +43,7 @@ public class RevenueStatistics {
                         System.err.println("Vui lòng nhập từ 1 đến 4.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập số.");
+                System.out.println("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -51,7 +51,7 @@ public class RevenueStatistics {
 
     public static void revenueByDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        StatisticsRevenueDAOImpl dao = new StatisticsRevenueDAOImpl();
+        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
         LocalDate date;
 
@@ -65,7 +65,7 @@ public class RevenueStatistics {
             }
         } while (true);
 
-        double total = dao.totalRevenueByDate(date);
+        double total = statisticsService.totalRevenueByDate(date);
 
         StatisticsUI.printRevenueResult(
                 "Doanh thu theo ngày",
@@ -77,7 +77,7 @@ public class RevenueStatistics {
 
 
     public static void revenueByMonth() {
-        StatisticsRevenueDAOImpl dao = new StatisticsRevenueDAOImpl();
+        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Nhập tháng: ");
@@ -86,7 +86,7 @@ public class RevenueStatistics {
         System.out.print("Nhập năm: ");
         int year = Integer.parseInt(sc.nextLine());
 
-        double total = dao.totalRevenueByMonth(month, year);
+        double total = statisticsService.totalRevenueByMonth(month, year);
 
         StatisticsUI.printRevenueResult(
                 "Doanh thu theo tháng",
@@ -98,13 +98,13 @@ public class RevenueStatistics {
 
 
     public static void revenueByYear() {
-        StatisticsRevenueDAOImpl dao = new StatisticsRevenueDAOImpl();
+        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Nhập năm: ");
         int year = Integer.parseInt(sc.nextLine());
 
-        double total = dao.totalRevenueByYear(year);
+        double total = statisticsService.totalRevenueByYear(year);
 
         StatisticsUI.printRevenueResult(
                 "Doanh thu theo năm",

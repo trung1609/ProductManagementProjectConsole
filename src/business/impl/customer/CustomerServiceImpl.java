@@ -1,6 +1,7 @@
 package business.impl.customer;
 
 import business.interfaceService.ICustomerService;
+import dao.impl.customer.CustomerDAOImpl;
 import entity.Customer;
 import util.DBUtil;
 
@@ -8,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.List;
 
 public class CustomerServiceImpl implements ICustomerService {
     @Override
@@ -18,6 +20,25 @@ public class CustomerServiceImpl implements ICustomerService {
             conn = DBUtil.openConnection();
             callSt = conn.prepareCall("call check_email_customer(?,?)");
             callSt.setString(1, email);
+            callSt.registerOutParameter(2, Types.BOOLEAN);
+            callSt.execute();
+            return callSt.getBoolean(2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkPhone(String phone) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("call check_phone_customer(?,?)");
+            callSt.setString(1, phone);
             callSt.registerOutParameter(2, Types.BOOLEAN);
             callSt.execute();
             return callSt.getBoolean(2);
@@ -56,5 +77,29 @@ public class CustomerServiceImpl implements ICustomerService {
             DBUtil.closeConnection(conn, callSt);
         }
         return customer;
+    }
+
+    @Override
+    public boolean createCustomer(Customer customer) {
+        CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
+        return customerDAOImpl.addCustomer(customer);
+    }
+
+    @Override
+    public boolean updateCustomer(Customer customer) {
+        CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
+        return customerDAOImpl.updateCustomer(customer);
+    }
+
+    @Override
+    public boolean deleteCustomer(int index) {
+        CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
+        return customerDAOImpl.deleteCustomer(index);
+    }
+
+    @Override
+    public List<Customer> findAllCustomers() {
+        CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
+        return customerDAOImpl.getAllCustomers();
     }
 }

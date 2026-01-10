@@ -20,7 +20,11 @@ public class CustomerDAOImpl implements ICustomerDAO {
         CallableStatement callSt = null;
         try {
             if (customerService.checkEmail(customer.getEmail())) {
-                System.err.println("Email đã tồn tại. Vui lòng nhập lại.");
+                System.out.println("Email đã tồn tại. Vui lòng nhập lại.");
+                return false;
+            }
+            if (customerService.checkPhone(customer.getPhone())) {
+                System.out.println("Số điện thoại đã tồn tại. Vui lòng nhập lại.");
                 return false;
             }
             conn = DBUtil.openConnection();

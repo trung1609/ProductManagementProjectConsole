@@ -3,14 +3,14 @@ package presentation.menuUtil;
 
 public class MenuUtil {
 
-    // ===== ANSI COLORS =====
+
     public static final String RESET = "\u001B[0m";
     public static final String CYAN = "\u001B[36m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String RED = "\u001B[31m";
 
-    // Bật / tắt màu
+
     public static final boolean ENABLE_COLOR = true;
 
     private static String color(String c) {
@@ -38,7 +38,7 @@ public class MenuUtil {
         System.out.print("Nhập lựa chọn: ");
     }
 
-    // ===== FRAME =====
+
     private static void printLine(int width) {
         System.out.print("┌");
         for (int i = 0; i < width - 2; i++) System.out.print("─");
@@ -58,12 +58,11 @@ public class MenuUtil {
         System.out.println("│");
     }
 
-    // ===== REMOVE ANSI FOR WIDTH =====
     private static String stripAnsi(String text) {
         return text.replaceAll("\u001B\\[[;\\d]*m", "");
     }
 
-    // ===== LOGIN HEADER =====
+
     public static void printLoginHeader(String title) {
         int width = 55;
         printLine(width);

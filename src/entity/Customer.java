@@ -106,12 +106,12 @@ public class Customer {
     }
 
     public void inputName(Scanner sc) {
-        String regex = "[\\p{L}]+";
+        String regex = "^[\\p{L} ]+$";
         do {
             System.out.print("Nhập tên khách hàng: ");
             String nameInput = sc.nextLine().trim();
             if (!Pattern.matches(regex, nameInput)) {
-                System.err.println("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái.");
+                System.err.println("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái và khoảng trắng.");
                 continue;
             }
             this.name = nameInput;

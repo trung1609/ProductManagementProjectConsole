@@ -1,6 +1,7 @@
 package business.impl.product;
 
 import business.interfaceService.IProductService;
+import dao.impl.product.ProductDAOImpl;
 import entity.Product;
 import util.DBUtil;
 
@@ -58,6 +59,30 @@ public class ProductServiceImpl implements IProductService {
             DBUtil.closeConnection(conn, callSt);
         }
         return product;
+    }
+
+    @Override
+    public List<Product> getALlProducts() {
+        ProductDAOImpl productDAO = new ProductDAOImpl();
+        return productDAO.displayAllProducts();
+    }
+
+    @Override
+    public boolean addProduct(Product product) {
+        ProductDAOImpl productDAO = new ProductDAOImpl();
+        return productDAO.addProduct(product);
+    }
+
+    @Override
+    public boolean updateProduct(Product product) {
+        ProductDAOImpl productDAO = new ProductDAOImpl();
+        return productDAO.updateProduct(product);
+    }
+
+    @Override
+    public boolean deleteProduct(int index) {
+        ProductDAOImpl productDAO = new ProductDAOImpl();
+        return productDAO.deleteProduct(index);
     }
 
     @Override

@@ -11,6 +11,19 @@ begin
 end;
 $$;
 
+/*check_phone*/
+create or replace procedure check_phone_customer(phone_in varchar(255), out is_exist boolean)
+    language plpgsql
+as
+$$
+begin
+    select exists(select 1
+                  from customer c
+                  where c.phone = phone_in)
+    into is_exist;
+end;
+$$;
+
 /* add customer */
 create or replace procedure add_customer(name_in varchar(100), phone_in varchar(20), email_in varchar(100),
                                          address_in varchar(255))
