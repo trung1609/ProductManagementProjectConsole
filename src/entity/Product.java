@@ -1,5 +1,7 @@
 package entity;
 
+import presentation.consoleColor.ConsoleColor;
+
 import java.util.Scanner;
 
 public class Product {
@@ -60,10 +62,45 @@ public class Product {
         this.stock = stock;
     }
 
-    @Override
-    public String toString() {
-        return String.format("ID: %d - Name: %s - Brand: %s - Price: %.2f - Stock: %d", id, name, brand, price, stock);
+    public void printProductHeader() {
+        System.out.println(ConsoleColor.CYAN +
+                "┌─────┬──────────────┬──────────────┬──────────────┬──────────┐"
+                + ConsoleColor.RESET);
+
+        System.out.printf(ConsoleColor.YELLOW +
+                        "│ %-3s │ %-12s │ %-12s │ %-12s │ %-8s │%n"
+                        + ConsoleColor.RESET,
+                "ID", "Name", "Brand", "Price", "Stock");
+
+        System.out.println(ConsoleColor.CYAN +
+                "├─────┼──────────────┼──────────────┼──────────────┼──────────┤"
+                + ConsoleColor.RESET);
     }
+
+
+    public void printProductRow(Product p) {
+        System.out.printf(
+                "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%12.2f" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.GREEN + "%8d" + ConsoleColor.RESET +
+                        " │%n",
+                p.getId(),
+                p.getName(),
+                p.getBrand(),
+                p.getPrice(),
+                p.getStock()
+        );
+    }
+
+
+    public void printProductFooter() {
+        System.out.println(ConsoleColor.CYAN +
+                "└─────┴──────────────┴──────────────┴──────────────┴──────────┘"
+                + ConsoleColor.RESET);
+    }
+
 
     public void input(Scanner sc) {
         inputName(sc);

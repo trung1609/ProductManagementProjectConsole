@@ -1,32 +1,36 @@
 package presentation.invoice;
 
-import business.IInvoiceService;
-import business.impl.CustomerServiceImpl;
-import business.impl.InvoiceServiceImpl;
-import business.impl.ProductServiceImpl;
-import dao.impl.ProductDAOImpl;
+import business.impl.customer.CustomerServiceImpl;
+import business.impl.invoice.InvoiceServiceImpl;
+import business.impl.product.ProductServiceImpl;
+import business.interfaceService.IInvoiceService;
+import dao.impl.customer.CustomerDAOImpl;
+import dao.impl.product.ProductDAOImpl;
 import entity.Customer;
 import entity.Invoice;
 import entity.Product;
 import presentation.MainMenu;
+import presentation.menuUtil.MenuUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class InvoiceManagement {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        String[] invoiceMenu = {
+                "Hiển thị danh sách hóa đơn",
+                "Thêm mới hóa đơn",
+                "Tìm kiếm hóa đơn chi tiết",
+                "Quay ra menu chính"
+        };
+
         do {
             try {
-                System.out.println("============ QUẢN LÝ HÓA ĐƠN ============");
-                System.out.println("1. Hiển thị danh sách hóa đơn");
-                System.out.println("2. Thêm mới hóa đơn");
-                System.out.println("3. Tìm kiếm hóa đơn chi tiết");
-                System.out.println("4. Quay ra menu chính");
-                System.out.println("=========================================");
-                System.out.print("Nhập lựa chọn: ");
+                MenuUtil.printMenu("QUẢN LÝ HÓA ĐƠN", invoiceMenu);
+
                 int choice = Integer.parseInt(sc.nextLine());
+
                 switch (choice) {
                     case 1:
                         getAllInvoices();
@@ -39,15 +43,16 @@ public class InvoiceManagement {
                         break;
                     case 4:
                         MainMenu.main(args);
-                        return;
+                        return; // ✅ rất quan trọng
                     default:
                         System.err.println("Vui lòng nhập lại lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập lại lựa chọn.");
+                System.err.println("Vui lòng nhập số.");
             }
         } while (true);
     }
+
 
     /*
      * Nhập mã khách hàng
@@ -61,6 +66,14 @@ public class InvoiceManagement {
      * */
 
     public static void addInvoice(Scanner sc) {
+        System.out.println("--- Danh sách khách hàng ---");
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        List<Customer> customers = customerDAO.getAllCustomers();
+        if (customers.isEmpty() || customers == null) {
+            System.out.println("Chưa có khách hàng");
+            return;
+        }
+        customers.forEach(System.out::println);
         System.out.print("Nhập mã khách hàng: ");
         int customerId = Integer.parseInt(sc.nextLine());
 
@@ -72,12 +85,20 @@ public class InvoiceManagement {
         }
 
         ProductDAOImpl productDAO = new ProductDAOImpl();
+        System.out.println("--- Danh sách sản phẩm ---");
         List<Product> productList = productDAO.displayAllProducts();
         if (productList == null || productList.isEmpty()) {
             System.err.println("Không có sản phẩm nào!");
             return;
         }
         productList.forEach(System.out::println);
+
+        //Tạo stock tạm -> check stock ngay khi add
+        Map<Integer, Integer> stockTmp = new HashMap<>();
+        for (Product product : productList) {
+            stockTmp.put(product.getId(), product.getStock());
+        }
+
         List<Integer> productIds = new ArrayList<>();
         List<Integer> quantities = new ArrayList<>();
         List<Double> prices = new ArrayList<>();
@@ -90,21 +111,35 @@ public class InvoiceManagement {
                 break;
             }
             Product checkProductId = productService.findProductById(productId);
-            if(checkProductId == null) {
+            if (checkProductId == null) {
                 System.err.println("Không tìm thấy id sản phẩm");
                 continue;
             }
             System.out.print("Nhập số lượng: ");
             int quantity = Integer.parseInt(sc.nextLine());
 
-            if (quantity > checkProductId.getStock()) {
+            int availableStock = stockTmp.get(productId);
+
+            if (quantity > availableStock) {
                 System.out.println("Số lượng trong kho không đủ.");
                 continue;
             }
 
-            productIds.add(productId);
-            quantities.add(quantity);
-            prices.add(checkProductId.getPrice());
+            stockTmp.put(productId, availableStock - quantity);
+
+            boolean isExist = false;
+            for (int i = 0; i < productIds.size(); i++) {
+                if (productIds.get(i) == productId) {
+                    quantities.set(i, quantities.get(i) + quantity);
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                productIds.add(productId);
+                quantities.add(quantity);
+                prices.add(checkProductId.getPrice());
+            }
             double subTotal = quantity * checkProductId.getPrice();
             totalAmount += subTotal;
             System.out.println("Đã thêm: " + checkProductId.getName() + " x" + quantity + " = " + subTotal);
@@ -128,7 +163,7 @@ public class InvoiceManagement {
         boolean result = invoiceService.createInvoice(customerId, productIds, quantities, prices);
 
         if (result) {
-            System.out.println("Tạo hóa đơn thành công!");
+            System.out.println("Tạo hóa đơn thành công!.");
         } else {
             System.err.println("Tạo hóa đơn thất bại!");
         }
@@ -137,7 +172,6 @@ public class InvoiceManagement {
     public static void getAllInvoices() {
         IInvoiceService invoiceService = new InvoiceServiceImpl();
         List<Invoice> invoices = invoiceService.getAllInvoices();
-
         if (invoices == null || invoices.isEmpty()) {
             System.out.println("Không có hóa đơn nào trong hệ thống.");
             return;
@@ -145,7 +179,9 @@ public class InvoiceManagement {
 
         System.out.println("\n========== DANH SÁCH HÓA ĐƠN ==========");
         Invoice.printHeader();
-        invoices.forEach(System.out::println);
+        for (Invoice invoice : invoices) {
+            invoice.printInvoiceRow();
+        }
         Invoice.printFooter();
         System.out.println("Tổng số hóa đơn: " + invoices.size());
     }

@@ -1,39 +1,50 @@
 package presentation.invoice;
 
-import dao.impl.InvoiceDAOImpl;
-import dao.impl.InvoiceDetailsDAOImpl;
+import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import entity.InvoiceDetails;
+import presentation.menuUtil.MenuUtil;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuSearchInvoice {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        String[] searchInvoiceMenu = {
+                "Tìm kiếm theo tên khách hàng",
+                "Tìm kiếm theo ngày / tháng / năm",
+                "Quay lại menu hóa đơn"
+        };
+
         do {
             try {
-                System.out.println("1. Tìm kiếm theo tên khách hàng");
-                System.out.println("2. Tìm kiếm theo ngày/tháng/năm");
-                System.out.println("3. Quay lại menu hóa đơn");
-                System.out.print("Nhập lựa chọn của bạn: ");
+                MenuUtil.printMenu("TÌM KIẾM HÓA ĐƠN", searchInvoiceMenu);
+
                 int choice = Integer.parseInt(sc.nextLine());
+
                 switch (choice) {
                     case 1:
                         searchByCustomerName();
                         break;
                     case 2:
+                        searchByinvoiceDate();
                         break;
                     case 3:
                         InvoiceManagement.main(args);
-                        return;
+                        break;
                     default:
-                        System.err.println("Vui lòng nhập từ 1-3");
+                        System.err.println("Vui lòng nhập từ 1 đến 3.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập lựa chọn phù hợp.");
+                System.err.println("Vui lòng nhập số.");
             }
         } while (true);
     }
+
 
     public static void searchByCustomerName() {
         Scanner sc = new Scanner(System.in);
@@ -43,12 +54,40 @@ public class MenuSearchInvoice {
         List<InvoiceDetails> invoiceDetailsList = invoiceDAO.getAllInvoiceDetailsByCustomerName(customerName);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             InvoiceDetails.printHeader();
-            invoiceDetailsList.forEach(System.out::println);
+            for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
+                invoiceDetails.printInvoiceDetailRow();
+            }
             InvoiceDetails.printFooter();
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
         } else {
             System.out.println("Không tìm thấy kết quả nào!");
         }
+    }
 
+    public static void searchByinvoiceDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Scanner sc = new Scanner(System.in);
+        InvoiceDetailsDAOImpl invoiceDAO = new InvoiceDetailsDAOImpl();
+        LocalDate invoiceDate;
+        do {
+            try {
+                System.out.print("Nhập ngày/tháng/năm cần tìm(dd/MM/yyyy): ");
+                invoiceDate = LocalDate.parse(sc.nextLine(), dtf);
+                break;
+            } catch (DateTimeParseException e) {
+                System.err.println("Vui lòng nhập lại đúng định dạng ngày tháng năm");
+            }
+        } while (true);
+        List<InvoiceDetails> invoiceDetailsList = invoiceDAO.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
+        if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
+            InvoiceDetails.printHeader();
+            for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
+                invoiceDetails.printInvoiceDetailRow();
+            }
+            InvoiceDetails.printFooter();
+            System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
+        } else {
+            System.out.println("Không tìm thấy kết quả nào!");
+        }
     }
 }

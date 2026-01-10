@@ -3,21 +3,27 @@ package presentation;
 import presentation.invoice.InvoiceManagement;
 
 import java.util.Scanner;
+import presentation.menuUtil.MenuUtil;
+import presentation.statistics.RevenueStatistics;
 
 public class MainMenu {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        String[] mainMenu = {
+                "Quản lý sản phẩm điện thoại",
+                "Quản lý khách hàng",
+                "Quản lý hóa đơn",
+                "Thống kê doanh thu",
+                "Đăng xuất"
+        };
+
         do {
             try {
-                System.out.println("============ MENU CHÍNH ============");
-                System.out.println("1. Quản lý sản phẩm điện thoại");
-                System.out.println("2. Quản lý khách hàng");
-                System.out.println("3. Quản lý hóa đơn");
-                System.out.println("4. Thống kê doanh thu");
-                System.out.println("5. Đăng xuất");
-                System.out.println("===================================");
-                System.out.print("Nhập lựa chọn: ");
+                MenuUtil.printMenu("MENU CHÍNH", mainMenu);
+
                 int choice = Integer.parseInt(sc.nextLine());
+
                 switch (choice) {
                     case 1:
                         ProductManagement.main(args);
@@ -29,6 +35,7 @@ public class MainMenu {
                         InvoiceManagement.main(args);
                         break;
                     case 4:
+                        RevenueStatistics.main(args);
                         break;
                     case 5:
                         MenuDashboard.main(args);
@@ -37,8 +44,9 @@ public class MainMenu {
                         System.err.println("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập lại lựa chọn.");
+                System.err.println("Vui lòng nhập số.");
             }
         } while (true);
     }
 }
+

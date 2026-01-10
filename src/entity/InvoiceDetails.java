@@ -1,5 +1,7 @@
 package entity;
 
+import presentation.consoleColor.ConsoleColor;
+
 public class InvoiceDetails {
     private int id;
     private int invoice_id;
@@ -14,7 +16,47 @@ public class InvoiceDetails {
         this.quantity = quantity;
         this.price = price;
     }
-    public InvoiceDetails() {}
+
+    public InvoiceDetails() {
+    }
+
+    public static void printHeader() {
+        System.out.println(ConsoleColor.CYAN +
+                "┌─────┬────────────┬────────────┬──────────┬───────────────┐"
+                + ConsoleColor.RESET);
+
+        System.out.printf(ConsoleColor.YELLOW +
+                        "│ %-3s │ %-10s │ %-10s │ %-8s │ %-13s │%n"
+                        + ConsoleColor.RESET,
+                "ID", "Invoice ID", "Product ID", "Quantity", "Unit Price");
+
+        System.out.println(ConsoleColor.CYAN +
+                "├─────┼────────────┼────────────┼──────────┼───────────────┤"
+                + ConsoleColor.RESET);
+    }
+
+    public void printInvoiceDetailRow() {
+        System.out.printf(
+                "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-10d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-10d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.GREEN + "%-8d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%13.2f" + ConsoleColor.RESET +
+                        " │%n",
+                id,
+                invoice_id,
+                product_id,
+                quantity,
+                price
+        );
+    }
+
+    public static void printFooter() {
+        System.out.println(ConsoleColor.CYAN +
+                "└─────┴────────────┴────────────┴──────────┴───────────────┘"
+                + ConsoleColor.RESET);
+    }
+
 
     public int getId() {
         return id;
@@ -56,20 +98,4 @@ public class InvoiceDetails {
         this.price = price;
     }
 
-    public static void printHeader() {
-        System.out.println("┌─────┬────────────┬────────────┬──────────┬───────────────┐");
-        System.out.printf("│ %-3s │ %-10s │ %-10s │ %-8s │ %-13s │%n",
-                "ID", "Invoice ID", "Product ID", "Quantity", "Unit Price");
-        System.out.println("├─────┼────────────┼────────────┼──────────┼───────────────┤");
-    }
-
-    public static void printFooter() {
-        System.out.println("└─────┴────────────┴────────────┴──────────┴───────────────┘");
-    }
-
-    @Override
-    public String toString() {
-        return String.format("│ %-3d │ %-10d │ %-10d │ %-8d │ %13.2f │",
-                id, invoice_id, product_id, quantity, price);
-    }
 }

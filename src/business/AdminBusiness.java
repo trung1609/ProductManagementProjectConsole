@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.Types;
 
 public class AdminBusiness {
-    public static boolean loginAdmin(String username,String password) {
+    public static boolean loginAdmin(String username, String password) {
         Connection conn = null;
         CallableStatement callSt = null;
         try {
@@ -17,11 +17,11 @@ public class AdminBusiness {
             callSt.setString(2, password);
             callSt.registerOutParameter(3, Types.BOOLEAN);
             callSt.execute();
-            return  callSt.getBoolean(3);
-        }catch (Exception e){
+            return callSt.getBoolean(3);
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn,callSt);
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
         }
         return false;
     }

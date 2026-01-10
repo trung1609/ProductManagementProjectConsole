@@ -1,7 +1,7 @@
-package dao.impl;
+package dao.impl.product;
 
-import business.impl.ProductServiceImpl;
-import dao.IProductDAO;
+import business.impl.product.ProductServiceImpl;
+import dao.interfaceDAO.IProductDAO;
 import entity.Product;
 import util.DBUtil;
 

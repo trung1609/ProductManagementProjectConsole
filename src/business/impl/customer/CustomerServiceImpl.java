@@ -1,6 +1,6 @@
-package business.impl;
+package business.impl.customer;
 
-import business.ICustomerService;
+import business.interfaceService.ICustomerService;
 import entity.Customer;
 import util.DBUtil;
 
@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements ICustomerService {
             boolean hasData = callSt.execute();
             if (hasData) {
                 ResultSet rs = callSt.getResultSet();
-                if(rs.next()) {
+                if (rs.next()) {
                     customer = new Customer();
                     customer.setId(rs.getInt("id"));
                     customer.setName(rs.getString("name"));
@@ -50,10 +50,10 @@ public class CustomerServiceImpl implements ICustomerService {
                     customer.setAddress(rs.getString("address"));
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn,callSt);
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
         }
         return customer;
     }

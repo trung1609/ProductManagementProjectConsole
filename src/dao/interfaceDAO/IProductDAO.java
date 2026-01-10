@@ -1,4 +1,4 @@
-package dao;
+package dao.interfaceDAO;
 
 import entity.Product;
 

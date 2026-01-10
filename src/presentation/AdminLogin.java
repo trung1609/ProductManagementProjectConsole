@@ -2,24 +2,34 @@ package presentation;
 
 import business.AdminBusiness;
 import entity.Admin;
+import presentation.menuUtil.MenuUtil;
 
 import java.util.Scanner;
 
 public class AdminLogin {
     static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         do {
-            System.out.println("============ ĐĂNG NHẬP QUẢN TRỊ ============");
+            MenuUtil.printLoginHeader("ĐĂNG NHẬP QUẢN TRỊ");
+
             Admin admin = new Admin();
             admin.login(sc);
-            boolean checkLogin = AdminBusiness.loginAdmin(admin.getUsername(), admin.getPassword());
+
+            boolean checkLogin = AdminBusiness.loginAdmin(
+                    admin.getUsername(),
+                    admin.getPassword()
+            );
+
             if (checkLogin) {
+                System.out.println("✔ Đăng nhập thành công!");
                 MainMenu.main(args);
-                break;
+                return;
             } else {
-                System.err.println("Sai tài khoản và mật khẩu vui lòng nhập lại.");
+                System.err.println("✖ Sai tài khoản hoặc mật khẩu, vui lòng nhập lại.");
             }
-            System.out.println("============================================");
+            MenuUtil.printFooter();
         } while (true);
     }
+
 }

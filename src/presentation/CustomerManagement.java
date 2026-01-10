@@ -1,8 +1,9 @@
 package presentation;
 
-import business.impl.CustomerServiceImpl;
-import dao.impl.CustomerDAOImpl;
+import business.impl.customer.CustomerServiceImpl;
+import dao.impl.customer.CustomerDAOImpl;
 import entity.Customer;
+import presentation.menuUtil.MenuUtil;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,17 +12,21 @@ import java.util.regex.Pattern;
 public class CustomerManagement {
     static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        String[] customerMenu = {
+                "Hiển thị danh sách khách hàng",
+                "Thêm khách hàng mới",
+                "Cập nhật thông tin khách hàng",
+                "Xóa khách hàng theo ID",
+                "Quay lại menu chính"
+        };
+
         do {
             try {
-                System.out.println("============ QUẢN LÝ KHÁCH HÀNG ============");
-                System.out.println("1. Hiển thị danh sách khách hàng");
-                System.out.println("2. Thêm khách hàng mới");
-                System.out.println("3. Cập nhật thông tin khách hàng");
-                System.out.println("4. Xóa khách hàng theo ID");
-                System.out.println("5. Quay lại menu chính");
-                System.out.println("============================================");
-                System.out.print("Lựa chọn của bạn: ");
+                MenuUtil.printMenu("QUẢN LÝ KHÁCH HÀNG", customerMenu);
+
                 int choice = Integer.parseInt(sc.nextLine());
+
                 switch (choice) {
                     case 1:
                         getAllCustomers();
@@ -42,7 +47,7 @@ public class CustomerManagement {
                         System.err.println("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập lại lựa chọn.");
+                System.err.println("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -66,7 +71,13 @@ public class CustomerManagement {
         if (customerList.isEmpty()) {
             System.out.println("Chưa có khách hàng được thêm.");
         } else {
-            customerList.forEach(System.out::println);
+            Customer customer = new Customer();
+            customer.printCustomerHeader();
+            for (Customer c : customerList) {
+                c.printCustomerRow(c);
+            }
+            customer.printCustomerFooter();
+            System.out.println("Tổng số khách hàng: " + customerList.size());
         }
     }
 

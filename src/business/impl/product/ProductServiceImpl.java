@@ -1,6 +1,6 @@
-package business.impl;
+package business.impl.product;
 
-import business.IProductService;
+import business.interfaceService.IProductService;
 import entity.Product;
 import util.DBUtil;
 
@@ -30,6 +30,7 @@ public class ProductServiceImpl implements IProductService {
         }
         return false;
     }
+
     @Override
     public Product findProductById(int productId) {
         Connection conn = null;
@@ -58,6 +59,7 @@ public class ProductServiceImpl implements IProductService {
         }
         return product;
     }
+
     @Override
     public List<Product> searchProductByBrand(String brand) {
         Connection conn = null;

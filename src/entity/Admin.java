@@ -7,7 +7,8 @@ public class Admin {
     private String username;
     private String password;
 
-    public Admin(){}
+    public Admin() {
+    }
 
     public Admin(int id, String username, String password) {
         this.id = id;
@@ -39,7 +40,7 @@ public class Admin {
         this.password = password;
     }
 
-    public void login(Scanner scanner){
+    public void login(Scanner scanner) {
         System.out.print("Tài khoản: ");
         this.username = scanner.nextLine();
         System.out.print("Mật khẩu: ");

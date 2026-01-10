@@ -1,8 +1,9 @@
 package presentation;
 
-import business.impl.ProductServiceImpl;
-import dao.impl.ProductDAOImpl;
+import business.impl.product.ProductServiceImpl;
+import dao.impl.product.ProductDAOImpl;
 import entity.Product;
+import presentation.menuUtil.MenuUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,20 +12,24 @@ import java.util.Scanner;
 public class ProductManagement {
     static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        String[] productMenu = {
+                "Hiển thị danh sách sản phẩm",
+                "Thêm sản phẩm mới",
+                "Cập nhật thông tin sản phẩm",
+                "Xóa sản phẩm theo ID",
+                "Tìm kiếm theo brand",
+                "Tìm kiếm theo khoảng giá",
+                "Tìm kiếm theo tồn kho",
+                "Quay lại menu chính"
+        };
+
         do {
             try {
-                System.out.println("============ QUẢN LÝ SẢN PHẨM ============");
-                System.out.println("1. Hiển thị danh sách sản phẩm");
-                System.out.println("2. Thêm sản phẩm mới");
-                System.out.println("3. Cập nhật thông tin sản phẩm");
-                System.out.println("4. Xóa sản phẩm theo ID");
-                System.out.println("5. Tìm kiếm theo brand");
-                System.out.println("6. Tìm kiếm theo khoảng giá");
-                System.out.println("7. Tìm kiếm theo tồn kho");
-                System.out.println("8. Quay lại menu chính");
-                System.out.println("==========================================");
-                System.out.print("Nhập lựa chọn: ");
+                MenuUtil.printMenu("QUẢN LÝ SẢN PHẨM", productMenu);
+
                 int choice = Integer.parseInt(sc.nextLine());
+
                 switch (choice) {
                     case 1:
                         displayAllProducts();
@@ -50,9 +55,11 @@ public class ProductManagement {
                     case 8:
                         MainMenu.main(args);
                         return;
+                    default:
+                        System.err.println("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập lại lựa chọn.");
+                System.err.println("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -72,7 +79,17 @@ public class ProductManagement {
     public static void displayAllProducts() {
         ProductDAOImpl productDAO = new ProductDAOImpl();
         List<Product> productList = productDAO.displayAllProducts();
-        productList.forEach(System.out::println);
+        if (productList.isEmpty()) {
+            System.out.println("Chưa có sản phẩm.");
+        } else {
+            Product product = new Product();
+            product.printProductHeader();
+            for (Product p : productList) {
+                p.printProductRow(p);
+            }
+            product.printProductFooter();
+            System.out.println("Tổng số sản phẩm: " + productList.size());
+        }
     }
 
     public static void updateProduct() {

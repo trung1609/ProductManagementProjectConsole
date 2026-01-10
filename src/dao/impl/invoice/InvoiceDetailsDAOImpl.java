@@ -1,14 +1,15 @@
-package dao.impl;
+package dao.impl.invoice;
 
-import dao.IInvoiceDetailsDAO;
+import dao.interfaceDAO.IInvoiceDetailsDAO;
 import entity.InvoiceDetails;
 import util.DBUtil;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,10 +46,10 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
             callSt = conn.prepareCall("{call get_invoice_details_by_customer_name(?)}");
             callSt.setString(1, customerName);
             boolean hasData = callSt.execute();
-            if(hasData){
+            if (hasData) {
                 ResultSet rs = callSt.getResultSet();
                 invoiceDetailsList = new ArrayList<>();
-                while (rs.next()){
+                while (rs.next()) {
                     InvoiceDetails invoiceDetails = new InvoiceDetails();
                     invoiceDetails.setId(rs.getInt("id"));
                     invoiceDetails.setInvoice_id(rs.getInt("invoice_id"));
@@ -58,10 +59,41 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                     invoiceDetailsList.add(invoiceDetails);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn,callSt);
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return invoiceDetailsList;
+    }
+
+    @Override
+    public List<InvoiceDetails> getAllInvoiceDetailsByInvoiceDate(LocalDate invoiceDate) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<InvoiceDetails> invoiceDetailsList = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_invoice_details_by_invoice_date(?)}");
+            callSt.setDate(1, Date.valueOf(invoiceDate));
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                invoiceDetailsList = new ArrayList<>();
+                while (rs.next()) {
+                    InvoiceDetails invoiceDetails = new InvoiceDetails();
+                    invoiceDetails.setId(rs.getInt("id"));
+                    invoiceDetails.setInvoice_id(rs.getInt("invoice_id"));
+                    invoiceDetails.setProduct_id(rs.getInt("product_id"));
+                    invoiceDetails.setQuantity(rs.getInt("quantity"));
+                    invoiceDetails.setPrice(rs.getDouble("unit_price"));
+                    invoiceDetailsList.add(invoiceDetails);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
         }
         return invoiceDetailsList;
     }

@@ -1,5 +1,7 @@
 package entity;
 
+import presentation.consoleColor.ConsoleColor;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -60,11 +62,41 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+    public void printCustomerHeader() {
+        System.out.println(ConsoleColor.CYAN +
+                "┌─────┬──────────────┬──────────────┬────────────────────┬────────────────────┐"
+                + ConsoleColor.RESET);
 
-    @Override
-    public String toString() {
-        return String.format("ID: %d - Name: %s - Phone: %s - Email: %s - Address: %s", id, name, phone, email, address);
+        System.out.printf(ConsoleColor.YELLOW +
+                        "│ %-3s │ %-12s │ %-12s │ %-18s │ %-18s │%n"
+                        + ConsoleColor.RESET,
+                "ID", "Name", "Phone", "Email", "Address");
+
+        System.out.println(ConsoleColor.CYAN +
+                "├─────┼──────────────┼──────────────┼────────────────────┼────────────────────┤"
+                + ConsoleColor.RESET);
     }
+    public void printCustomerRow(Customer c) {
+        System.out.printf(
+                "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
+                        " │%n",
+                c.getId(),
+                c.getName(),
+                c.getPhone(),
+                c.getEmail(),
+                c.getAddress()
+        );
+    }
+    public void printCustomerFooter() {
+        System.out.println(ConsoleColor.CYAN +
+                "└─────┴──────────────┴──────────────┴────────────────────┴────────────────────┘"
+                + ConsoleColor.RESET);
+    }
+
 
     public void input(Scanner sc) {
         inputName(sc);

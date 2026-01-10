@@ -1,7 +1,7 @@
-package dao.impl;
+package dao.impl.customer;
 
-import business.impl.CustomerServiceImpl;
-import dao.ICustomerDAO;
+import business.impl.customer.CustomerServiceImpl;
+import dao.interfaceDAO.ICustomerDAO;
 import entity.Customer;
 import util.DBUtil;
 
@@ -19,7 +19,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
         Connection conn = null;
         CallableStatement callSt = null;
         try {
-            if(customerService.checkEmail(customer.getEmail())){
+            if (customerService.checkEmail(customer.getEmail())) {
                 System.err.println("Email đã tồn tại. Vui lòng nhập lại.");
                 return false;
             }
@@ -54,10 +54,10 @@ public class CustomerDAOImpl implements ICustomerDAO {
             callSt.setString(5, customer.getAddress());
             callSt.execute();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn,callSt);
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
         }
         return false;
     }
@@ -72,10 +72,10 @@ public class CustomerDAOImpl implements ICustomerDAO {
             callSt.setInt(1, index);
             callSt.execute();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn,callSt);
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
         }
         return true;
     }
@@ -102,9 +102,9 @@ public class CustomerDAOImpl implements ICustomerDAO {
                     customers.add(customer);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
         return customers;
