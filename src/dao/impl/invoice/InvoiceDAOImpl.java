@@ -60,4 +60,22 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
         }
         return invoices;
     }
+
+    @Override
+    public boolean deleteInvoicesByCustomerId(int customerId) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("call delete_customer_invoices(?)");
+            callSt.setInt(1, customerId);
+            callSt.execute();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return false;
+    }
 }

@@ -3,6 +3,7 @@ package business.impl.invoice;
 import business.interfaceService.IInvoiceService;
 import dao.impl.invoice.InvoiceDAOImpl;
 import dao.impl.invoice.InvoiceDetailsDAOImpl;
+import entity.Customer;
 import entity.Invoice;
 import presentation.menuUtil.MenuUtil;
 import util.DBUtil;
@@ -62,6 +63,40 @@ public class InvoiceServiceImpl implements IInvoiceService {
     public List<Invoice> getAllInvoices() {
         InvoiceDAOImpl invoiceDAO = new InvoiceDAOImpl();
         return invoiceDAO.getAllInvoices();
+    }
+
+    @Override
+    public Invoice findInvoiceByCustomerId(int customerId) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        Invoice invoice = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call find_invoice_by_customer_id(?)}");
+            callSt.setInt(1, customerId);
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                if (rs.next()) {
+                    invoice = new Invoice();
+                    invoice.setId(rs.getInt("id"));
+                    invoice.setCustomerId(rs.getInt("customer_id"));
+                    invoice.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime().toLocalDate());
+                    invoice.setTotalAmount(rs.getDouble("total_amount"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return invoice;
+    }
+
+    @Override
+    public boolean deleteInvoicesByCustomerId(int customerId) {
+        InvoiceDAOImpl invoiceDAO = new InvoiceDAOImpl();
+        return invoiceDAO.deleteInvoicesByCustomerId(customerId);
     }
 
 

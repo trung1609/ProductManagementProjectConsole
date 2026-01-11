@@ -65,16 +65,16 @@ public class Product {
 
     public void printProductHeader() {
         System.out.println(ConsoleColor.CYAN +
-                "┌─────┬──────────────┬──────────────┬──────────────┬──────────┐"
+                "┌─────┬────────────────────┬───────────────┬───────────────┬──────────┐"
                 + ConsoleColor.RESET);
 
         System.out.printf(ConsoleColor.YELLOW +
-                        "│ %-3s │ %-12s │ %-12s │ %-12s │ %-8s │%n"
+                        "│ %-3s │ %-18s │ %-13s │ %-13s │ %-8s │%n"
                         + ConsoleColor.RESET,
                 "ID", "Name", "Brand", "Price", "Stock");
 
         System.out.println(ConsoleColor.CYAN +
-                "├─────┼──────────────┼──────────────┼──────────────┼──────────┤"
+                "├─────┼────────────────────┼───────────────┼───────────────┼──────────┤"
                 + ConsoleColor.RESET);
     }
 
@@ -82,9 +82,9 @@ public class Product {
     public void printProductRow(Product p) {
         System.out.printf(
                 "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%12.2f" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%13.2f" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.GREEN + "%8d" + ConsoleColor.RESET +
                         " │%n",
                 p.getId(),
@@ -98,7 +98,7 @@ public class Product {
 
     public void printProductFooter() {
         System.out.println(ConsoleColor.CYAN +
-                "└─────┴──────────────┴──────────────┴──────────────┴──────────┘"
+                "└─────┴────────────────────┴───────────────┴───────────────┴──────────┘"
                 + ConsoleColor.RESET);
     }
 
@@ -137,7 +137,7 @@ public class Product {
     public void inputPrice(Scanner sc) {
         do {
             try {
-                System.out.print("Nhập gia bán: ");
+                System.out.print("Nhập giá bán: ");
                 double priceInput = Double.parseDouble(sc.nextLine());
                 if (priceInput <= 0) {
                     MenuUtil.printError("Vui lòng nhập giá bán lớn hơn hoặc bằng 0");

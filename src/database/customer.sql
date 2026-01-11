@@ -48,7 +48,7 @@ create or replace function get_all_customer()
 as
 $$
 begin
-    return query select c.id, c.name, c.phone, c.email, c.address from customer c;
+    return query select c.id, c.name, c.phone, c.email, c.address from customer c order by c.id;
 end;
 $$ language plpgsql;
 

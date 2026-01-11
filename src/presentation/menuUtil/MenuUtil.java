@@ -16,6 +16,7 @@ public class MenuUtil {
     private static String color(String c) {
         return ENABLE_COLOR ? c : "";
     }
+
     public static void printMenu(String title, String[] options) {
         int width = 50;
 
@@ -37,6 +38,18 @@ public class MenuUtil {
         System.out.print("Nhập lựa chọn: ");
     }
 
+    public static void printListItems(String title) {
+        int width = 70;
+        int textLength = stripAnsi(title).length();
+        int totalPadding = width - 2 - textLength;
+        int left = totalPadding / 2;
+        int right = totalPadding - left;
+        System.out.println();
+        for (int i = 0; i < left; i++) System.out.print(" ");
+        System.out.print(color(CYAN) + title + color(CYAN));
+        for (int i = 0; i < right; i++) System.out.print(" ");
+        System.out.println();
+    }
 
     private static void printLine(int width, char leftChar, char rightChar) {
         System.out.print(leftChar);
@@ -70,8 +83,13 @@ public class MenuUtil {
         printCentered(color(CYAN) + title + color(RESET), width);
         printLine(width, '├', '┤');
     }
+
     public static void printError(String message) {
         System.out.println(color(RED) + " × " + message + color(RESET));
+    }
+
+    public static void printSuccess(String message) {
+        System.out.println(color(GREEN) + " ✓ " + message + color(RESET));
     }
 }
 

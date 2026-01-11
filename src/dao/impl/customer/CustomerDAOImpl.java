@@ -20,14 +20,6 @@ public class CustomerDAOImpl implements ICustomerDAO {
         Connection conn = null;
         CallableStatement callSt = null;
         try {
-            if (customerService.checkEmail(customer.getEmail())) {
-                MenuUtil.printError("Email đã tồn tại.");
-                return false;
-            }
-            if (customerService.checkPhone(customer.getPhone())) {
-                MenuUtil.printError("Số điện thoại đã tồn tại.");
-                return false;
-            }
             conn = DBUtil.openConnection();
             callSt = conn.prepareCall("call add_customer(?,?,?,?)");
             callSt.setString(1, customer.getName());

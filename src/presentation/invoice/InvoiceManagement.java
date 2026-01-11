@@ -12,7 +12,9 @@ import entity.Product;
 import presentation.MainMenu;
 import presentation.menuUtil.MenuUtil;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class InvoiceManagement {
     public static void main(String[] args) {
@@ -163,7 +165,7 @@ public class InvoiceManagement {
         String confirm = sc.nextLine();
 
         if (!confirm.equalsIgnoreCase("Y")) {
-            System.out.println("Đã hủy tạo hóa đơn.");
+            MenuUtil.printSuccess("Đã hủy tạo hóa đơn.");
             return;
         }
 
@@ -171,7 +173,7 @@ public class InvoiceManagement {
         boolean result = invoiceService.createInvoice(customerId, productIds, quantities, prices);
 
         if (result) {
-            System.out.println("Tạo hóa đơn thành công!.");
+            MenuUtil.printSuccess("Tạo hóa đơn thành công!.");
         } else {
             MenuUtil.printError("Tạo hóa đơn thất bại!");
         }

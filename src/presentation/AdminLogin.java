@@ -22,7 +22,7 @@ public class AdminLogin {
             );
 
             if (checkLogin) {
-                System.out.println("✔ Đăng nhập thành công!");
+                MenuUtil.printSuccess("Đăng nhập thành công!");
                 System.out.println();
                 MainMenu.main(args);
                 return;

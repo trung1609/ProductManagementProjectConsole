@@ -1,3 +1,4 @@
+/*revenue by date*/
 create or replace procedure revenue_by_date(date_in date, out total_revenue numeric)
     language plpgsql
 as
@@ -7,6 +8,7 @@ begin
 end;
 $$;
 
+/*revenue by month*/
 create or replace procedure revenue_by_month(month_in int, year_in int, out total_revenue numeric)
     language plpgsql
 as
@@ -20,6 +22,7 @@ begin
 end;
 $$;
 
+/*revenue by year*/
 create or replace procedure revenue_by_year(year_in int, out total_revenue numeric)
     language plpgsql
 as

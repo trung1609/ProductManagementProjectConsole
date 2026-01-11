@@ -1,7 +1,9 @@
 package presentation;
 
 import business.impl.customer.CustomerServiceImpl;
+import business.impl.invoice.InvoiceServiceImpl;
 import entity.Customer;
+import entity.Invoice;
 import presentation.menuUtil.MenuUtil;
 
 import java.util.List;
@@ -58,7 +60,7 @@ public class CustomerManagement {
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         boolean result = customerService.createCustomer(customer);
         if (result) {
-            System.out.println("Thêm khách hàng thành công.");
+            MenuUtil.printSuccess("Thêm khách hàng thành công.");
         } else {
             MenuUtil.printError("Có lỗi khi thêm khách hàng.");
         }
@@ -97,6 +99,12 @@ public class CustomerManagement {
             return;
         }
         boolean isExist = true;
+        MenuUtil.printListItems("THÔNG TIN KHÁCH HÀNG CẦN CẬP NHẬT");
+        customer.printCustomerHeader();
+        for (int i = 0; i < 1; i++) {
+            customer.printCustomerRow(customer);
+        }
+        customer.printCustomerFooter();
         do {
             try {
                 MenuUtil.printMenu("CẬP NHẬT THÔNG TIN KHÁCH HÀNG", updateCustomerMenu);
@@ -104,11 +112,11 @@ public class CustomerManagement {
                 switch (choice) {
                     case 1:
                         do {
-                            String regex = "[\\p{L}]+";
+                            String regex = "[\\p{L} ]+";
                             System.out.print("Nhập tên mới của khách hàng: ");
                             String newName = sc.nextLine().trim();
                             if (!Pattern.matches(regex, newName)) {
-                                MenuUtil.printError("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái.");
+                                MenuUtil.printError("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái và khoảng cách.");
                                 continue;
                             }
                             customer.setName(newName);
@@ -169,7 +177,7 @@ public class CustomerManagement {
 
         boolean result = customerService.updateCustomer(customer);
         if (result) {
-            System.out.println("Cập nhật thông tin khách hàng thành công.");
+            MenuUtil.printSuccess("Cập nhật thông tin khách hàng thành công.");
         } else {
             MenuUtil.printError("Có lỗi khi cập nhật thông tin.");
         }
@@ -177,20 +185,66 @@ public class CustomerManagement {
 
     public static void deleteCustomer(Scanner sc) {
         CustomerServiceImpl customerService = new CustomerServiceImpl();
+        Customer customer = new Customer();
+        List<Customer> customerList = customerService.findAllCustomers();
+        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM");
+        customer.printCustomerHeader();
+        for (Customer c : customerList) {
+            c.printCustomerRow(c);
+        }
+        customer.printCustomerFooter();
         System.out.print("Nhập mã khách hàng cần xóa: ");
         int id = Integer.parseInt(sc.nextLine());
-        Customer customer = customerService.findCustomerById(id);
-        if (customer == null) {
+        Customer checkCustomerId = customerService.findCustomerById(id);
+        if (checkCustomerId == null) {
             MenuUtil.printError("Không tìm thấy mã khách hàng.");
             return;
         }
         System.out.print("Bạn có chắc chắn muốn xóa khách hàng này không ? (Y/N) ");
         String choice = sc.nextLine();
         if (choice.equalsIgnoreCase("N")) {
-            System.out.println("Đã hủy xóa khách hàng thành công.");
+            MenuUtil.printSuccess("Đã hủy xóa khách hàng thành công.");
         } else if (choice.equalsIgnoreCase("Y")) {
-            customerService.deleteCustomer(id);
-            System.out.println("Xóa khách hàng thành công.");
+            InvoiceServiceImpl invoiceService = new InvoiceServiceImpl();
+            Invoice checkCustomerInvoice = invoiceService.findInvoiceByCustomerId(checkCustomerId.getId());
+            if (checkCustomerInvoice != null) {
+                MenuUtil.printError("Khách hàng đã có hóa đơn mua hàng. Không thể xóa khách hàng.");
+                System.out.println("-----------------------------------------------------------------------");
+                System.out.println("Vui lòng xóa hóa đơn liên quan đến khách hàng trước khi xóa khách hàng.");
+                System.out.print("Bạn có muốn xóa toàn bộ hóa đơn của khách hàng này không ? (Y/N): ");
+                String deleteChoice = sc.nextLine();
+                if (deleteChoice.equalsIgnoreCase("N")) {
+                    MenuUtil.printSuccess("Đã hủy xóa khách hàng thành công.");
+                    return;
+                } else if (deleteChoice.equalsIgnoreCase("Y")) {
+                    System.out.println("Đang xóa toàn bộ hóa đơn của khách hàng...");
+                    boolean deleteInvoicesResult = invoiceService.deleteInvoicesByCustomerId(checkCustomerId.getId());
+                    if (!deleteInvoicesResult) {
+                        MenuUtil.printError("Có lỗi khi xóa hóa đơn của khách hàng.");
+                    } else {
+                        MenuUtil.printSuccess("Xóa toàn bộ hóa đơn của khách hàng thành công.");
+                    }
+                }
+                System.out.print("Bạn có muốn tiếp tục xóa khách hàng này không ? (Y/N) ");
+                String continueDeleteChoice = sc.nextLine();
+                if (continueDeleteChoice.equalsIgnoreCase("N")) {
+                    MenuUtil.printSuccess("Đã hủy xóa khách hàng thành công.");
+                } else if (continueDeleteChoice.equalsIgnoreCase("Y")) {
+                    System.out.println("Đang xóa khách hàng...");
+                    if (!customerService.deleteCustomer(checkCustomerId.getId())) {
+                        MenuUtil.printError("Có lỗi khi xóa khách hàng.");
+                    } else {
+                        MenuUtil.printSuccess("Xóa khách hàng thành công.");
+                    }
+                }
+            } else {
+                boolean result = customerService.deleteCustomer(id);
+                if (result) {
+                    MenuUtil.printSuccess("Xóa khách hàng thành công.");
+                } else {
+                    MenuUtil.printError("Có lỗi khi xóa khách hàng.");
+                }
+            }
         }
     }
 }

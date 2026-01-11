@@ -1,5 +1,6 @@
 package presentation;
 
+import business.impl.invoice.InvoiceDetailsServiceImpl;
 import business.impl.product.ProductServiceImpl;
 import entity.Product;
 import presentation.menuUtil.MenuUtil;
@@ -68,7 +69,7 @@ public class ProductManagement {
         ProductServiceImpl productService = new ProductServiceImpl();
         boolean result = productService.addProduct(product);
         if (result) {
-            System.out.println("Thêm sản phẩm thành công");
+            MenuUtil.printSuccess("Thêm sản phẩm thành công");
         } else {
             MenuUtil.printError("Có lỗi khi thêm sản phẩm");
         }
@@ -107,6 +108,13 @@ public class ProductManagement {
             MenuUtil.printError("Mã sản phẩm không tồn tại");
             return;
         }
+
+        MenuUtil.printListItems("THÔNG TIN SẢN PHẨM CẦN CẬP NHẬT");
+        product.printProductHeader();
+        for (int i = 0; i < 1; i++) {
+            product.printProductRow(product);
+        }
+        product.printProductFooter();
         boolean isExist = true;
         do {
 
@@ -179,7 +187,7 @@ public class ProductManagement {
 
         boolean updateProductResult = productService.updateProduct(product);
         if (updateProductResult) {
-            System.out.println("Cập nhật thông tin sản phẩm thành công.");
+            MenuUtil.printSuccess("Cập nhật thông tin sản phẩm thành công.");
         } else {
             MenuUtil.printError("Có lỗi khi cập nhật sản phẩm");
         }
@@ -187,6 +195,14 @@ public class ProductManagement {
 
     public static void deleteProduct(Scanner sc) {
         ProductServiceImpl productService = new ProductServiceImpl();
+        Product product = new Product();
+        List<Product> productList = productService.getALlProducts();
+        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM");
+        product.printProductHeader();
+        for (Product p : productList) {
+            p.printProductRow(p);
+        }
+        product.printProductFooter();
         System.out.print("Nhập id sản phẩm cần xóa: ");
         int id = Integer.parseInt(sc.nextLine());
         Product checkProductId = productService.findProductById(id);
@@ -197,10 +213,19 @@ public class ProductManagement {
         System.out.print("Bạn có chắc chắn muốn xóa sản phẩm này không (Y/N): ");
         String choice = sc.nextLine();
         if (choice.equalsIgnoreCase("N")) {
-            System.out.println("Đã hủy xóa sản phẩm thành công");
+            MenuUtil.printSuccess("Đã hủy xóa sản phẩm thành công");
         } else if (choice.equalsIgnoreCase("Y")) {
-            productService.deleteProduct(id);
-            System.out.println("Xóa sản phẩm thành công");
+            InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
+            if (invoiceDetailsService.findInvoiceDetailsByProductId(id) != null) {
+                MenuUtil.printError("Sản phẩm đã có trong hóa đơn, không thể xóa.");
+            }else {
+                boolean deleteProductResult = productService.deleteProduct(id);
+                if (deleteProductResult) {
+                    MenuUtil.printSuccess("Xóa sản phẩm thành công.");
+                } else {
+                    MenuUtil.printError("Có lỗi khi xóa sản phẩm.");
+                }
+            }
         }
     }
 
