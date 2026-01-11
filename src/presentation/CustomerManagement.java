@@ -73,6 +73,7 @@ public class CustomerManagement {
             MenuUtil.printError("Chưa có khách hàng được thêm.");
         } else {
             Customer customer = new Customer();
+            MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
             customer.printCustomerHeader();
             for (Customer c : customerList) {
                 c.printCustomerRow(c);
@@ -99,7 +100,7 @@ public class CustomerManagement {
             return;
         }
         boolean isExist = true;
-        MenuUtil.printListItems("THÔNG TIN KHÁCH HÀNG CẦN CẬP NHẬT");
+        MenuUtil.printListItems("THÔNG TIN KHÁCH HÀNG CẦN CẬP NHẬT", 95);
         customer.printCustomerHeader();
         for (int i = 0; i < 1; i++) {
             customer.printCustomerRow(customer);
@@ -187,7 +188,7 @@ public class CustomerManagement {
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         Customer customer = new Customer();
         List<Customer> customerList = customerService.findAllCustomers();
-        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM");
+        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 95);
         customer.printCustomerHeader();
         for (Customer c : customerList) {
             c.printCustomerRow(c);

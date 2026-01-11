@@ -68,7 +68,7 @@ public class InvoiceManagement {
      * */
 
     public static void addInvoice(Scanner sc) {
-        System.out.println("****************** DANH SÁCH KHÁCH HÀNG ******************");
+        MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG",50);
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         List<Customer> customers = customerService.findAllCustomers();
         if (customers.isEmpty() || customers == null) {
@@ -91,7 +91,7 @@ public class InvoiceManagement {
         }
 
         ProductServiceImpl productService = new ProductServiceImpl();
-        System.out.println("****************** DANH SÁCH SẢN PHẨM ******************");
+        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM",50);
         List<Product> productList = productService.getALlProducts();
         if (productList == null || productList.isEmpty()) {
             MenuUtil.printError("Không có sản phẩm nào!");
@@ -187,7 +187,7 @@ public class InvoiceManagement {
             return;
         }
 
-        System.out.println("\n========== DANH SÁCH HÓA ĐƠN ==========");
+        MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN",55);
         Invoice.printHeader();
         for (Invoice invoice : invoices) {
             invoice.printInvoiceRow();

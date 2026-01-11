@@ -66,25 +66,25 @@ public class Customer {
     }
     public void printCustomerHeader() {
         System.out.println(ConsoleColor.CYAN +
-                "┌─────┬──────────────┬──────────────┬────────────────────┬────────────────────┐"
+                "┌─────┬───────────────┬───────────────┬───────────────────────────┬───────────────────────────┐"
                 + ConsoleColor.RESET);
 
         System.out.printf(ConsoleColor.YELLOW +
-                        "│ %-3s │ %-12s │ %-12s │ %-18s │ %-18s │%n"
+                        "│ %-3s │ %-13s │ %-13s │ %-25s │ %-25s │%n"
                         + ConsoleColor.RESET,
                 "ID", "Name", "Phone", "Email", "Address");
 
         System.out.println(ConsoleColor.CYAN +
-                "├─────┼──────────────┼──────────────┼────────────────────┼────────────────────┤"
+                "├─────┼───────────────┼───────────────┼───────────────────────────┼───────────────────────────┤"
                 + ConsoleColor.RESET);
     }
     public void printCustomerRow(Customer c) {
         System.out.printf(
                 "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-25s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-25s" + ConsoleColor.RESET +
                         " │%n",
                 c.getId(),
                 c.getName(),
@@ -95,7 +95,7 @@ public class Customer {
     }
     public void printCustomerFooter() {
         System.out.println(ConsoleColor.CYAN +
-                "└─────┴──────────────┴──────────────┴────────────────────┴────────────────────┘"
+                "└─────┴───────────────┴───────────────┴───────────────────────────┴───────────────────────────┘"
                 + ConsoleColor.RESET);
     }
 

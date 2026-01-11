@@ -82,6 +82,7 @@ public class ProductManagement {
             MenuUtil.printError("Chưa có sản phẩm.");
         } else {
             Product product = new Product();
+            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
             product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);
@@ -109,7 +110,7 @@ public class ProductManagement {
             return;
         }
 
-        MenuUtil.printListItems("THÔNG TIN SẢN PHẨM CẦN CẬP NHẬT");
+        MenuUtil.printListItems("THÔNG TIN SẢN PHẨM CẦN CẬP NHẬT", 70);
         product.printProductHeader();
         for (int i = 0; i < 1; i++) {
             product.printProductRow(product);
@@ -197,7 +198,7 @@ public class ProductManagement {
         ProductServiceImpl productService = new ProductServiceImpl();
         Product product = new Product();
         List<Product> productList = productService.getALlProducts();
-        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM");
+        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
         product.printProductHeader();
         for (Product p : productList) {
             p.printProductRow(p);
@@ -218,7 +219,7 @@ public class ProductManagement {
             InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
             if (invoiceDetailsService.findInvoiceDetailsByProductId(id) != null) {
                 MenuUtil.printError("Sản phẩm đã có trong hóa đơn, không thể xóa.");
-            }else {
+            } else {
                 boolean deleteProductResult = productService.deleteProduct(id);
                 if (deleteProductResult) {
                     MenuUtil.printSuccess("Xóa sản phẩm thành công.");
@@ -238,6 +239,7 @@ public class ProductManagement {
             MenuUtil.printError("Không tìm thấy sản phẩm có thương hiệu " + brand);
         } else {
             Product product = new Product();
+            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM CÓ TÊN THƯƠNG HIỆU LÀ: " + brand, 70);
             product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);
@@ -281,6 +283,7 @@ public class ProductManagement {
             MenuUtil.printError("Không tìm thấy sản phẩm có giá từ " + price_from + " đến" + price_to);
         } else {
             Product product = new Product();
+            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM CÓ GIÁ TỪ " + price_from + " ĐẾN " + price_to + " LÀ: ", 73);
             product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);
@@ -299,6 +302,7 @@ public class ProductManagement {
             MenuUtil.printError("Không tìm thấy sản phẩm có số lượng tồn kho la: " + stock);
         } else {
             Product product = new Product();
+            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM CÓ SỐ LƯỢNG TỒN KHO LÀ: " + stock, 70);
             product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);

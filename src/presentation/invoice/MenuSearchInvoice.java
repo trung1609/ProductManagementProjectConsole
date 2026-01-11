@@ -54,6 +54,7 @@ public class MenuSearchInvoice {
         String customerName = sc.nextLine();
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByCustomerName(customerName);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
+            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA KHÁCH HÀNG CÓ TÊN: " + customerName, 63);
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
@@ -81,6 +82,7 @@ public class MenuSearchInvoice {
         } while (true);
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
+            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT NGÀY " + invoiceDate,63);
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
