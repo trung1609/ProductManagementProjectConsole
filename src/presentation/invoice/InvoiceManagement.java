@@ -45,10 +45,10 @@ public class InvoiceManagement {
                         MainMenu.main(args);
                         return;
                     default:
-                        System.err.println("Vui lòng nhập lại lựa chọn phù hợp.");
+                        MenuUtil.printError("Vui lòng nhập lại lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập số.");
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -70,7 +70,7 @@ public class InvoiceManagement {
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         List<Customer> customers = customerService.findAllCustomers();
         if (customers.isEmpty() || customers == null) {
-            System.out.println("Chưa có khách hàng");
+            MenuUtil.printError("Chưa có khách hàng");
             return;
         }
         Customer customer = new Customer();
@@ -84,7 +84,7 @@ public class InvoiceManagement {
 
         customer = customerService.findCustomerById(customerId);
         if (customer == null) {
-            System.err.println("Không tìm thấy mã khách hàng.");
+            MenuUtil.printError("Không tìm thấy mã khách hàng.");
             return;
         }
 
@@ -92,7 +92,7 @@ public class InvoiceManagement {
         System.out.println("****************** DANH SÁCH SẢN PHẨM ******************");
         List<Product> productList = productService.getALlProducts();
         if (productList == null || productList.isEmpty()) {
-            System.err.println("Không có sản phẩm nào!");
+            MenuUtil.printError("Không có sản phẩm nào!");
             return;
         }
         Product p_print = new Product();
@@ -120,7 +120,7 @@ public class InvoiceManagement {
             }
             Product checkProductId = productService.findProductById(productId);
             if (checkProductId == null) {
-                System.err.println("Không tìm thấy id sản phẩm");
+                MenuUtil.printError("Không tìm thấy id sản phẩm");
                 continue;
             }
             System.out.print("Nhập số lượng: ");
@@ -129,7 +129,7 @@ public class InvoiceManagement {
             int availableStock = stockTmp.get(productId);
 
             if (quantity > availableStock) {
-                System.out.println("Số lượng trong kho không đủ.");
+                MenuUtil.printError("Số lượng trong kho không đủ.");
                 continue;
             }
 
@@ -154,7 +154,7 @@ public class InvoiceManagement {
         } while (true);
 
         if (productIds.isEmpty()) {
-            System.err.println("Chưa chọn sản phẩm nào.");
+            MenuUtil.printError("Chưa chọn sản phẩm nào.");
             return;
         }
 
@@ -173,7 +173,7 @@ public class InvoiceManagement {
         if (result) {
             System.out.println("Tạo hóa đơn thành công!.");
         } else {
-            System.err.println("Tạo hóa đơn thất bại!");
+            MenuUtil.printError("Tạo hóa đơn thất bại!");
         }
     }
 
@@ -181,7 +181,7 @@ public class InvoiceManagement {
         IInvoiceService invoiceService = new InvoiceServiceImpl();
         List<Invoice> invoices = invoiceService.getAllInvoices();
         if (invoices == null || invoices.isEmpty()) {
-            System.out.println("Không có hóa đơn nào trong hệ thống.");
+            MenuUtil.printError("Không có hóa đơn nào trong hệ thống.");
             return;
         }
 

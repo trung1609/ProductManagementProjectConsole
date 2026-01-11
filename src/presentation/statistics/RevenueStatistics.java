@@ -40,10 +40,10 @@ public class RevenueStatistics {
                         MainMenu.main(args);
                         break;
                     default:
-                        System.err.println("Vui lòng nhập từ 1 đến 4.");
+                        MenuUtil.printError("Vui lòng nhập từ 1 đến 4.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Vui lòng nhập số.");
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -61,7 +61,7 @@ public class RevenueStatistics {
                 date = LocalDate.parse(sc.nextLine(), dtf);
                 break;
             } catch (DateTimeParseException e) {
-                System.err.println("Vui lòng nhập đúng định dạng.");
+                MenuUtil.printError("Vui lòng nhập đúng định dạng.");
             }
         } while (true);
 
@@ -79,12 +79,27 @@ public class RevenueStatistics {
     public static void revenueByMonth() {
         StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
+        int month;
+        int year;
+        do {
+            try {
+                System.out.print("Nhập tháng: ");
+                month = Integer.parseInt(sc.nextLine());
+                break;
+            }catch (NumberFormatException e) {
+                MenuUtil.printError("Vui lòng nhập số.");
+            }
+        }while (true);
 
-        System.out.print("Nhập tháng: ");
-        int month = Integer.parseInt(sc.nextLine());
-
-        System.out.print("Nhập năm: ");
-        int year = Integer.parseInt(sc.nextLine());
+        do {
+            try {
+                System.out.print("Nhập năm: ");
+                year = Integer.parseInt(sc.nextLine());
+                break;
+            }catch (NumberFormatException e) {
+                MenuUtil.printError("Vui lòng nhập số.");
+            }
+        }while (true);
 
         double total = statisticsService.totalRevenueByMonth(month, year);
 
@@ -100,9 +115,16 @@ public class RevenueStatistics {
     public static void revenueByYear() {
         StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
-
-        System.out.print("Nhập năm: ");
-        int year = Integer.parseInt(sc.nextLine());
+        int year;
+        do {
+            try {
+                System.out.print("Nhập năm: ");
+                year = Integer.parseInt(sc.nextLine());
+                break;
+            }catch (NumberFormatException e) {
+                MenuUtil.printError("Vui lòng nhập số.");
+            }
+        }while (true);
 
         double total = statisticsService.totalRevenueByYear(year);
 

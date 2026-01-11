@@ -16,13 +16,12 @@ public class MenuUtil {
     private static String color(String c) {
         return ENABLE_COLOR ? c : "";
     }
-
     public static void printMenu(String title, String[] options) {
         int width = 50;
 
-        printLine(width);
+        printLine(width, '┌', '┐');
         printCentered(color(CYAN) + title + color(RESET), width);
-        printLine(width);
+        printLine(width, '├', '┤');
 
         for (int i = 0; i < options.length; i++) {
             String index = color(YELLOW) + (i + 1) + "." + color(RESET);
@@ -34,15 +33,17 @@ public class MenuUtil {
             System.out.printf("│ %s%" + paddingRight + "s │%n", content, "");
         }
 
-        printLine(width);
+        printLine(width, '└', '┘');
         System.out.print("Nhập lựa chọn: ");
     }
 
 
-    private static void printLine(int width) {
-        System.out.print("┌");
-        for (int i = 0; i < width - 2; i++) System.out.print("─");
-        System.out.println("┐");
+    private static void printLine(int width, char leftChar, char rightChar) {
+        System.out.print(leftChar);
+        for (int i = 0; i < width - 2; i++) {
+            System.out.print("─");
+        }
+        System.out.println(rightChar);
     }
 
     private static void printCentered(String text, int width) {
@@ -65,14 +66,12 @@ public class MenuUtil {
 
     public static void printLoginHeader(String title) {
         int width = 55;
-        printLine(width);
+        printLine(width, '┌', '┐');
         printCentered(color(CYAN) + title + color(RESET), width);
-        printLine(width);
+        printLine(width, '├', '┤');
     }
-
-    public static void printFooter() {
-        int width = 55;
-        printLine(width);
+    public static void printError(String message) {
+        System.out.println(color(RED) + " × " + message + color(RESET));
     }
 }
 

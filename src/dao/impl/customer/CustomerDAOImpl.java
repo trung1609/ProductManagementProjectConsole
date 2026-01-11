@@ -3,6 +3,7 @@ package dao.impl.customer;
 import business.impl.customer.CustomerServiceImpl;
 import dao.interfaceDAO.ICustomerDAO;
 import entity.Customer;
+import presentation.menuUtil.MenuUtil;
 import util.DBUtil;
 
 import java.sql.CallableStatement;
@@ -20,11 +21,11 @@ public class CustomerDAOImpl implements ICustomerDAO {
         CallableStatement callSt = null;
         try {
             if (customerService.checkEmail(customer.getEmail())) {
-                System.out.println("Email đã tồn tại. Vui lòng nhập lại.");
+                MenuUtil.printError("Email đã tồn tại.");
                 return false;
             }
             if (customerService.checkPhone(customer.getPhone())) {
-                System.out.println("Số điện thoại đã tồn tại. Vui lòng nhập lại.");
+                MenuUtil.printError("Số điện thoại đã tồn tại.");
                 return false;
             }
             conn = DBUtil.openConnection();

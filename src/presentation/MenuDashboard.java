@@ -25,10 +25,10 @@ public class MenuDashboard {
                     case 2:
                         System.exit(0);
                     default:
-                        System.err.println("Vui lòng nhập lựa chọn phù hợp");
+                        MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập số.");
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
     }

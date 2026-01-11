@@ -4,6 +4,7 @@ import business.interfaceService.IInvoiceService;
 import dao.impl.invoice.InvoiceDAOImpl;
 import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import entity.Invoice;
+import presentation.menuUtil.MenuUtil;
 import util.DBUtil;
 
 import java.sql.CallableStatement;
@@ -32,7 +33,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
                         quantities.get(i),
                         prices.get(i));
                 if (!result) {
-                    System.err.println("Lỗi khi thêm sản phẩm ID: " + productIds.get(i));
+                    MenuUtil.printError("Lỗi khi thêm sản phẩm ID: " + productIds.get(i));
                     conn.rollback();
                     return false;
                 }

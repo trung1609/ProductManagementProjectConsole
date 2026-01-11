@@ -1,6 +1,7 @@
 package entity;
 
 import presentation.consoleColor.ConsoleColor;
+import presentation.menuUtil.MenuUtil;
 
 import java.util.Scanner;
 
@@ -139,13 +140,13 @@ public class Product {
                 System.out.print("Nhập gia bán: ");
                 double priceInput = Double.parseDouble(sc.nextLine());
                 if (priceInput <= 0) {
-                    System.err.println("Vui lòng nhập giá bán lớn hơn hoặc bằng 0");
+                    MenuUtil.printError("Vui lòng nhập giá bán lớn hơn hoặc bằng 0");
                     continue;
                 }
                 this.price = priceInput;
                 break;
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập đúng định dạng giá tiền.");
+                System.out.println("Vui lòng nhập đúng định dạng giá tiền.");
             }
         } while (true);
     }
@@ -156,13 +157,13 @@ public class Product {
                 System.out.print("Nhập số lượng tồn kho: ");
                 int stockInput = Integer.parseInt(sc.nextLine());
                 if (stockInput <= 0) {
-                    System.err.println("Vui lòng nhập số lượng lớn hơn 0");
+                    MenuUtil.printError("Vui lòng nhập số lượng lớn hơn 0");
                     continue;
                 }
                 this.stock = stockInput;
                 break;
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập đúng định dạng số lượng tồn kho.");
+                MenuUtil.printError("Vui lòng nhập đúng định dạng số lượng tồn kho.");
             }
         } while (true);
     }

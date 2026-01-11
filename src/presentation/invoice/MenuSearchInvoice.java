@@ -38,10 +38,10 @@ public class MenuSearchInvoice {
                         InvoiceManagement.main(args);
                         break;
                     default:
-                        System.err.println("Vui lòng nhập từ 1 đến 3.");
+                        MenuUtil.printError("Vui lòng nhập từ 1 đến 3.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập số.");
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -61,7 +61,7 @@ public class MenuSearchInvoice {
             InvoiceDetails.printFooter();
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
         } else {
-            System.out.println("Không tìm thấy kết quả nào!");
+            MenuUtil.printError("Không tìm thấy kết quả nào!");
         }
     }
 
@@ -76,7 +76,7 @@ public class MenuSearchInvoice {
                 invoiceDate = LocalDate.parse(sc.nextLine(), dtf);
                 break;
             } catch (DateTimeParseException e) {
-                System.err.println("Vui lòng nhập lại đúng định dạng ngày tháng năm");
+                MenuUtil.printError("Vui lòng nhập lại đúng định dạng ngày tháng năm");
             }
         } while (true);
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
@@ -88,7 +88,7 @@ public class MenuSearchInvoice {
             InvoiceDetails.printFooter();
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
         } else {
-            System.out.println("Không tìm thấy kết quả nào!");
+            MenuUtil.printError("Không tìm thấy kết quả nào!");
         }
     }
 }

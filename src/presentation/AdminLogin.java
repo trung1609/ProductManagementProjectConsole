@@ -23,12 +23,13 @@ public class AdminLogin {
 
             if (checkLogin) {
                 System.out.println("✔ Đăng nhập thành công!");
+                System.out.println();
                 MainMenu.main(args);
                 return;
             } else {
-                System.err.println("✖ Sai tài khoản hoặc mật khẩu, vui lòng nhập lại.");
+                MenuUtil.printError("Sai tài khoản hoặc mật khẩu, vui lòng nhập lại.");
             }
-            MenuUtil.printFooter();
+            System.out.println();
         } while (true);
     }
 

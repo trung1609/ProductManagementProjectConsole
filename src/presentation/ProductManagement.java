@@ -1,11 +1,9 @@
 package presentation;
 
 import business.impl.product.ProductServiceImpl;
-import dao.impl.product.ProductDAOImpl;
 import entity.Product;
 import presentation.menuUtil.MenuUtil;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -56,10 +54,10 @@ public class ProductManagement {
                         MainMenu.main(args);
                         return;
                     default:
-                        System.err.println("Vui lòng nhập lựa chọn phù hợp.");
+                        MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập số.");
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
     }
@@ -72,7 +70,7 @@ public class ProductManagement {
         if (result) {
             System.out.println("Thêm sản phẩm thành công");
         } else {
-            System.err.println("Có lỗi khi thêm sản phẩm");
+            MenuUtil.printError("Có lỗi khi thêm sản phẩm");
         }
     }
 
@@ -80,7 +78,7 @@ public class ProductManagement {
         ProductServiceImpl productService = new ProductServiceImpl();
         List<Product> productList = productService.getALlProducts();
         if (productList.isEmpty()) {
-            System.out.println("Chưa có sản phẩm.");
+            MenuUtil.printError("Chưa có sản phẩm.");
         } else {
             Product product = new Product();
             product.printProductHeader();
@@ -93,82 +91,89 @@ public class ProductManagement {
     }
 
     public static void updateProduct() {
+        String[] productUpdateMenu = {
+                "Cập nhật tên sản phẩm",
+                "Cập nhật thương hiệu sản phẩm",
+                "Cập nhật giá sản phẩm",
+                "Cập nhật số lượng tồn kho",
+                "Thoát"
+        };
         ProductServiceImpl productService = new ProductServiceImpl();
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập id sản phẩm cần cập nhật: ");
         int id = Integer.parseInt(sc.nextLine());
         Product product = productService.findProductById(id);
         if (product == null) {
-            System.err.println("Mã sản phẩm không tồn tại");
+            MenuUtil.printError("Mã sản phẩm không tồn tại");
             return;
         }
         boolean isExist = true;
         do {
-            System.out.println("1. Cập nhật tên sản phẩm");
-            System.out.println("2. Cập nhật thương hiệu sản phẩm");
-            System.out.println("3. Cập nhật giá sản phẩm");
-            System.out.println("4. Cập nhật số lượng tồn kho");
-            System.out.println("5. Thoát");
-            System.out.print("Nhập lựa chọn: ");
-            int choice = Integer.parseInt(sc.nextLine());
-            switch (choice) {
-                case 1:
-                    do {
-                        try {
-                            System.out.print("Nhập tên sản phẩm mới: ");
-                            product.setName(sc.nextLine());
-                            break;
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
-                    } while (true);
-                    break;
-                case 2:
-                    do {
-                        try {
-                            System.out.print("Nhập thương hiệu mới của sản phẩm: ");
-                            product.setBrand(sc.nextLine());
-                            break;
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
-                    } while (true);
-                    break;
-                case 3:
-                    do {
-                        try {
-                            System.out.print("Nhập gia bán: ");
-                            double newPrice = Double.parseDouble(sc.nextLine());
-                            if (newPrice <= 0) {
-                                System.err.println("Vui lòng nhập giá bán lớn hơn hoặc bằng 0");
-                                continue;
+
+            try {
+                MenuUtil.printMenu("CẬP NHẬT THÔNG TIN SẢN PHẨM", productUpdateMenu);
+                int choice = Integer.parseInt(sc.nextLine());
+                switch (choice) {
+                    case 1:
+                        do {
+                            try {
+                                System.out.print("Nhập tên sản phẩm mới: ");
+                                product.setName(sc.nextLine());
+                                break;
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
                             }
-                            product.setPrice(newPrice);
-                            break;
-                        } catch (NumberFormatException e) {
-                            System.err.println("Vui lòng nhập đúng định dạng giá tiền.");
-                        }
-                    } while (true);
-                    break;
-                case 4:
-                    do {
-                        try {
-                            System.out.print("Nhập số lượng tồn kho: ");
-                            int newStock = Integer.parseInt(sc.nextLine());
-                            if (newStock < 0) {
-                                System.err.println("Vui lòng nhập số lượng lớn hơn 0");
-                                continue;
+                        } while (true);
+                        break;
+                    case 2:
+                        do {
+                            try {
+                                System.out.print("Nhập thương hiệu mới của sản phẩm: ");
+                                product.setBrand(sc.nextLine());
+                                break;
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
                             }
-                            product.setStock(newStock);
-                            break;
-                        } catch (NumberFormatException e) {
-                            System.err.println("Vui lòng nhập đúng định dạng số lượng tồn kho.");
-                        }
-                    } while (true);
-                    break;
-                case 5:
-                    isExist = false;
-                    break;
+                        } while (true);
+                        break;
+                    case 3:
+                        do {
+                            try {
+                                System.out.print("Nhập gia bán: ");
+                                double newPrice = Double.parseDouble(sc.nextLine());
+                                if (newPrice <= 0) {
+                                    MenuUtil.printError("Vui lòng nhập giá bán lớn hơn hoặc bằng 0");
+                                    continue;
+                                }
+                                product.setPrice(newPrice);
+                                break;
+                            } catch (NumberFormatException e) {
+                                MenuUtil.printError("Vui lòng nhập đúng định dạng giá tiền.");
+                            }
+                        } while (true);
+                        break;
+                    case 4:
+                        do {
+                            try {
+                                System.out.print("Nhập số lượng tồn kho: ");
+                                int newStock = Integer.parseInt(sc.nextLine());
+                                if (newStock < 0) {
+                                    MenuUtil.printError("Vui lòng nhập số lượng lớn hơn 0");
+                                    continue;
+                                }
+                                product.setStock(newStock);
+                                break;
+                            } catch (NumberFormatException e) {
+                                MenuUtil.printError("Vui lòng nhập đúng định dạng số lượng tồn kho.");
+                            }
+                        } while (true);
+                        break;
+                    case 5:
+                        isExist = false;
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (isExist);
 
@@ -176,7 +181,7 @@ public class ProductManagement {
         if (updateProductResult) {
             System.out.println("Cập nhật thông tin sản phẩm thành công.");
         } else {
-            System.err.println("Có lỗi khi cập nhật sản phẩm");
+            MenuUtil.printError("Có lỗi khi cập nhật sản phẩm");
         }
     }
 
@@ -186,7 +191,7 @@ public class ProductManagement {
         int id = Integer.parseInt(sc.nextLine());
         Product checkProductId = productService.findProductById(id);
         if (checkProductId == null) {
-            System.err.println("Mã sản phẩm không tồn tại.");
+            MenuUtil.printError("Mã sản phẩm không tồn tại.");
             return;
         }
         System.out.print("Bạn có chắc chắn muốn xóa sản phẩm này không (Y/N): ");
@@ -205,9 +210,15 @@ public class ProductManagement {
         String brand = sc.nextLine();
         List<Product> productList = productService.searchProductByBrand(brand);
         if (productList.isEmpty()) {
-            System.out.println("Không tìm thấy sản phẩm có thương hiệu " + brand);
+            MenuUtil.printError("Không tìm thấy sản phẩm có thương hiệu " + brand);
         } else {
-            productList.forEach(System.out::println);
+            Product product = new Product();
+            product.printProductHeader();
+            for (Product p : productList) {
+                p.printProductRow(p);
+            }
+            product.printProductFooter();
+            System.out.println("Tổng số sản phẩm: " + productList.size());
         }
     }
 
@@ -221,11 +232,11 @@ public class ProductManagement {
                 System.out.print("Nhập giá khởi đầu: ");
                 price_from = Double.parseDouble(sc.nextLine());
                 if (price_from <= 0) {
-                    System.err.println("Vui lòng nhập giá lớn hơn 0.");
+                    MenuUtil.printError("Vui lòng nhập giá lớn hơn 0.");
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập đúng định dạng giá bán.");
+                MenuUtil.printError("Vui lòng nhập đúng định dạng giá bán.");
             }
         } while (true);
         do {
@@ -233,18 +244,24 @@ public class ProductManagement {
                 System.out.print("Nhập giá kết thúc: ");
                 price_to = Double.parseDouble(sc.nextLine());
                 if (price_to <= 0) {
-                    System.err.println("Vui lòng nhập giá lớn hơn 0.");
+                    MenuUtil.printError("Vui lòng nhập giá lớn hơn 0.");
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập đúng định dạng giá bán.");
+                MenuUtil.printError("Vui lòng nhập đúng định dạng giá bán.");
             }
         } while (true);
         List<Product> productList = productService.searchProductByPrice(price_from, price_to);
         if (productList.isEmpty()) {
-            System.out.printf("Không tìm thấy sản phẩm có giá từ %.2f đến %.2f\n", price_from, price_to);
+            MenuUtil.printError("Không tìm thấy sản phẩm có giá từ " + price_from + " đến" + price_to);
         } else {
-            productList.stream().sorted(Comparator.comparing(Product::getPrice)).forEach(System.out::println);
+            Product product = new Product();
+            product.printProductHeader();
+            for (Product p : productList) {
+                p.printProductRow(p);
+            }
+            product.printProductFooter();
+            System.out.println("Tổng số sản phẩm: " + productList.size());
         }
     }
 
@@ -254,9 +271,15 @@ public class ProductManagement {
         int stock = Integer.parseInt(sc.nextLine());
         List<Product> productList = productService.searchProductByStock(stock);
         if (productList.isEmpty()) {
-            System.out.println("Không tìm thấy sản phẩm có số lượng tồn kho la: " + stock);
+            MenuUtil.printError("Không tìm thấy sản phẩm có số lượng tồn kho la: " + stock);
         } else {
-            productList.forEach(System.out::println);
+            Product product = new Product();
+            product.printProductHeader();
+            for (Product p : productList) {
+                p.printProductRow(p);
+            }
+            product.printProductFooter();
+            System.out.println("Tổng số sản phẩm: " + productList.size());
         }
     }
 }

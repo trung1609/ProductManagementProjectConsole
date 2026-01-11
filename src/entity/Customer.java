@@ -1,6 +1,8 @@
 package entity;
 
+import business.impl.customer.CustomerServiceImpl;
 import presentation.consoleColor.ConsoleColor;
+import presentation.menuUtil.MenuUtil;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -111,7 +113,7 @@ public class Customer {
             System.out.print("Nhập tên khách hàng: ");
             String nameInput = sc.nextLine().trim();
             if (!Pattern.matches(regex, nameInput)) {
-                System.err.println("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái và khoảng trắng.");
+                MenuUtil.printError("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái và khoảng trắng.");
                 continue;
             }
             this.name = nameInput;
@@ -125,7 +127,12 @@ public class Customer {
             System.out.print("Nhập số điện thoại khách hàng: ");
             String phoneInput = sc.nextLine();
             if (!Pattern.matches(regex, phoneInput)) {
-                System.err.println("Vui lòng nhập lại số điện thoại đúng định dạng");
+                MenuUtil.printError("Vui lòng nhập lại số điện thoại đúng định dạng");
+                continue;
+            }
+            CustomerServiceImpl customerService = new CustomerServiceImpl();
+            if(customerService.checkPhone(phoneInput)) {
+                MenuUtil.printError("Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác.");
                 continue;
             }
             this.phone = phoneInput;
@@ -139,7 +146,12 @@ public class Customer {
             System.out.print("Nhập email khách hàng: ");
             String emailInput = sc.nextLine().trim();
             if (!Pattern.matches(regex, emailInput)) {
-                System.err.println("Vui lòng nhập đúng định dạng email.");
+                MenuUtil.printError("Vui lòng nhập đúng định dạng email.");
+                continue;
+            }
+            CustomerServiceImpl customerService = new CustomerServiceImpl();
+            if(customerService.checkEmail(emailInput)) {
+                MenuUtil.printError("Email đã tồn tại. Vui lòng nhập email khác.");
                 continue;
             }
             this.email = emailInput;

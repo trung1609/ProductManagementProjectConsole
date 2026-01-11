@@ -3,6 +3,7 @@ package dao.impl.product;
 import business.impl.product.ProductServiceImpl;
 import dao.interfaceDAO.IProductDAO;
 import entity.Product;
+import presentation.menuUtil.MenuUtil;
 import util.DBUtil;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public class ProductDAOImpl implements IProductDAO {
         CallableStatement callSt = null;
         try {
             if (ProductServiceImpl.checkProductName(product.getName())) {
-                System.err.println("Tên sản phẩm đã tồn tại.");
+                MenuUtil.printError("Tên sản phẩm đã tồn tại.");
                 return false;
             }
             conn = DBUtil.openConnection();

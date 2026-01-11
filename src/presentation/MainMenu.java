@@ -41,10 +41,10 @@ public class MainMenu {
                         MenuDashboard.main(args);
                         return;
                     default:
-                        System.err.println("Vui lòng nhập lựa chọn phù hợp.");
+                        MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Vui lòng nhập số.");
+                MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
     }
