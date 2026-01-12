@@ -1,5 +1,6 @@
 package entity;
 
+import business.impl.product.ProductServiceImpl;
 import presentation.consoleColor.ConsoleColor;
 import presentation.menuUtil.MenuUtil;
 
@@ -11,6 +12,7 @@ public class Product {
     private String brand;
     private double price;
     private int stock;
+    private boolean status;
 
     public Product() {
     }
@@ -61,6 +63,12 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+    public boolean isStatus() {
+        return status;
+    }
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void printProductHeader() {
@@ -115,6 +123,11 @@ public class Product {
             try {
                 System.out.print("Nhập tên sản phẩm: ");
                 this.name = sc.nextLine();
+                ProductServiceImpl productService = new ProductServiceImpl();
+                if (productService.checkProductName(this.name)) {
+                    MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
+                    continue;
+                }
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());

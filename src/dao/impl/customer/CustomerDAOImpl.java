@@ -96,6 +96,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
                     customer.setPhone(rs.getString("phone"));
                     customer.setEmail(rs.getString("email"));
                     customer.setAddress(rs.getString("address"));
+                    customer.setStatus(rs.getBoolean("status"));
                     customers.add(customer);
                 }
             }

@@ -224,16 +224,11 @@ public class ProductManagement {
         if (choice.equalsIgnoreCase("N")) {
             MenuUtil.printSuccess("Đã hủy xóa sản phẩm thành công");
         } else if (choice.equalsIgnoreCase("Y")) {
-            InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
-            if (invoiceDetailsService.findInvoiceDetailsByProductId(id) != null) {
-                MenuUtil.printError("Sản phẩm đã có trong hóa đơn, không thể xóa.");
+            boolean deleteProductResult = productService.deleteProduct(id);
+            if (deleteProductResult) {
+                MenuUtil.printSuccess("Xóa sản phẩm thành công.");
             } else {
-                boolean deleteProductResult = productService.deleteProduct(id);
-                if (deleteProductResult) {
-                    MenuUtil.printSuccess("Xóa sản phẩm thành công.");
-                } else {
-                    MenuUtil.printError("Có lỗi khi xóa sản phẩm.");
-                }
+                MenuUtil.printError("Có lỗi khi xóa sản phẩm.");
             }
         }
     }
@@ -288,11 +283,11 @@ public class ProductManagement {
         } while (true);
         List<Product> productList = productService.searchProductByPrice(price_from, price_to);
         if (productList.isEmpty()) {
-            String message = String.format("Không tìm thấy sản phẩm có giá từ %.0f đến %.0f", price_from, price_to);
+            String message = String.format("Không tìm thấy sản phẩm có giá từ %,.0f đến %,.0f", price_from, price_to);
             MenuUtil.printError(message);
         } else {
             Product product = new Product();
-            String message = String.format("DANH SÁCH SẢN PHẨM CÓ GIÁ TỪ %.0f ĐẾN %.0f LÀ: ", price_from, price_to);
+            String message = String.format("DANH SÁCH SẢN PHẨM CÓ GIÁ TỪ %,.0f ĐẾN %,.0f LÀ: ", price_from, price_to);
             MenuUtil.printListItems(message, 73);
             product.printProductHeader();
             for (Product p : productList) {

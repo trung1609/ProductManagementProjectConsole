@@ -6,7 +6,7 @@ $$
 begin
     return exists(select 1
                   from product p
-                  where p.name = name_in);
+                  where p.name = name_in and p.status = true);
 end;
 $$ language plpgsql;
 
@@ -21,20 +21,25 @@ begin
 end;
 $$;
 
+
 /* Display product*/
 create or replace function get_all_product()
     returns table
             (
-                id    int,
-                name  varchar(100),
-                brand varchar(50),
-                price decimal(12, 2),
-                stock int
+                id     int,
+                name   varchar(100),
+                brand  varchar(50),
+                price  decimal(12, 2),
+                stock  int,
+                status boolean
             )
 as
 $$
 begin
-    return query select p.id, p.name, p.brand, p.price, p.stock from product p order by p.id;
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status
+                 from product p
+                 where p.status = true
+                 order by p.id;
 end;
 $$ language plpgsql;
 
@@ -42,16 +47,19 @@ $$ language plpgsql;
 create or replace function find_product_by_id(id_in int)
     returns table
             (
-                id    int,
-                name  varchar(100),
-                brand varchar(50),
-                price decimal(12, 2),
-                stock int
+                id     int,
+                name   varchar(100),
+                brand  varchar(50),
+                price  decimal(12, 2),
+                stock  int,
+                status boolean
             )
 as
 $$
 begin
-    return query select p.id, p.name, p.brand, p.price, p.stock from product p where p.id = id_in;
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status
+                 from product p
+                 where p.id = id_in and p.status = true;
 end;
 $$ language plpgsql;
 
@@ -67,7 +75,7 @@ begin
         brand = brand_in,
         price = price_in,
         stock = stock_in
-    where p.id = id_in;
+    where p.id = id_in and p.status = true;
 end;
 $$;
 
@@ -77,9 +85,11 @@ create or replace procedure delete_product(id_in int)
 as
 $$
 begin
-    delete from product p where p.id = id_in;
+    update product set status = false where id = id_in;
 end;
 $$;
+
+
 
 /* search by brand*/
 create or replace function search_product_by_brand(brand_in varchar(50))
@@ -89,7 +99,8 @@ create or replace function search_product_by_brand(brand_in varchar(50))
                 name  varchar(100),
                 brand varchar(50),
                 price decimal(12, 2),
-                stock int
+                stock int,
+                status boolean
             )
 as
 $$
@@ -97,7 +108,7 @@ declare
     brand_search varchar(50);
 begin
     brand_search := concat('%', brand_in, '%');
-    return query select p.id, p.name, p.brand, p.price, p.stock from product p where p.brand ilike brand_search;
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status from product p where p.brand ilike brand_search and p.status = true;
 end;
 $$
     language plpgsql;
@@ -111,14 +122,15 @@ create or replace function search_product_by_price(price_search_from decimal(12,
                 name  varchar(100),
                 brand varchar(50),
                 price decimal(12, 2),
-                stock int
+                stock int,
+                status boolean
             )
 as
 $$
 begin
-    return query select p.id, p.name, p.brand, p.price, p.stock
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status
                  from product p
-                 where p.price between price_search_from and price_search_to
+                 where p.price between price_search_from and price_search_to and p.status = true
                  order by p.price;
 end;
 $$
@@ -132,12 +144,13 @@ create or replace function search_product_by_stock(stock_in int)
                 name  varchar(100),
                 brand varchar(50),
                 price decimal(12, 2),
-                stock int
+                stock int,
+                status boolean
             )
 as
 $$
 begin
-    return query select p.id, p.name, p.brand, p.price, p.stock from product p where p.stock = stock_in;
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status from product p where p.stock = stock_in and p.status = true;
 end;
 $$
     language plpgsql;

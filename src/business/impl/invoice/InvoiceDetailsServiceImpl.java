@@ -59,4 +59,10 @@ public class InvoiceDetailsServiceImpl implements IInvoiceDetailsService {
         }
         return invoiceDetails;
     }
+
+    @Override
+    public List<InvoiceDetails> getAllInvoiceDetailsByInvoiceId(int invoiceId) {
+        IInvoiceDetailsDAO invoiceDetailsDAOImpl = new InvoiceDetailsDAOImpl();
+        return invoiceDetailsDAOImpl.getAllInvoiceDetailsByInvoiceId(invoiceId);
+    }
 }

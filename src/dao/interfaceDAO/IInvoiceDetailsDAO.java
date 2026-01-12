@@ -11,4 +11,6 @@ public interface IInvoiceDetailsDAO {
     List<InvoiceDetails> getAllInvoiceDetailsByCustomerName(String customerName);
 
     List<InvoiceDetails> getAllInvoiceDetailsByInvoiceDate(LocalDate invoiceDate);
+
+    List<InvoiceDetails> getAllInvoiceDetailsByInvoiceId(int invoiceId);
 }

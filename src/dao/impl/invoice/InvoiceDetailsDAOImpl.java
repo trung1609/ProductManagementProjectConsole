@@ -102,4 +102,37 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
         return invoiceDetailsList;
     }
 
+    @Override
+    public List<InvoiceDetails> getAllInvoiceDetailsByInvoiceId(int invoiceId) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<InvoiceDetails> invoiceDetailsList = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_invoice_details_by_id(?)}");
+            callSt.setInt(1, invoiceId);
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                invoiceDetailsList = new ArrayList<>();
+                while (rs.next()) {
+                    InvoiceDetails invoiceDetails = new InvoiceDetails();
+                    invoiceDetails.setId(rs.getInt("id"));
+                    invoiceDetails.setInvoice_id(rs.getInt("invoice_id"));
+                    invoiceDetails.setCustomerId(rs.getInt("customer_id"));
+                    invoiceDetails.setCustomerName(rs.getString("customer_name"));
+                    invoiceDetails.setProduct_name(rs.getString("product_name"));
+                    invoiceDetails.setQuantity(rs.getInt("quantity"));
+                    invoiceDetails.setPrice(rs.getDouble("unit_price"));
+                    invoiceDetailsList.add(invoiceDetails);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return invoiceDetailsList;
+    }
+
 }

@@ -29,16 +29,16 @@ public class InvoiceDetails {
 
     public static void printHeader() {
         System.out.println(ConsoleColor.CYAN +
-                "┌─────┬────────────┬─────────────┬───────────────┬───────────────┬──────────┬───────────────┐"
+                "┌─────┬────────────┬─────────────┬───────────────┬──────────────────────┬──────────┬─────────────────┐"
                 + ConsoleColor.RESET);
 
         System.out.printf(ConsoleColor.YELLOW +
-                        "│ %-3s │ %-10s │ %-11s │ %-13s │ %-13s │ %-8s │ %-13s │%n"
+                        "│ %-3s │ %-10s │ %-11s │ %-13s │ %-20s │ %-8s │ %-15s │%n"
                         + ConsoleColor.RESET,
                 "ID", "Invoice ID", "Customer ID", "Customer Name", "Product Name", "Quantity", "Unit Price");
 
         System.out.println(ConsoleColor.CYAN +
-                "├─────┼────────────┼─────────────┼───────────────┼───────────────┼──────────┼───────────────┤"
+                "├─────┼────────────┼─────────────┼───────────────┼──────────────────────┼──────────┼─────────────────┤"
                 + ConsoleColor.RESET);
     }
 
@@ -48,9 +48,9 @@ public class InvoiceDetails {
                         " │ " + ConsoleColor.WHITE + "%-10d" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.WHITE + "%-11d" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-20s" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.GREEN + "%-8d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%,13.0f" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%,15.0f" + ConsoleColor.RESET +
                         " │%n",
                 id,
                 invoice_id,
@@ -64,7 +64,7 @@ public class InvoiceDetails {
 
     public static void printFooter() {
         System.out.println(ConsoleColor.CYAN +
-                "└─────┴────────────┴─────────────┴───────────────┴───────────────┴──────────┴───────────────┘"
+                "└─────┴────────────┴─────────────┴───────────────┴──────────────────────┴──────────┴─────────────────┘"
                 + ConsoleColor.RESET);
     }
 

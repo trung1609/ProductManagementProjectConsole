@@ -214,45 +214,11 @@ public class CustomerManagement {
         if (choice.equalsIgnoreCase("N")) {
             MenuUtil.printSuccess("Đã hủy xóa khách hàng thành công.");
         } else if (choice.equalsIgnoreCase("Y")) {
-            InvoiceServiceImpl invoiceService = new InvoiceServiceImpl();
-            Invoice checkCustomerInvoice = invoiceService.findInvoiceByCustomerId(checkCustomerId.getId());
-            if (checkCustomerInvoice != null) {
-                MenuUtil.printError("Khách hàng đã có hóa đơn mua hàng. Không thể xóa khách hàng.");
-                System.out.println("-----------------------------------------------------------------------");
-                System.out.println("Vui lòng xóa hóa đơn liên quan đến khách hàng trước khi xóa khách hàng.");
-                System.out.print("Bạn có muốn xóa toàn bộ hóa đơn của khách hàng này không ? (Y/N): ");
-                String deleteChoice = sc.nextLine();
-                if (deleteChoice.equalsIgnoreCase("N")) {
-                    MenuUtil.printSuccess("Đã hủy xóa khách hàng thành công.");
-                    return;
-                } else if (deleteChoice.equalsIgnoreCase("Y")) {
-                    System.out.println("Đang xóa toàn bộ hóa đơn của khách hàng...");
-                    boolean deleteInvoicesResult = invoiceService.deleteInvoicesByCustomerId(checkCustomerId.getId());
-                    if (!deleteInvoicesResult) {
-                        MenuUtil.printError("Có lỗi khi xóa hóa đơn của khách hàng.");
-                    } else {
-                        MenuUtil.printSuccess("Xóa toàn bộ hóa đơn của khách hàng thành công.");
-                    }
-                }
-                System.out.print("Bạn có muốn tiếp tục xóa khách hàng này không ? (Y/N) ");
-                String continueDeleteChoice = sc.nextLine();
-                if (continueDeleteChoice.equalsIgnoreCase("N")) {
-                    MenuUtil.printSuccess("Đã hủy xóa khách hàng thành công.");
-                } else if (continueDeleteChoice.equalsIgnoreCase("Y")) {
-                    System.out.println("Đang xóa khách hàng...");
-                    if (!customerService.deleteCustomer(checkCustomerId.getId())) {
-                        MenuUtil.printError("Có lỗi khi xóa khách hàng.");
-                    } else {
-                        MenuUtil.printSuccess("Xóa khách hàng thành công.");
-                    }
-                }
+            boolean result = customerService.deleteCustomer(id);
+            if (result) {
+                MenuUtil.printSuccess("Xóa khách hàng thành công.");
             } else {
-                boolean result = customerService.deleteCustomer(id);
-                if (result) {
-                    MenuUtil.printSuccess("Xóa khách hàng thành công.");
-                } else {
-                    MenuUtil.printError("Có lỗi khi xóa khách hàng.");
-                }
+                MenuUtil.printError("Có lỗi khi xóa khách hàng.");
             }
         }
     }

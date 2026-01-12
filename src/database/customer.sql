@@ -43,12 +43,16 @@ create or replace function get_all_customer()
                 name    varchar(100),
                 phone   varchar(20),
                 email   varchar(100),
-                address varchar(255)
+                address varchar(255),
+                status  boolean
             )
 as
 $$
 begin
-    return query select c.id, c.name, c.phone, c.email, c.address from customer c order by c.id;
+    return query select c.id, c.name, c.phone, c.email, c.address, c.status
+                 from customer c
+                 where c.status = true
+                 order by c.id;
 end;
 $$ language plpgsql;
 
@@ -60,12 +64,16 @@ create or replace function find_customer_by_id(id_in int)
                 name    varchar(100),
                 phone   varchar(20),
                 email   varchar(100),
-                address varchar(255)
+                address varchar(255),
+                status  boolean
             )
 as
 $$
 begin
-    return query select c.id, c.name, c.phone, c.email, c.address from customer c where c.id = id_in;
+    return query select c.id, c.name, c.phone, c.email, c.address, c.status
+                 from customer c
+                 where c.id = id_in
+                   and c.status = true;
 end;
 $$ language plpgsql;
 
@@ -81,7 +89,8 @@ begin
         phone   = phone_in,
         email   = email_in,
         address = address_in
-    where id = id_in;
+    where id = id_in
+      and status = true;
 end;
 $$;
 
@@ -91,6 +100,6 @@ create or replace procedure delete_customer(id_in int)
 as
 $$
 begin
-    delete from customer c where c.id = id_in;
+    update customer set status = false where id = id_in;
 end;
 $$;

@@ -16,6 +16,7 @@ public class MenuSearchInvoice {
         Scanner sc = new Scanner(System.in);
 
         String[] searchInvoiceMenu = {
+                "Xem chi tiết hóa đơn",
                 "Tìm kiếm theo tên khách hàng",
                 "Tìm kiếm theo ngày / tháng / năm",
                 "Quay lại menu hóa đơn"
@@ -29,12 +30,15 @@ public class MenuSearchInvoice {
 
                 switch (choice) {
                     case 1:
-                        searchByCustomerName();
+                        getAllInvoiceDetailsByInvoiceId();
                         break;
                     case 2:
-                        searchByinvoiceDate();
+                        searchByCustomerName();
                         break;
                     case 3:
+                        searchByinvoiceDate();
+                        break;
+                    case 4:
                         InvoiceManagement.main(args);
                         break;
                     default:
@@ -44,6 +48,25 @@ public class MenuSearchInvoice {
                 MenuUtil.printError("Vui lòng nhập số.");
             }
         } while (true);
+    }
+
+    public static void getAllInvoiceDetailsByInvoiceId(){
+        Scanner sc = new Scanner(System.in);
+        InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
+        System.out.print("Nhập mã hóa đơn cần xem chi tiết: ");
+        int invoiceId = Integer.parseInt(sc.nextLine());
+        List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceId(invoiceId);
+        if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
+            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA MÃ HÓA ĐƠN: " + invoiceId, 90);
+            InvoiceDetails.printHeader();
+            for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
+                invoiceDetails.printInvoiceDetailRow();
+            }
+            InvoiceDetails.printFooter();
+            System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
+        } else {
+            MenuUtil.printError("Không tìm thấy kết quả nào!");
+        }
     }
 
 

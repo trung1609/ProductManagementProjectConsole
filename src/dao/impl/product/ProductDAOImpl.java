@@ -19,10 +19,6 @@ public class ProductDAOImpl implements IProductDAO {
         Connection conn = null;
         CallableStatement callSt = null;
         try {
-            if (ProductServiceImpl.checkProductName(product.getName())) {
-                MenuUtil.printError("Tên sản phẩm đã tồn tại.");
-                return false;
-            }
             conn = DBUtil.openConnection();
             callSt = conn.prepareCall("call add_product(?,?,?,?)");
             callSt.setString(1, product.getName());
@@ -98,6 +94,7 @@ public class ProductDAOImpl implements IProductDAO {
                     product.setBrand(rs.getString("brand"));
                     product.setPrice(rs.getDouble("price"));
                     product.setStock(rs.getInt("stock"));
+                    product.setStatus(rs.getBoolean("status"));
                     productList.add(product);
                 }
             }

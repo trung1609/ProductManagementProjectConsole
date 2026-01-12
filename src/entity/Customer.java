@@ -13,6 +13,7 @@ public class Customer {
     private String phone;
     private String email;
     private String address;
+    private boolean status;
 
     public Customer() {
     }
@@ -59,6 +60,12 @@ public class Customer {
 
     public String getAddress() {
         return address;
+    }
+    public boolean isStatus() {
+        return status;
+    }
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void setAddress(String address) {

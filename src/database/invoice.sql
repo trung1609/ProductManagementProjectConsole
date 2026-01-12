@@ -169,3 +169,33 @@ begin
     delete from invoice where customer_id = customer_id_in;
 end;
 $$;
+
+/*get invoice details by id*/
+create or replace function get_invoice_details_by_id(invoice_id_in int)
+    returns table
+            (
+                id            int,
+                invoice_id    int,
+                customer_id   int,
+                customer_name varchar(255),
+                product_name  varchar(100),
+                quantity      int,
+                unit_price    decimal(12, 2)
+            )
+as
+$$
+begin
+    return query select ind.id,
+                        ind.invoice_id,
+                        i.customer_id,
+                        c.name as customer_name,
+                        p.name as product_name,
+                        ind.quantity,
+                        ind.unit_price
+                 from invoice_details ind
+                          join invoice i on i.id = ind.invoice_id
+                          join product p on ind.product_id = p.id
+                          join customer c on i.customer_id = c.id
+                 where ind.invoice_id = invoice_id_in;
+end;
+$$ language plpgsql;
