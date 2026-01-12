@@ -43,17 +43,22 @@ $$;
 create or replace function get_all_invoices()
     returns table
             (
-                id           int,
-                customer_id  int,
-                created_at   timestamp,
-                total_amount decimal(12, 2)
+                id            int,
+                customer_id   int,
+                customer_name varchar(255),
+                created_at    timestamp,
+                total_amount  decimal(12, 2)
             )
 as
 $$
 begin
-    return query select i.id, i.customer_id, i.created_at, i.total_amount from invoice i order by i.id;
+    return query select i.id, i.customer_id, c.name as customer_name, i.created_at, i.total_amount
+                 from invoice i
+                          join customer c on i.customer_id = c.id
+                 order by i.id;
 end;
 $$ language plpgsql;
+
 
 
 /*find invoice by customer id*/
@@ -93,26 +98,34 @@ begin
 end;
 $$ language plpgsql;
 
-
 /*get_invoice_details_by_customer_name*/
 create or replace function get_invoice_details_by_customer_name(customer_name_in varchar(255))
     returns table
             (
-                id         int,
-                invoice_id int,
-                product_id int,
-                quantity   int,
-                unit_price decimal(12, 2)
+                id            int,
+                invoice_id    int,
+                customer_id   int,
+                customer_name varchar(255),
+                product_name  varchar(100),
+                quantity      int,
+                unit_price    decimal(12, 2)
             )
 as
 $$
 begin
     return query
-        select ind.id, ind.invoice_id, ind.product_id, ind.quantity, ind.unit_price
+        select ind.id,
+               ind.invoice_id,
+               i.customer_id,
+               c.name as customer_name,
+               p.name as product_name,
+               ind.quantity,
+               ind.unit_price
         from invoice_details ind
                  join invoice i on ind.invoice_id = i.id
                  join customer c on i.customer_id = c.id
-        where c.name like customer_name_in
+                 join product p on ind.product_id = p.id
+        where c.name ilike '%' || customer_name_in || '%'
         order by ind.id;
 end;
 $$ language plpgsql;
@@ -121,23 +134,32 @@ $$ language plpgsql;
 create or replace function get_invoice_details_by_invoice_date(date_in timestamp)
     returns table
             (
-                id         int,
-                invoice_id int,
-                product_id int,
-                quantity   int,
-                unit_price decimal(12, 2)
+                id            int,
+                invoice_id    int,
+                customer_id   int,
+                customer_name varchar(255),
+                product_name  varchar(100),
+                quantity      int,
+                unit_price    decimal(12, 2)
             )
 as
 $$
 begin
     return query
-        select id.id, id.invoice_id, id.product_id, id.quantity, id.unit_price
+        select id.id,
+               id.invoice_id,
+               i.customer_id,
+               c.name as customer_name,
+               p.name as product_name,
+               id.quantity,
+               id.unit_price
         from invoice_details id
                  join invoice i on i.id = id.invoice_id
+                 join product p on id.product_id = p.id
+                 join customer c on i.customer_id = c.id
         where i.created_at = date_in;
 end;
 $$ language plpgsql;
-
 
 /*delete customer invoice*/
 create or replace procedure delete_customer_invoices(customer_id_in int)

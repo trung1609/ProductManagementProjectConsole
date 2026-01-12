@@ -50,11 +50,11 @@ public class MenuSearchInvoice {
     public static void searchByCustomerName() {
         Scanner sc = new Scanner(System.in);
         InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
-        System.out.print("Nhập tên khach hàng cần tìm: ");
+        System.out.print("Nhập tên khách hàng cần tìm: ");
         String customerName = sc.nextLine();
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByCustomerName(customerName);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
-            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA KHÁCH HÀNG CÓ TÊN: " + customerName, 63);
+            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA KHÁCH HÀNG CÓ TÊN: " + customerName, 90);
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
@@ -67,13 +67,13 @@ public class MenuSearchInvoice {
     }
 
     public static void searchByinvoiceDate() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         Scanner sc = new Scanner(System.in);
         InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         LocalDate invoiceDate;
         do {
             try {
-                System.out.print("Nhập ngày/tháng/năm cần tìm(dd/MM/yyyy): ");
+                System.out.print("Nhập ngày/tháng/năm cần tìm(dd-MM-yyyy): ");
                 invoiceDate = LocalDate.parse(sc.nextLine(), dtf);
                 break;
             } catch (DateTimeParseException e) {
@@ -82,7 +82,7 @@ public class MenuSearchInvoice {
         } while (true);
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
-            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT NGÀY " + invoiceDate,63);
+            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT NGÀY " + invoiceDate.format(dtf),90);
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();

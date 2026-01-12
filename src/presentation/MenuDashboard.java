@@ -23,6 +23,8 @@ public class MenuDashboard {
                         AdminLogin.main(args);
                         break;
                     case 2:
+                        System.out.println("Cảm ơn bạn đã sử dụng hệ thống!");
+                        MenuUtil.printSuccess("Thoát chương trình thành công.");
                         System.exit(0);
                     default:
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp");

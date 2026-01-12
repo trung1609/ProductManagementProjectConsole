@@ -84,7 +84,7 @@ public class Product {
                 "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%13.2f" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%,13.0f" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.GREEN + "%8d" + ConsoleColor.RESET +
                         " │%n",
                 p.getId(),

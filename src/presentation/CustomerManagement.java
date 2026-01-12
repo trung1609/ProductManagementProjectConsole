@@ -92,6 +92,14 @@ public class CustomerManagement {
                 "Thoát"
         };
         CustomerServiceImpl customerService = new CustomerServiceImpl();
+        MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
+        List<Customer> customerList = customerService.findAllCustomers();
+        Customer customerDisplay = new Customer();
+        customerDisplay.printCustomerHeader();
+        for (Customer c : customerList) {
+            c.printCustomerRow(c);
+        }
+        customerDisplay.printCustomerFooter();
         System.out.print("Nhập mã khách hàng cần cập nhật: ");
         int id = Integer.parseInt(sc.nextLine());
         Customer customer = customerService.findCustomerById(id);

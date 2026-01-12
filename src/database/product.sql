@@ -1,5 +1,3 @@
-
-
 /* Check product name */
 create or replace function check_product_name(in name_in varchar(100))
     returns boolean
@@ -99,7 +97,7 @@ declare
     brand_search varchar(50);
 begin
     brand_search := concat('%', brand_in, '%');
-    return query select p.id, p.name, p.brand, p.price, p.stock from product p where p.brand like brand_search;
+    return query select p.id, p.name, p.brand, p.price, p.stock from product p where p.brand ilike brand_search;
 end;
 $$
     language plpgsql;
@@ -120,7 +118,8 @@ $$
 begin
     return query select p.id, p.name, p.brand, p.price, p.stock
                  from product p
-                 where p.price between price_search_from and price_search_to;
+                 where p.price between price_search_from and price_search_to
+                 order by p.price;
 end;
 $$
     language plpgsql;

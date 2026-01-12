@@ -5,14 +5,21 @@ import presentation.consoleColor.ConsoleColor;
 public class InvoiceDetails {
     private int id;
     private int invoice_id;
+    private int customerId;
+    private String customerName;
     private int product_id;
+    private String product_name;
     private int quantity;
     private double price;
 
-    public InvoiceDetails(int id, int invoice_id, int product_id, int quantity, double price) {
+    public InvoiceDetails(int id, int invoice_id, int customerId,
+                          String customerName, int product_id, String product_name, int quantity, double price) {
         this.id = id;
         this.invoice_id = invoice_id;
+        this.customerId = customerId;
+        this.customerName = customerName;
         this.product_id = product_id;
+        this.product_name = product_name;
         this.quantity = quantity;
         this.price = price;
     }
@@ -22,16 +29,16 @@ public class InvoiceDetails {
 
     public static void printHeader() {
         System.out.println(ConsoleColor.CYAN +
-                "┌─────┬────────────┬────────────┬──────────┬───────────────┐"
+                "┌─────┬────────────┬─────────────┬───────────────┬───────────────┬──────────┬───────────────┐"
                 + ConsoleColor.RESET);
 
         System.out.printf(ConsoleColor.YELLOW +
-                        "│ %-3s │ %-10s │ %-10s │ %-8s │ %-13s │%n"
+                        "│ %-3s │ %-10s │ %-11s │ %-13s │ %-13s │ %-8s │ %-13s │%n"
                         + ConsoleColor.RESET,
-                "ID", "Invoice ID", "Product ID", "Quantity", "Unit Price");
+                "ID", "Invoice ID", "Customer ID", "Customer Name", "Product Name", "Quantity", "Unit Price");
 
         System.out.println(ConsoleColor.CYAN +
-                "├─────┼────────────┼────────────┼──────────┼───────────────┤"
+                "├─────┼────────────┼─────────────┼───────────────┼───────────────┼──────────┼───────────────┤"
                 + ConsoleColor.RESET);
     }
 
@@ -39,13 +46,17 @@ public class InvoiceDetails {
         System.out.printf(
                 "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.WHITE + "%-10d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-10d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-11d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
                         " │ " + ConsoleColor.GREEN + "%-8d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%13.2f" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%,13.0f" + ConsoleColor.RESET +
                         " │%n",
                 id,
                 invoice_id,
-                product_id,
+                customerId,
+                customerName,
+                product_name,
                 quantity,
                 price
         );
@@ -53,7 +64,7 @@ public class InvoiceDetails {
 
     public static void printFooter() {
         System.out.println(ConsoleColor.CYAN +
-                "└─────┴────────────┴────────────┴──────────┴───────────────┘"
+                "└─────┴────────────┴─────────────┴───────────────┴───────────────┴──────────┴───────────────┘"
                 + ConsoleColor.RESET);
     }
 
@@ -98,4 +109,27 @@ public class InvoiceDetails {
         this.price = price;
     }
 
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }

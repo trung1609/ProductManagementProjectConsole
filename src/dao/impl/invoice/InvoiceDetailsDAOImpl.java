@@ -53,7 +53,9 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                     InvoiceDetails invoiceDetails = new InvoiceDetails();
                     invoiceDetails.setId(rs.getInt("id"));
                     invoiceDetails.setInvoice_id(rs.getInt("invoice_id"));
-                    invoiceDetails.setProduct_id(rs.getInt("product_id"));
+                    invoiceDetails.setCustomerId(rs.getInt("customer_id"));
+                    invoiceDetails.setCustomerName(rs.getString("customer_name"));
+                    invoiceDetails.setProduct_name(rs.getString("product_name"));
                     invoiceDetails.setQuantity(rs.getInt("quantity"));
                     invoiceDetails.setPrice(rs.getDouble("unit_price"));
                     invoiceDetailsList.add(invoiceDetails);
@@ -84,7 +86,9 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                     InvoiceDetails invoiceDetails = new InvoiceDetails();
                     invoiceDetails.setId(rs.getInt("id"));
                     invoiceDetails.setInvoice_id(rs.getInt("invoice_id"));
-                    invoiceDetails.setProduct_id(rs.getInt("product_id"));
+                    invoiceDetails.setCustomerId(rs.getInt("customer_id"));
+                    invoiceDetails.setCustomerName(rs.getString("customer_name"));
+                    invoiceDetails.setProduct_name(rs.getString("product_name"));
                     invoiceDetails.setQuantity(rs.getInt("quantity"));
                     invoiceDetails.setPrice(rs.getDouble("unit_price"));
                     invoiceDetailsList.add(invoiceDetails);

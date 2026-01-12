@@ -9,31 +9,33 @@ import java.time.format.DateTimeFormatter;
 public class Invoice {
     private int id;
     private int customerId;
+    private String customerName;
     private LocalDate createdAt;
     private double totalAmount;
 
     public Invoice() {
     }
 
-    public Invoice(int id, int customerId, LocalDate createdAt, double totalAmount) {
+    public Invoice(int id, int customerId,String customerName, LocalDate createdAt, double totalAmount) {
         this.id = id;
         this.customerId = customerId;
+        this.customerName = customerName;
         this.createdAt = createdAt;
         this.totalAmount = totalAmount;
     }
 
     public static void printHeader() {
         System.out.println(ConsoleColor.CYAN +
-                "┌─────┬──────────────┬──────────────┬─────────────────┐"
+                "┌─────┬─────────────┬────────────────────┬───────────────┬─────────────────┐"
                 + ConsoleColor.RESET);
 
         System.out.printf(ConsoleColor.YELLOW +
-                        "│ %-3s │ %-12s │ %-12s │ %-15s │%n"
+                        "│ %-3s │ %-11s │ %-18s │ %-13s │ %-15s │%n"
                         + ConsoleColor.RESET,
-                "ID", "Customer ID", "Created At", "Total Amount");
+                "ID", "Customer ID", "Customer Name", "Created At", "Total Amount");
 
         System.out.println(ConsoleColor.CYAN +
-                "├─────┼──────────────┼──────────────┼─────────────────┤"
+                "├─────┼─────────────┼────────────────────┼───────────────┼─────────────────┤"
                 + ConsoleColor.RESET);
     }
 
@@ -42,12 +44,14 @@ public class Invoice {
 
         System.out.printf(
                 "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-12d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-12s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%15.2f" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-11d" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
+                        " │ " + ConsoleColor.YELLOW + "%,15.0f" + ConsoleColor.RESET +
                         " │%n",
                 id,
                 customerId,
+                customerName,
                 createdAt.format(dtf),
                 totalAmount
         );
@@ -55,7 +59,7 @@ public class Invoice {
 
     public static void printFooter() {
         System.out.println(ConsoleColor.CYAN +
-                "└─────┴──────────────┴──────────────┴─────────────────┘"
+                "└─────┴─────────────┴────────────────────┴───────────────┴─────────────────┘"
                 + ConsoleColor.RESET);
     }
 
@@ -92,5 +96,11 @@ public class Invoice {
         this.totalAmount = totalAmount;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }
