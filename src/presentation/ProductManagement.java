@@ -100,6 +100,14 @@ public class ProductManagement {
                 "Cập nhật số lượng tồn kho",
                 "Thoát"
         };
+        List<Product> productList = new ProductServiceImpl().getALlProducts();
+        MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
+        Product productDisplay = new  Product();
+        productDisplay.printProductHeader();
+        for (Product p : productList) {
+            p.printProductRow(p);
+        }
+        productDisplay.printProductFooter();
         ProductServiceImpl productService = new ProductServiceImpl();
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập id sản phẩm cần cập nhật: ");
@@ -280,10 +288,12 @@ public class ProductManagement {
         } while (true);
         List<Product> productList = productService.searchProductByPrice(price_from, price_to);
         if (productList.isEmpty()) {
-            MenuUtil.printError("Không tìm thấy sản phẩm có giá từ " + price_from + " đến" + price_to);
+            String message = String.format("Không tìm thấy sản phẩm có giá từ %.0f đến %.0f", price_from, price_to);
+            MenuUtil.printError(message);
         } else {
             Product product = new Product();
-            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM CÓ GIÁ TỪ " + price_from + " ĐẾN " + price_to + " LÀ: ", 73);
+            String message = String.format("DANH SÁCH SẢN PHẨM CÓ GIÁ TỪ %.0f ĐẾN %.0f LÀ: ", price_from, price_to);
+            MenuUtil.printListItems(message, 73);
             product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);

@@ -48,6 +48,7 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
                     Invoice invoice = new Invoice();
                     invoice.setId(rs.getInt("id"));
                     invoice.setCustomerId(rs.getInt("customer_id"));
+                    invoice.setCustomerName(rs.getString("customer_name"));
                     invoice.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime().toLocalDate());
                     invoice.setTotalAmount(rs.getDouble("total_amount"));
                     invoices.add(invoice);

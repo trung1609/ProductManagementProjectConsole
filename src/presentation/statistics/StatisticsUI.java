@@ -17,7 +17,7 @@ public class StatisticsUI {
         System.out.println(MenuUtil.CYAN +
                 "├" + "─".repeat(width - 2) + "┤" + MenuUtil.RESET);
 
-        String content = String.format("%-20s : %15.2f", label, value);
+        String content = String.format("%-20s : %,15.0f", label, value);
         int paddingRight = width - content.length() - 4;
 
         System.out.printf(
