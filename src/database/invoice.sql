@@ -59,8 +59,6 @@ begin
 end;
 $$ language plpgsql;
 
-
-
 /*find invoice by customer id*/
 create or replace function find_invoice_by_customer_id(customer_id_in int)
     returns table

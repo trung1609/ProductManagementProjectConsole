@@ -82,7 +82,11 @@ public class MenuSearchInvoice {
         } while (true);
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
+<<<<<<< HEAD
             MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT NGÀY " + invoiceDate.format(dtf),90);
+=======
+            MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT NGÀY " + invoiceDate,90);
+>>>>>>> a60900c29fd8b9032b90752f264c1dd03d000e4f
             InvoiceDetails.printHeader();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
