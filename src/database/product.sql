@@ -135,7 +135,7 @@ $$
     language plpgsql;
 
 /*search by stock */
-create or replace function search_product_by_stock(stock_in int)
+create or replace function search_product_by_stock(product_name varchar)
     returns table
             (
                 id    int,
@@ -147,8 +147,10 @@ create or replace function search_product_by_stock(stock_in int)
             )
 as
 $$
+    declare produc_name_search varchar(100);
 begin
-    return query select p.id, p.name, p.brand, p.price, p.stock, p.status from product p where p.stock = stock_in and p.status = true;
+        produc_name_search := concat('%', product_name, '%');
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status from product p where p.name ilike produc_name_search and p.status = true;
 end;
 $$
     language plpgsql;

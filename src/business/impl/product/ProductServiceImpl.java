@@ -149,14 +149,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> searchProductByStock(int stock) {
+    public List<Product> searchProductByStock(String product_name) {
         Connection conn = null;
         CallableStatement callSt = null;
         List<Product> productList = null;
         try {
             conn = DBUtil.openConnection();
             callSt = conn.prepareCall("{call search_product_by_stock(?)}");
-            callSt.setInt(1, stock);
+            callSt.setString(1, product_name);
             boolean hasData = callSt.execute();
             if (hasData) {
                 ResultSet rs = callSt.getResultSet();

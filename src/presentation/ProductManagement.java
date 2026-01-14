@@ -300,14 +300,14 @@ public class ProductManagement {
 
     public static void searchProductByStock(Scanner sc) {
         ProductServiceImpl productService = new ProductServiceImpl();
-        System.out.print("Nhập sản phẩm có số lượng tồn kho cần tìm: ");
-        int stock = Integer.parseInt(sc.nextLine());
-        List<Product> productList = productService.searchProductByStock(stock);
+        System.out.print("Nhập tên sản phẩm cần tìm: ");
+        String product_name = sc.nextLine();
+        List<Product> productList = productService.searchProductByStock(product_name);
         if (productList.isEmpty()) {
-            MenuUtil.printError("Không tìm thấy sản phẩm có số lượng tồn kho la: " + stock);
+            MenuUtil.printError("Không tìm thấy sản phẩm có tên là: " + product_name);
         } else {
             Product product = new Product();
-            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM CÓ SỐ LƯỢNG TỒN KHO LÀ: " + stock, 70);
+            MenuUtil.printListItems("DANH SÁCH SẢN PHẨM TÊN LÀ: " + product_name, 70);
             product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);

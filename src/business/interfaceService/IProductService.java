@@ -19,5 +19,5 @@ public interface IProductService {
 
     List<Product> searchProductByPrice(double price_from, double price_to);
 
-    List<Product> searchProductByStock(int stock);
+    List<Product> searchProductByStock(String product_name);
 }
