@@ -21,7 +21,6 @@ begin
 end;
 $$;
 
-
 /* Display product*/
 create or replace function get_all_product()
     returns table
@@ -88,7 +87,6 @@ begin
     update product set status = false where id = id_in;
 end;
 $$;
-
 
 
 /* search by brand*/
