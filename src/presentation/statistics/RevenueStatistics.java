@@ -2,7 +2,7 @@ package presentation.statistics;
 
 import business.impl.statistics.StatisticsServiceImpl;
 import presentation.MainMenu;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

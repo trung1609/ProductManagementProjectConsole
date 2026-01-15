@@ -1,6 +1,6 @@
-package presentation.consoleColor;
+package presentation.menu_util;
 
-public class ConsoleColor {
+public class MenuColor {
     public static final String RESET = "\u001B[0m";
 
     public static final String RED = "\u001B[31m";

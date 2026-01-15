@@ -4,15 +4,13 @@ import business.impl.customer.CustomerServiceImpl;
 import business.impl.invoice.InvoiceServiceImpl;
 import business.impl.product.ProductServiceImpl;
 import business.interfaceService.IInvoiceService;
-import dao.impl.customer.CustomerDAOImpl;
-import dao.impl.product.ProductDAOImpl;
 import entity.Customer;
 import entity.Invoice;
 import entity.Product;
 import presentation.MainMenu;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
+import presentation.statistics.StatisticsUI;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -194,5 +192,6 @@ public class InvoiceManagement {
         }
         Invoice.printFooter();
         System.out.println("Tổng số hóa đơn: " + invoices.size());
+        StatisticsUI.waitEnter();
     }
 }

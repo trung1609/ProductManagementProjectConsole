@@ -1,9 +1,9 @@
 package presentation.invoice;
 
 import business.impl.invoice.InvoiceDetailsServiceImpl;
-import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import entity.InvoiceDetails;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
+import presentation.statistics.StatisticsUI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -64,6 +64,7 @@ public class MenuSearchInvoice {
             }
             InvoiceDetails.printFooter();
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
+            StatisticsUI.waitEnter();
         } else {
             MenuUtil.printError("Không tìm thấy kết quả nào!");
         }
@@ -84,6 +85,7 @@ public class MenuSearchInvoice {
             }
             InvoiceDetails.printFooter();
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
+            StatisticsUI.waitEnter();
         } else {
             MenuUtil.printError("Không tìm thấy kết quả nào!");
         }
@@ -113,6 +115,7 @@ public class MenuSearchInvoice {
             }
             InvoiceDetails.printFooter();
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
+            StatisticsUI.waitEnter();
         } else {
             MenuUtil.printError("Không tìm thấy kết quả nào!");
         }

@@ -1,9 +1,9 @@
 package presentation;
 
-import business.impl.invoice.InvoiceDetailsServiceImpl;
 import business.impl.product.ProductServiceImpl;
 import entity.Product;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
+import presentation.statistics.StatisticsUI;
 
 import java.util.List;
 import java.util.Scanner;
@@ -89,6 +89,7 @@ public class ProductManagement {
             }
             product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
+            StatisticsUI.waitEnter();
         }
     }
 
@@ -249,6 +250,7 @@ public class ProductManagement {
             }
             product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
+            StatisticsUI.waitEnter();
         }
     }
 
@@ -295,6 +297,7 @@ public class ProductManagement {
             }
             product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
+            StatisticsUI.waitEnter();
         }
     }
 
@@ -314,6 +317,7 @@ public class ProductManagement {
             }
             product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
+            StatisticsUI.waitEnter();
         }
     }
 }

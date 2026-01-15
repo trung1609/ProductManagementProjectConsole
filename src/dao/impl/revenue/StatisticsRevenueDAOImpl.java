@@ -1,6 +1,6 @@
 package dao.impl.revenue;
 
-import dao.interfaceDAO.IStatisticsRevenue;
+import dao.interfaceDao.IStatisticsRevenue;
 import util.DBUtil;
 
 import java.sql.CallableStatement;

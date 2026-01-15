@@ -3,7 +3,7 @@ package presentation;
 import presentation.invoice.InvoiceManagement;
 
 import java.util.Scanner;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
 import presentation.statistics.RevenueStatistics;
 
 public class MainMenu {

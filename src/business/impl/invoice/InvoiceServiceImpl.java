@@ -3,9 +3,8 @@ package business.impl.invoice;
 import business.interfaceService.IInvoiceService;
 import dao.impl.invoice.InvoiceDAOImpl;
 import dao.impl.invoice.InvoiceDetailsDAOImpl;
-import entity.Customer;
 import entity.Invoice;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
 import util.DBUtil;
 
 import java.sql.CallableStatement;

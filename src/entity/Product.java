@@ -1,8 +1,8 @@
 package entity;
 
 import business.impl.product.ProductServiceImpl;
-import presentation.consoleColor.ConsoleColor;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuColor;
+import presentation.menu_util.MenuUtil;
 
 import java.util.Scanner;
 
@@ -72,28 +72,28 @@ public class Product {
     }
 
     public void printProductHeader() {
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "┌─────┬────────────────────┬───────────────┬───────────────┬──────────┐"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
 
-        System.out.printf(ConsoleColor.YELLOW +
+        System.out.printf(MenuColor.YELLOW +
                         "│ %-3s │ %-18s │ %-13s │ %-13s │ %-8s │%n"
-                        + ConsoleColor.RESET,
+                        + MenuColor.RESET,
                 "ID", "Name", "Brand", "Price", "Stock");
 
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "├─────┼────────────────────┼───────────────┼───────────────┼──────────┤"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
     }
 
 
     public void printProductRow(Product p) {
         System.out.printf(
-                "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%,13.0f" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.GREEN + "%8d" + ConsoleColor.RESET +
+                "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-18s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%,13.0f" + MenuColor.RESET +
+                        " │ " + MenuColor.GREEN + "%8d" + MenuColor.RESET +
                         " │%n",
                 p.getId(),
                 p.getName(),
@@ -105,9 +105,9 @@ public class Product {
 
 
     public void printProductFooter() {
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "└─────┴────────────────────┴───────────────┴───────────────┴──────────┘"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
     }
 
 

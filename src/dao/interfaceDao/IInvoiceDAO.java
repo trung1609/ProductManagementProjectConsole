@@ -1,4 +1,4 @@
-package dao.interfaceDAO;
+package dao.interfaceDao;
 
 import entity.Invoice;
 

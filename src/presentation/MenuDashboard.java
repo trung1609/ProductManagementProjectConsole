@@ -1,11 +1,11 @@
 package presentation;
 
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
 
 import java.util.Scanner;
 
 public class MenuDashboard {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         String[] menu = {

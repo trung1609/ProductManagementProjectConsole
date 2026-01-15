@@ -1,10 +1,9 @@
 package presentation;
 
 import business.impl.customer.CustomerServiceImpl;
-import business.impl.invoice.InvoiceServiceImpl;
 import entity.Customer;
-import entity.Invoice;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuUtil;
+import presentation.statistics.StatisticsUI;
 
 import java.util.List;
 import java.util.Scanner;
@@ -80,6 +79,7 @@ public class CustomerManagement {
             }
             customer.printCustomerFooter();
             System.out.println("Tổng số khách hàng: " + customerList.size());
+            StatisticsUI.waitEnter();
         }
     }
 

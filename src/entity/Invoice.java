@@ -1,7 +1,7 @@
 package entity;
 
 
-import presentation.consoleColor.ConsoleColor;
+import presentation.menu_util.MenuColor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,29 +25,29 @@ public class Invoice {
     }
 
     public static void printHeader() {
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "┌─────┬─────────────┬────────────────────┬───────────────┬─────────────────┐"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
 
-        System.out.printf(ConsoleColor.YELLOW +
+        System.out.printf(MenuColor.YELLOW +
                         "│ %-3s │ %-11s │ %-18s │ %-13s │ %-15s │%n"
-                        + ConsoleColor.RESET,
+                        + MenuColor.RESET,
                 "ID", "Customer ID", "Customer Name", "Created At", "Total Amount");
 
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "├─────┼─────────────┼────────────────────┼───────────────┼─────────────────┤"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
     }
 
     public void printInvoiceRow() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         System.out.printf(
-                "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-11d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-18s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.YELLOW + "%,15.0f" + ConsoleColor.RESET +
+                "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-11d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-18s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%,15.0f" + MenuColor.RESET +
                         " │%n",
                 id,
                 customerId,
@@ -58,9 +58,9 @@ public class Invoice {
     }
 
     public static void printFooter() {
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "└─────┴─────────────┴────────────────────┴───────────────┴─────────────────┘"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
     }
 
 

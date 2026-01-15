@@ -1,9 +1,7 @@
 package dao.impl.product;
 
-import business.impl.product.ProductServiceImpl;
-import dao.interfaceDAO.IProductDAO;
+import dao.interfaceDao.IProductDAO;
 import entity.Product;
-import presentation.menuUtil.MenuUtil;
 import util.DBUtil;
 
 import java.math.BigDecimal;

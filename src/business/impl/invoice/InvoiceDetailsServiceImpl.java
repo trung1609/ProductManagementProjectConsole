@@ -2,7 +2,7 @@ package business.impl.invoice;
 
 import business.interfaceService.IInvoiceDetailsService;
 import dao.impl.invoice.InvoiceDetailsDAOImpl;
-import dao.interfaceDAO.IInvoiceDetailsDAO;
+import dao.interfaceDao.IInvoiceDetailsDAO;
 import entity.InvoiceDetails;
 import util.DBUtil;
 

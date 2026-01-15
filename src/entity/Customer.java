@@ -1,8 +1,8 @@
 package entity;
 
 import business.impl.customer.CustomerServiceImpl;
-import presentation.consoleColor.ConsoleColor;
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuColor;
+import presentation.menu_util.MenuUtil;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -72,26 +72,26 @@ public class Customer {
         this.address = address;
     }
     public void printCustomerHeader() {
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "┌─────┬───────────────┬───────────────┬───────────────────────────┬───────────────────────────┐"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
 
-        System.out.printf(ConsoleColor.YELLOW +
+        System.out.printf(MenuColor.YELLOW +
                         "│ %-3s │ %-13s │ %-13s │ %-25s │ %-25s │%n"
-                        + ConsoleColor.RESET,
+                        + MenuColor.RESET,
                 "ID", "Name", "Phone", "Email", "Address");
 
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "├─────┼───────────────┼───────────────┼───────────────────────────┼───────────────────────────┤"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
     }
     public void printCustomerRow(Customer c) {
         System.out.printf(
-                "│ " + ConsoleColor.GREEN + "%-3d" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-13s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-25s" + ConsoleColor.RESET +
-                        " │ " + ConsoleColor.WHITE + "%-25s" + ConsoleColor.RESET +
+                "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-25s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-25s" + MenuColor.RESET +
                         " │%n",
                 c.getId(),
                 c.getName(),
@@ -101,9 +101,9 @@ public class Customer {
         );
     }
     public void printCustomerFooter() {
-        System.out.println(ConsoleColor.CYAN +
+        System.out.println(MenuColor.CYAN +
                 "└─────┴───────────────┴───────────────┴───────────────────────────┴───────────────────────────┘"
-                + ConsoleColor.RESET);
+                + MenuColor.RESET);
     }
 
 

@@ -1,9 +1,8 @@
 package dao.impl.customer;
 
 import business.impl.customer.CustomerServiceImpl;
-import dao.interfaceDAO.ICustomerDAO;
+import dao.interfaceDao.ICustomerDAO;
 import entity.Customer;
-import presentation.menuUtil.MenuUtil;
 import util.DBUtil;
 
 import java.sql.CallableStatement;

@@ -1,14 +1,7 @@
-package presentation.menuUtil;
+package presentation.menu_util;
 
 
 public class MenuUtil {
-
-
-    public static final String RESET = "\u001B[0m";
-    public static final String CYAN = "\u001B[36m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String RED = "\u001B[31m";
 
 
     public static final boolean ENABLE_COLOR = true;
@@ -21,12 +14,12 @@ public class MenuUtil {
         int width = 50;
 
         printLine(width, '┌', '┐');
-        printCentered(color(CYAN) + title + color(RESET), width);
+        printCentered(color(MenuColor.CYAN) + title + color(MenuColor.RESET), width);
         printLine(width, '├', '┤');
 
         for (int i = 0; i < options.length; i++) {
-            String index = color(YELLOW) + (i + 1) + "." + color(RESET);
-            String text = color(GREEN) + options[i] + color(RESET);
+            String index = color(MenuColor.YELLOW) + (i + 1) + "." + color(MenuColor.RESET);
+            String text = color(MenuColor.GREEN) + options[i] + color(MenuColor.RESET);
 
             String content = index + " " + text;
 
@@ -45,7 +38,7 @@ public class MenuUtil {
         int right = totalPadding - left;
         System.out.println();
         for (int i = 0; i < left; i++) System.out.print(" ");
-        System.out.print(color(CYAN) + title + color(CYAN));
+        System.out.print(color(MenuColor.CYAN) + title + color(MenuColor.CYAN));
         for (int i = 0; i < right; i++) System.out.print(" ");
         System.out.println();
     }
@@ -79,16 +72,16 @@ public class MenuUtil {
     public static void printLoginHeader(String title) {
         int width = 55;
         printLine(width, '┌', '┐');
-        printCentered(color(CYAN) + title + color(RESET), width);
+        printCentered(color(MenuColor.CYAN) + title + color(MenuColor.RESET), width);
         printLine(width, '├', '┤');
     }
 
     public static void printError(String message) {
-        System.out.println(color(RED) + " × " + message + color(RESET));
+        System.out.println(color(MenuColor.RED) + " × " + message + color(MenuColor.RESET));
     }
 
     public static void printSuccess(String message) {
-        System.out.println(color(GREEN) + " ✓ " + message + color(RESET));
+        System.out.println(color(MenuColor.GREEN) + " ✓ " + message + color(MenuColor.RESET));
     }
 }
 

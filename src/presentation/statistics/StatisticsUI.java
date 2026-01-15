@@ -1,6 +1,7 @@
 package presentation.statistics;
 
-import presentation.menuUtil.MenuUtil;
+import presentation.menu_util.MenuColor;
+import presentation.menu_util.MenuUtil;
 
 import java.util.Scanner;
 
@@ -9,13 +10,13 @@ public class StatisticsUI {
     public static void printRevenueResult(String title, String label, double value) {
         int width = 50;
 
-        System.out.println(MenuUtil.CYAN +
-                "┌" + "─".repeat(width - 2) + "┐" + MenuUtil.RESET);
+        System.out.println(MenuColor.CYAN +
+                "┌" + "─".repeat(width - 2) + "┐" + MenuColor.RESET);
 
         printCentered(title.toUpperCase(), width);
 
-        System.out.println(MenuUtil.CYAN +
-                "├" + "─".repeat(width - 2) + "┤" + MenuUtil.RESET);
+        System.out.println(MenuColor.CYAN +
+                "├" + "─".repeat(width - 2) + "┤" + MenuColor.RESET);
 
         String content = String.format("%-20s : %,15.0f", label, value);
         int paddingRight = width - content.length() - 4;
@@ -25,8 +26,8 @@ public class StatisticsUI {
                 content, ""
         );
 
-        System.out.println(MenuUtil.CYAN +
-                "└" + "─".repeat(width - 2) + "┘" + MenuUtil.RESET);
+        System.out.println(MenuColor.CYAN +
+                "└" + "─".repeat(width - 2) + "┘" + MenuColor.RESET);
     }
 
 
@@ -37,7 +38,7 @@ public class StatisticsUI {
 
         System.out.print("│");
         System.out.print(" ".repeat(left));
-        System.out.print(MenuUtil.YELLOW + text + MenuUtil.RESET);
+        System.out.print(MenuColor.YELLOW + text + MenuColor.RESET);
         System.out.print(" ".repeat(right));
         System.out.println("│");
     }

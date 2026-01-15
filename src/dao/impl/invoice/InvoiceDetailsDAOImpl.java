@@ -1,6 +1,6 @@
 package dao.impl.invoice;
 
-import dao.interfaceDAO.IInvoiceDetailsDAO;
+import dao.interfaceDao.IInvoiceDetailsDAO;
 import entity.InvoiceDetails;
 import util.DBUtil;
 

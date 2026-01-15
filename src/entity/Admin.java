@@ -1,5 +1,9 @@
 package entity;
 
+import business.AdminBusiness;
+import org.mindrot.jbcrypt.BCrypt;
+import presentation.menu_util.MenuUtil;
+
 import java.util.Scanner;
 
 public class Admin {
@@ -40,10 +44,34 @@ public class Admin {
         this.password = password;
     }
 
-    public void login(Scanner scanner) {
-        System.out.print("Tài khoản: ");
-        this.username = scanner.nextLine();
-        System.out.print("Mật khẩu: ");
-        this.password = scanner.nextLine();
+    public void login(Scanner sc) {
+        do {
+            System.out.print("Nhập username: ");
+            String input_username = sc.nextLine();
+            System.out.print("Nhập password: ");
+            String input_password = sc.nextLine();
+            boolean check_exist = AdminBusiness.check_exist_admin(input_username);
+            String hashPass = null;
+            boolean checkPassword = false;
+            if(check_exist) {
+                hashPass = AdminBusiness.get_password_by_username(input_username); //hashPass ko được null khi checkPassword được gọi
+                if(hashPass != null) {
+                    checkPassword = checkPassword(input_password, hashPass);
+                }
+            }
+            //kết luận cuối
+            if (check_exist && checkPassword) {
+                this.username = input_username;
+                this.password = input_password;
+                MenuUtil.printSuccess("Đăng nhập thành công!");
+                break;
+            } else {
+                MenuUtil.printError("Sai tài khoản hoặc mật khẩu, vui lòng nhập lại.");
+            }
+        } while (true);
+    }
+
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }
