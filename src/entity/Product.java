@@ -123,6 +123,10 @@ public class Product {
             try {
                 System.out.print("Nhập tên sản phẩm: ");
                 this.name = sc.nextLine();
+                if(name.isEmpty()){
+                    MenuUtil.printError("Vui lòng không bỏ trống tên sản phẩm.");
+                    continue;
+                }
                 ProductServiceImpl productService = new ProductServiceImpl();
                 if (productService.checkProductName(this.name)) {
                     MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
@@ -140,6 +144,10 @@ public class Product {
             try {
                 System.out.print("Nhập thương hiệu sản phẩm: ");
                 this.brand = sc.nextLine();
+                if (brand.isEmpty()){
+                    MenuUtil.printError("Vui lòng không bỏ trống thương hiệu sản phẩm.");
+                    continue;
+                }
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -159,7 +167,7 @@ public class Product {
                 this.price = priceInput;
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Vui lòng nhập đúng định dạng giá tiền.");
+                MenuUtil.printError("Vui lòng nhập đúng định dạng giá tiền.");
             }
         } while (true);
     }

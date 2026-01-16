@@ -170,8 +170,16 @@ public class CustomerManagement {
                         } while (true);
                         break;
                     case 4:
-                        System.out.print("Nhập địa chỉ mới của khách hàng: ");
-                        customer.setAddress(sc.nextLine().trim());
+                        do {
+                            System.out.print("Nhập địa chỉ: ");
+                            String addressInput = sc.nextLine().trim();
+                            if (addressInput.isEmpty()) {
+                                MenuUtil.printError("Địa chỉ không được để trống. Vui lòng nhập lại.");
+                                continue;
+                            }
+                            customer.setAddress(addressInput);
+                            break;
+                        } while (true);
                         break;
                     case 5:
                         isExist = false;

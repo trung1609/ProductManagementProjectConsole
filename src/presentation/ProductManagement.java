@@ -135,8 +135,16 @@ public class ProductManagement {
                     case 1:
                         do {
                             try {
-                                System.out.print("Nhập tên sản phẩm mới: ");
-                                product.setName(sc.nextLine());
+                                System.out.print("Nhập tên sản phẩm: ");
+                                String newName = sc.nextLine();
+                                if(newName.isEmpty()){
+                                    MenuUtil.printError("Vui lòng không bỏ trống tên sản phẩm.");
+                                    continue;
+                                }
+                                if (productService.checkProductName(newName)) {
+                                    MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
+                                    continue;
+                                }
                                 break;
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());
@@ -146,8 +154,12 @@ public class ProductManagement {
                     case 2:
                         do {
                             try {
-                                System.out.print("Nhập thương hiệu mới của sản phẩm: ");
-                                product.setBrand(sc.nextLine());
+                                System.out.print("Nhập thương hiệu sản phẩm: ");
+                                String newBrand = sc.nextLine();
+                                if (newBrand.isEmpty()){
+                                    MenuUtil.printError("Vui lòng không bỏ trống thương hiệu sản phẩm.");
+                                    continue;
+                                }
                                 break;
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());

@@ -119,6 +119,10 @@ public class Customer {
         do {
             System.out.print("Nhập tên khách hàng: ");
             String nameInput = sc.nextLine().trim();
+            if (nameInput.isEmpty()){
+                MenuUtil.printError("Tên khách hàng không được để trống. Vui lòng nhập lại.");
+                continue;
+            }
             if (!Pattern.matches(regex, nameInput)) {
                 MenuUtil.printError("Vui lòng nhập lại tên khách hàng chỉ chứa chữ cái và khoảng trắng.");
                 continue;
@@ -167,8 +171,16 @@ public class Customer {
     }
 
     public void inputAddress(Scanner sc) {
-        System.out.print("Nhập địa chỉ: ");
-        this.address = sc.nextLine().trim();
+        do {
+            System.out.print("Nhập địa chỉ: ");
+            String addressInput = sc.nextLine().trim();
+            if (addressInput.isEmpty()){
+                MenuUtil.printError("Địa chỉ không được để trống. Vui lòng nhập lại.");
+                continue;
+            }
+            this.address = addressInput;
+            break;
+        }while (true);
     }
 
 }
