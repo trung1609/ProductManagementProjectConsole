@@ -1,6 +1,7 @@
 package business;
 
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -21,12 +22,13 @@ public class AdminBusiness {
             callSt.execute();
             return callSt.getBoolean(3);
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi đăng nhập");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
         return false;
     }
+
     public static boolean check_exist_admin(String username) {
         Connection conn = null;
         CallableStatement callSt = null;
@@ -38,7 +40,7 @@ public class AdminBusiness {
             callSt.execute();
             return callSt.getBoolean(2);
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi kiểm tra tên đăng nhập");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -46,8 +48,7 @@ public class AdminBusiness {
     }
 
 
-
-    public static String get_password_by_username( String username) {
+    public static String get_password_by_username(String username) {
         Connection conn = null;
         CallableStatement callSt = null;
 
@@ -59,8 +60,8 @@ public class AdminBusiness {
             callSt.execute();
             return callSt.getString(2);
         } catch (Exception e) {
-            e.printStackTrace();
-    }
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy mật khẩu");
+        }
         return null;
     }
 }

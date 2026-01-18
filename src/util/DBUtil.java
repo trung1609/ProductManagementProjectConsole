@@ -14,6 +14,7 @@ public class DBUtil {
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Không thể mở kết nối đến cơ sở dữ liệu");
             throw new RuntimeException(e);
         }
         return conn;
@@ -24,14 +25,14 @@ public class DBUtil {
             try {
                 conn.close();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                ExceptionHandler.handleConnectionCloseException(e);
             }
         }
         if (callSt != null) {
             try {
                 callSt.close();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                ExceptionHandler.handleConnectionCloseException(e);
             }
         }
     }

@@ -53,9 +53,9 @@ public class Admin {
             boolean check_exist = AdminBusiness.check_exist_admin(input_username);
             String hashPass = null;
             boolean checkPassword = false;
-            if(check_exist) {
+            if (check_exist) {
                 hashPass = AdminBusiness.get_password_by_username(input_username); //hashPass ko được null khi checkPassword được gọi
-                if(hashPass != null) {
+                if (hashPass != null) {
                     checkPassword = checkPassword(input_password, hashPass);
                 }
             }

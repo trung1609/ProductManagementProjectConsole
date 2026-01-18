@@ -3,8 +3,10 @@ package presentation;
 import presentation.invoice.InvoiceManagement;
 
 import java.util.Scanner;
+
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.RevenueStatistics;
+import util.ExceptionHandler;
 
 public class MainMenu {
     public static void main(String[] args) {
@@ -44,7 +46,7 @@ public class MainMenu {
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
     }

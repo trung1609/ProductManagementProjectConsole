@@ -16,7 +16,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(int id, int customerId,String customerName, LocalDate createdAt, double totalAmount) {
+    public Invoice(int id, int customerId, String customerName, LocalDate createdAt, double totalAmount) {
         this.id = id;
         this.customerId = customerId;
         this.customerName = customerName;

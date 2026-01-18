@@ -3,6 +3,7 @@ package presentation.statistics;
 import business.impl.statistics.StatisticsServiceImpl;
 import presentation.MainMenu;
 import presentation.menu_util.MenuUtil;
+import util.ExceptionHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,7 +44,7 @@ public class RevenueStatistics {
                         MenuUtil.printError("Vui lòng nhập từ 1 đến 4.");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
     }
@@ -61,7 +62,7 @@ public class RevenueStatistics {
                 date = LocalDate.parse(sc.nextLine(), dtf);
                 break;
             } catch (DateTimeParseException e) {
-                MenuUtil.printError("Vui lòng nhập đúng định dạng.");
+                ExceptionHandler.handleDateTimeParseException();
             }
         } while (true);
 
@@ -86,20 +87,20 @@ public class RevenueStatistics {
                 System.out.print("Nhập tháng: ");
                 month = Integer.parseInt(sc.nextLine());
                 break;
-            }catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
             }
-        }while (true);
+        } while (true);
 
         do {
             try {
                 System.out.print("Nhập năm: ");
                 year = Integer.parseInt(sc.nextLine());
                 break;
-            }catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
             }
-        }while (true);
+        } while (true);
 
         double total = statisticsService.totalRevenueByMonth(month, year);
 
@@ -121,10 +122,10 @@ public class RevenueStatistics {
                 System.out.print("Nhập năm: ");
                 year = Integer.parseInt(sc.nextLine());
                 break;
-            }catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
             }
-        }while (true);
+        } while (true);
 
         double total = statisticsService.totalRevenueByYear(year);
 

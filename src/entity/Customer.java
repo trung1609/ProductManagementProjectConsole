@@ -61,9 +61,11 @@ public class Customer {
     public String getAddress() {
         return address;
     }
+
     public boolean isStatus() {
         return status;
     }
+
     public void setStatus(boolean status) {
         this.status = status;
     }
@@ -71,6 +73,7 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+
     public void printCustomerHeader() {
         System.out.println(MenuColor.CYAN +
                 "┌─────┬───────────────┬───────────────┬───────────────────────────┬───────────────────────────┐"
@@ -85,6 +88,7 @@ public class Customer {
                 "├─────┼───────────────┼───────────────┼───────────────────────────┼───────────────────────────┤"
                 + MenuColor.RESET);
     }
+
     public void printCustomerRow(Customer c) {
         System.out.printf(
                 "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
@@ -100,6 +104,7 @@ public class Customer {
                 c.getAddress()
         );
     }
+
     public void printCustomerFooter() {
         System.out.println(MenuColor.CYAN +
                 "└─────┴───────────────┴───────────────┴───────────────────────────┴───────────────────────────┘"
@@ -119,7 +124,7 @@ public class Customer {
         do {
             System.out.print("Nhập tên khách hàng: ");
             String nameInput = sc.nextLine().trim();
-            if (nameInput.isEmpty()){
+            if (nameInput.isEmpty()) {
                 MenuUtil.printError("Tên khách hàng không được để trống. Vui lòng nhập lại.");
                 continue;
             }
@@ -142,7 +147,7 @@ public class Customer {
                 continue;
             }
             CustomerServiceImpl customerService = new CustomerServiceImpl();
-            if(customerService.checkPhone(phoneInput)) {
+            if (customerService.checkPhone(phoneInput)) {
                 MenuUtil.printError("Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác.");
                 continue;
             }
@@ -161,7 +166,7 @@ public class Customer {
                 continue;
             }
             CustomerServiceImpl customerService = new CustomerServiceImpl();
-            if(customerService.checkEmail(emailInput)) {
+            if (customerService.checkEmail(emailInput)) {
                 MenuUtil.printError("Email đã tồn tại. Vui lòng nhập email khác.");
                 continue;
             }
@@ -174,13 +179,13 @@ public class Customer {
         do {
             System.out.print("Nhập địa chỉ: ");
             String addressInput = sc.nextLine().trim();
-            if (addressInput.isEmpty()){
+            if (addressInput.isEmpty()) {
                 MenuUtil.printError("Địa chỉ không được để trống. Vui lòng nhập lại.");
                 continue;
             }
             this.address = addressInput;
             break;
-        }while (true);
+        } while (true);
     }
 
 }

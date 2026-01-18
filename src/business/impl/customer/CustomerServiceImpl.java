@@ -4,6 +4,7 @@ import business.interfaceService.ICustomerService;
 import dao.impl.customer.CustomerDAOImpl;
 import entity.Customer;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -24,7 +25,7 @@ public class CustomerServiceImpl implements ICustomerService {
             callSt.execute();
             return callSt.getBoolean(2);
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi kiểm tra email");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -43,7 +44,7 @@ public class CustomerServiceImpl implements ICustomerService {
             callSt.execute();
             return callSt.getBoolean(2);
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi kiểm tra số điện thoại");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -72,7 +73,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm khách hàng theo ID");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }

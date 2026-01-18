@@ -31,7 +31,7 @@ public class MenuUtil {
         System.out.print("Nhập lựa chọn: ");
     }
 
-    public static void printListItems(String title,int width) {
+    public static void printListItems(String title, int width) {
         int textLength = stripAnsi(title).length();
         int totalPadding = width - 2 - textLength;
         int left = totalPadding / 2;

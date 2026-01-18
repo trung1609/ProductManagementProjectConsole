@@ -2,6 +2,7 @@ package dao.impl.revenue;
 
 import dao.interfaceDao.IStatisticsRevenue;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -23,7 +24,7 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenue {
             callSt.execute();
             return totalRevenue = callSt.getBigDecimal(2).doubleValue();
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tính doanh thu theo ngày");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -44,7 +45,7 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenue {
             callSt.execute();
             return totalRevenue = callSt.getBigDecimal(3).doubleValue();
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tính doanh thu theo tháng");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -64,7 +65,7 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenue {
             callSt.execute();
             return totalRevenue = callSt.getBigDecimal(2).doubleValue();
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tính doanh thu theo năm");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }

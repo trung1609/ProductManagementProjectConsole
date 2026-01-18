@@ -8,5 +8,6 @@ public interface IInvoiceDAO {
     int addInvoice(int customerId);
 
     List<Invoice> getAllInvoices();
+
     boolean deleteInvoicesByCustomerId(int customerId);
 }

@@ -3,6 +3,7 @@ package dao.impl.invoice;
 import dao.interfaceDao.IInvoiceDetailsDAO;
 import entity.InvoiceDetails;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -29,7 +30,7 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi thêm chi tiết hóa đơn");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -62,7 +63,7 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy chi tiết hóa đơn theo tên khách hàng");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -95,7 +96,7 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy chi tiết hóa đơn theo ngày");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }

@@ -6,6 +6,7 @@ import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import entity.Invoice;
 import presentation.menu_util.MenuUtil;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -33,7 +34,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
                         quantities.get(i),
                         prices.get(i));
                 if (!result) {
-                    MenuUtil.printError("Lỗi khi thêm sản phẩm ID: " + productIds.get(i));
+                    ExceptionHandler.handleDatabaseException(new Exception("Lỗi khi thêm chi tiết hóa đơn"),
+                            "Lỗi khi thêm chi tiết hóa đơn cho sản phẩm ID: " + productIds.get(i));
                     conn.rollback();
                     return false;
                 }
@@ -43,16 +45,16 @@ public class InvoiceServiceImpl implements IInvoiceService {
             try {
                 if (conn != null) conn.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                ExceptionHandler.handleRollbackException(ex);
             }
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tạo hóa đơn");
         } finally {
             try {
-                if (conn == null) {
+                if (conn != null) {
                     conn.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                ExceptionHandler.handleConnectionCloseException(e);
             }
         }
         return false;
@@ -85,8 +87,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm hóa đơn theo ID khách hàng");
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
         return invoice;

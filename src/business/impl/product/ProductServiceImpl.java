@@ -4,6 +4,7 @@ import business.interfaceService.IProductService;
 import dao.impl.product.ProductDAOImpl;
 import entity.Product;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements IProductService {
             callSt.execute();
             return callSt.getBoolean(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi kiểm tra tên sản phẩm");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm sản phẩm theo ID");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -109,7 +110,7 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm kiếm sản phẩm theo thương hiệu");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -141,7 +142,7 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm kiếm sản phẩm theo giá");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -172,7 +173,7 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm kiếm sản phẩm theo tồn kho");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
