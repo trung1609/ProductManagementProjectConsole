@@ -4,6 +4,7 @@ import business.impl.customer.CustomerServiceImpl;
 import entity.Customer;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
+import util.ExceptionHandler;
 
 import java.util.List;
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class CustomerManagement {
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
     }
@@ -188,7 +189,7 @@ public class CustomerManagement {
                         System.out.println("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (isExist);
 

@@ -3,6 +3,7 @@ package dao.impl.invoice;
 import dao.interfaceDao.IInvoiceDAO;
 import entity.Invoice;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -25,7 +26,7 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
             callSt.execute();
             return callSt.getInt(2);
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi thêm hóa đơn");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -55,7 +56,7 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy danh sách hóa đơn");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -72,9 +73,9 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
             callSt.setInt(1, customerId);
             callSt.execute();
             return true;
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
+        } catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi xóa hóa đơn của khách hàng");
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
         return false;

@@ -5,6 +5,7 @@ import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import dao.interfaceDao.IInvoiceDetailsDAO;
 import entity.InvoiceDetails;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -16,7 +17,7 @@ public class InvoiceDetailsServiceImpl implements IInvoiceDetailsService {
     @Override
     public boolean addInvoiceDetails(int invoiceId, int productId, int quantity, double price) {
         InvoiceDetailsDAOImpl invoiceDetailsDAOImpl = new InvoiceDetailsDAOImpl();
-        return  invoiceDetailsDAOImpl.addInvoiceDetails(invoiceId, productId, quantity, price);
+        return invoiceDetailsDAOImpl.addInvoiceDetails(invoiceId, productId, quantity, price);
     }
 
     @Override
@@ -52,9 +53,9 @@ public class InvoiceDetailsServiceImpl implements IInvoiceDetailsService {
                     invoiceDetails.setPrice(rs.getDouble("unit_price"));
                 }
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
+        } catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm chi tiết hóa đơn theo ID sản phẩm");
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
         return invoiceDetails;

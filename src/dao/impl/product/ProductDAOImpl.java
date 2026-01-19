@@ -3,6 +3,7 @@ package dao.impl.product;
 import dao.interfaceDao.IProductDAO;
 import entity.Product;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -26,7 +27,7 @@ public class ProductDAOImpl implements IProductDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi thêm sản phẩm");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -48,7 +49,7 @@ public class ProductDAOImpl implements IProductDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi cập nhật sản phẩm");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -66,7 +67,7 @@ public class ProductDAOImpl implements IProductDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi xóa sản phẩm");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -97,7 +98,7 @@ public class ProductDAOImpl implements IProductDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi hiển thị danh sách sản phẩm");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }

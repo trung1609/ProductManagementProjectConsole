@@ -64,9 +64,11 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
     public boolean isStatus() {
         return status;
     }
+
     public void setStatus(boolean status) {
         this.status = status;
     }
@@ -123,7 +125,7 @@ public class Product {
             try {
                 System.out.print("Nhập tên sản phẩm: ");
                 this.name = sc.nextLine();
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     MenuUtil.printError("Vui lòng không bỏ trống tên sản phẩm.");
                     continue;
                 }
@@ -144,7 +146,7 @@ public class Product {
             try {
                 System.out.print("Nhập thương hiệu sản phẩm: ");
                 this.brand = sc.nextLine();
-                if (brand.isEmpty()){
+                if (brand.isEmpty()) {
                     MenuUtil.printError("Vui lòng không bỏ trống thương hiệu sản phẩm.");
                     continue;
                 }

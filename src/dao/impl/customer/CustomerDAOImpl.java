@@ -4,6 +4,7 @@ import business.impl.customer.CustomerServiceImpl;
 import dao.interfaceDao.ICustomerDAO;
 import entity.Customer;
 import util.DBUtil;
+import util.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -28,7 +29,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi thêm khách hàng");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -51,7 +52,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi cập nhật khách hàng");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -69,7 +70,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
             callSt.execute();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi xóa khách hàng");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }
@@ -100,7 +101,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy danh sách khách hàng");
         } finally {
             DBUtil.closeConnection(conn, callSt);
         }

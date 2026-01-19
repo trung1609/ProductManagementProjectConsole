@@ -1,12 +1,15 @@
 package presentation.statistics;
 
 import business.impl.statistics.StatisticsServiceImpl;
+import entity.Invoice;
 import presentation.MainMenu;
 import presentation.menu_util.MenuUtil;
+import util.ExceptionHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class RevenueStatistics {
@@ -43,7 +46,7 @@ public class RevenueStatistics {
                         MenuUtil.printError("Vui lòng nhập từ 1 đến 4.");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
     }
@@ -57,22 +60,53 @@ public class RevenueStatistics {
 
         do {
             try {
-                System.out.print("Nhập ngày (dd-MM-yyyy): ");
-                date = LocalDate.parse(sc.nextLine(), dtf);
-                break;
-            } catch (DateTimeParseException e) {
-                MenuUtil.printError("Vui lòng nhập đúng định dạng.");
+                System.out.println("1. Nhập ngày để tính doanh thu");
+                System.out.println("2. Doanh thu của tất cả các ngày");
+                System.out.println("3. Quay lại");
+                System.out.print("Lựa chọn của bạn: ");
+                int option = Integer.parseInt(sc.nextLine());
+                switch (option) {
+                    case 1:
+                        do {
+                            try {
+                                System.out.print("Nhập ngày (dd-MM-yyyy): ");
+                                date = LocalDate.parse(sc.nextLine(), dtf);
+                                break;
+                            } catch (DateTimeParseException e) {
+                                ExceptionHandler.handleDateTimeParseException();
+                            }
+                        } while (true);
+
+                        double total = statisticsService.totalRevenueByDate(date);
+
+                        StatisticsUI.printRevenueResult(
+                                "Doanh thu theo ngày",
+                                date.format(dtf),
+                                total
+                        );
+                        StatisticsUI.waitEnter();
+                        break;
+                    case 2:
+                        double totalAllDate = statisticsService.totalRevenueAllDate();
+
+                        List<Invoice> totalRevenueEachDate = statisticsService.totalRevenueEachDate();
+                        StatisticsUI.printRevenueEachDateResult(
+                                "Doanh thu của tất cả các ngày",
+                                totalAllDate,
+                                totalRevenueEachDate,
+                                dtf
+                        );
+                        StatisticsUI.waitEnter();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        MenuUtil.printError("Vui lòng nhập từ 1 đến 3.");
+                }
+            }catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
-
-        double total = statisticsService.totalRevenueByDate(date);
-
-        StatisticsUI.printRevenueResult(
-                "Doanh thu theo ngày",
-                date.format(dtf),
-                total
-        );
-        StatisticsUI.waitEnter();
     }
 
 
@@ -81,34 +115,59 @@ public class RevenueStatistics {
         Scanner sc = new Scanner(System.in);
         int month;
         int year;
-        do {
-            try {
-                System.out.print("Nhập tháng: ");
-                month = Integer.parseInt(sc.nextLine());
-                break;
-            }catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
-            }
-        }while (true);
 
         do {
             try {
-                System.out.print("Nhập năm: ");
-                year = Integer.parseInt(sc.nextLine());
-                break;
-            }catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                System.out.println("1. Nhập tháng và năm để tính doanh thu");
+                System.out.println("2. Liệt kê doanh thu theo tất cả các tháng");
+                System.out.println("3. Quay lại");
+                System.out.print("Lựa chọn của bạn: ");
+                int option = Integer.parseInt(sc.nextLine());
+                switch (option) {
+                    case 1:
+                        do {
+                            try {
+                                System.out.print("Nhập tháng: ");
+                                month = Integer.parseInt(sc.nextLine());
+                                break;
+                            } catch (NumberFormatException e) {
+                                ExceptionHandler.handleNumberFormatException();
+                            }
+                        } while (true);
+
+                        do {
+                            try {
+                                System.out.print("Nhập năm: ");
+                                year = Integer.parseInt(sc.nextLine());
+                                break;
+                            } catch (NumberFormatException e) {
+                                ExceptionHandler.handleNumberFormatException();
+                            }
+                        } while (true);
+
+                        double total = statisticsService.totalRevenueByMonth(month, year);
+
+                        StatisticsUI.printRevenueResult(
+                                "Doanh thu theo tháng",
+                                String.format("%02d-%d", month, year),
+                                total
+                        );
+                        StatisticsUI.waitEnter();
+                        break;
+                    case 2:
+                        List<Invoice> monthlyList = statisticsService.totalRevenueEachMonth();
+                        StatisticsUI.printRevenueEachMonthResult("Doanh thu theo từng tháng", monthlyList);
+                        StatisticsUI.waitEnter();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        MenuUtil.printError("Vui lòng nhập từ 1 đến 3.");
+                }
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
             }
-        }while (true);
-
-        double total = statisticsService.totalRevenueByMonth(month, year);
-
-        StatisticsUI.printRevenueResult(
-                "Doanh thu theo tháng",
-                String.format("%02d-%d", month, year),
-                total
-        );
-        StatisticsUI.waitEnter();
+        } while (true);
     }
 
 
@@ -118,22 +177,46 @@ public class RevenueStatistics {
         int year;
         do {
             try {
-                System.out.print("Nhập năm: ");
-                year = Integer.parseInt(sc.nextLine());
-                break;
-            }catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                System.out.println("1. Nhập năm để tính doanh thu");
+                System.out.println("2. Liệt kê doanh thu theo tất cả các năm");
+                System.out.println("3. Quay lại");
+                System.out.print("Lựa chọn của bạn: ");
+                int option = Integer.parseInt(sc.nextLine());
+                switch (option) {
+                    case 1:
+                        do {
+                            try {
+                                System.out.print("Nhập năm: ");
+                                year = Integer.parseInt(sc.nextLine());
+                                break;
+                            } catch (NumberFormatException e) {
+                                ExceptionHandler.handleNumberFormatException();
+                            }
+                        } while (true);
+
+                        double total = statisticsService.totalRevenueByYear(year);
+
+                        StatisticsUI.printRevenueResult(
+                                "Doanh thu theo năm",
+                                String.valueOf(year),
+                                total
+                        );
+                        StatisticsUI.waitEnter();
+                        break;
+                    case 2:
+                        List<Invoice> yearlyList = statisticsService.totalRevenueEachYear();
+                        StatisticsUI.printRevenueEachYearResult("Doanh thu theo từng năm", yearlyList);
+                        StatisticsUI.waitEnter();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        MenuUtil.printError("Vui lòng nhập từ 1 đến 3.");
+                }
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
             }
-        }while (true);
-
-        double total = statisticsService.totalRevenueByYear(year);
-
-        StatisticsUI.printRevenueResult(
-                "Doanh thu theo năm",
-                String.valueOf(year),
-                total
-        );
-        StatisticsUI.waitEnter();
+        } while (true);
     }
 
 }

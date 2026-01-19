@@ -4,6 +4,7 @@ import business.impl.product.ProductServiceImpl;
 import entity.Product;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
+import util.ExceptionHandler;
 
 import java.util.List;
 import java.util.Scanner;
@@ -58,7 +59,7 @@ public class ProductManagement {
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
     }
@@ -103,7 +104,7 @@ public class ProductManagement {
         };
         List<Product> productList = new ProductServiceImpl().getALlProducts();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
-        Product productDisplay = new  Product();
+        Product productDisplay = new Product();
         productDisplay.printProductHeader();
         for (Product p : productList) {
             p.printProductRow(p);
@@ -137,7 +138,7 @@ public class ProductManagement {
                             try {
                                 System.out.print("Nhập tên sản phẩm: ");
                                 String newName = sc.nextLine();
-                                if(newName.isEmpty()){
+                                if (newName.isEmpty()) {
                                     MenuUtil.printError("Vui lòng không bỏ trống tên sản phẩm.");
                                     continue;
                                 }
@@ -156,7 +157,7 @@ public class ProductManagement {
                             try {
                                 System.out.print("Nhập thương hiệu sản phẩm: ");
                                 String newBrand = sc.nextLine();
-                                if (newBrand.isEmpty()){
+                                if (newBrand.isEmpty()) {
                                     MenuUtil.printError("Vui lòng không bỏ trống thương hiệu sản phẩm.");
                                     continue;
                                 }
@@ -169,7 +170,7 @@ public class ProductManagement {
                     case 3:
                         do {
                             try {
-                                System.out.print("Nhập gia bán: ");
+                                System.out.print("Nhập giá bán: ");
                                 double newPrice = Double.parseDouble(sc.nextLine());
                                 if (newPrice <= 0) {
                                     MenuUtil.printError("Vui lòng nhập giá bán lớn hơn hoặc bằng 0");
@@ -203,7 +204,7 @@ public class ProductManagement {
                         break;
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (isExist);
 
@@ -280,7 +281,7 @@ public class ProductManagement {
                 }
                 break;
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập đúng định dạng giá bán.");
+                ExceptionHandler.handleNumberFormatException("Vui lòng nhập đúng định dạng giá bán.");
             }
         } while (true);
         do {
@@ -292,7 +293,7 @@ public class ProductManagement {
                 }
                 break;
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập đúng định dạng giá bán.");
+                ExceptionHandler.handleNumberFormatException("Vui lòng nhập đúng định dạng giá bán.");
             }
         } while (true);
         List<Product> productList = productService.searchProductByPrice(price_from, price_to);

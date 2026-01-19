@@ -6,7 +6,8 @@ $$
 begin
     return exists(select 1
                   from product p
-                  where p.name = name_in and p.status = true);
+                  where p.name = name_in
+                    and p.status = true);
 end;
 $$ language plpgsql;
 
@@ -58,7 +59,8 @@ $$
 begin
     return query select p.id, p.name, p.brand, p.price, p.stock, p.status
                  from product p
-                 where p.id = id_in and p.status = true;
+                 where p.id = id_in
+                   and p.status = true;
 end;
 $$ language plpgsql;
 
@@ -74,7 +76,8 @@ begin
         brand = brand_in,
         price = price_in,
         stock = stock_in
-    where p.id = id_in and p.status = true;
+    where p.id = id_in
+      and p.status = true;
 end;
 $$;
 
@@ -93,11 +96,11 @@ $$;
 create or replace function search_product_by_brand(brand_in varchar(50))
     returns table
             (
-                id    int,
-                name  varchar(100),
-                brand varchar(50),
-                price decimal(12, 2),
-                stock int,
+                id     int,
+                name   varchar(100),
+                brand  varchar(50),
+                price  decimal(12, 2),
+                stock  int,
                 status boolean
             )
 as
@@ -106,7 +109,10 @@ declare
     brand_search varchar(50);
 begin
     brand_search := concat('%', brand_in, '%');
-    return query select p.id, p.name, p.brand, p.price, p.stock, p.status from product p where p.brand ilike brand_search and p.status = true;
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status
+                 from product p
+                 where p.brand ilike brand_search
+                   and p.status = true;
 end;
 $$
     language plpgsql;
@@ -116,11 +122,11 @@ create or replace function search_product_by_price(price_search_from decimal(12,
                                                    price_search_to decimal(12, 2))
     returns table
             (
-                id    int,
-                name  varchar(100),
-                brand varchar(50),
-                price decimal(12, 2),
-                stock int,
+                id     int,
+                name   varchar(100),
+                brand  varchar(50),
+                price  decimal(12, 2),
+                stock  int,
                 status boolean
             )
 as
@@ -128,7 +134,8 @@ $$
 begin
     return query select p.id, p.name, p.brand, p.price, p.stock, p.status
                  from product p
-                 where p.price between price_search_from and price_search_to and p.status = true
+                 where p.price between price_search_from and price_search_to
+                   and p.status = true
                  order by p.price;
 end;
 $$
@@ -138,19 +145,23 @@ $$
 create or replace function search_product_by_stock(product_name varchar)
     returns table
             (
-                id    int,
-                name  varchar(100),
-                brand varchar(50),
-                price decimal(12, 2),
-                stock int,
+                id     int,
+                name   varchar(100),
+                brand  varchar(50),
+                price  decimal(12, 2),
+                stock  int,
                 status boolean
             )
 as
 $$
-    declare produc_name_search varchar(100);
+declare
+    produc_name_search varchar(100);
 begin
-        produc_name_search := concat('%', product_name, '%');
-    return query select p.id, p.name, p.brand, p.price, p.stock, p.status from product p where p.name ilike produc_name_search and p.status = true;
+    produc_name_search := concat('%', product_name, '%');
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status
+                 from product p
+                 where p.name ilike produc_name_search
+                   and p.status = true;
 end;
 $$
     language plpgsql;

@@ -50,7 +50,7 @@ public class MenuSearchInvoice {
         } while (true);
     }
 
-    public static void getAllInvoiceDetailsByInvoiceId(){
+    public static void getAllInvoiceDetailsByInvoiceId() {
         Scanner sc = new Scanner(System.in);
         InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         System.out.print("Nhập mã hóa đơn cần xem chi tiết: ");

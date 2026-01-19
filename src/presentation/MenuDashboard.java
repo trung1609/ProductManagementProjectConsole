@@ -1,6 +1,7 @@
 package presentation;
 
 import presentation.menu_util.MenuUtil;
+import util.ExceptionHandler;
 
 import java.util.Scanner;
 
@@ -30,7 +31,7 @@ public class MenuDashboard {
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp");
                 }
             } catch (NumberFormatException e) {
-                MenuUtil.printError("Vui lòng nhập số.");
+                ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
     }

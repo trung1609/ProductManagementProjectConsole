@@ -18,8 +18,8 @@ as
 $$
 begin
     select exists(select 1
-                    from admin a
-                    where username = user_in)
+                  from admin a
+                  where username = user_in)
     into is_true;
 end;
 $$;

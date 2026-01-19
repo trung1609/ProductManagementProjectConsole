@@ -1,11 +1,11 @@
-package business.interfaceService;
+package dao.interfaceDao;
 
 import entity.Invoice;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IStatisticsService {
+public interface IStatisticsRevenueDAO {
     double totalRevenueByDate(LocalDate date);
 
     double totalRevenueAllDate();
