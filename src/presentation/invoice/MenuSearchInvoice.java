@@ -59,10 +59,13 @@ public class MenuSearchInvoice {
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA MÃ HÓA ĐƠN: " + invoiceId, 90);
             InvoiceDetails.printHeader();
+            double totalAmount = 0;
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
+                totalAmount += invoiceDetails.getQuantity() * invoiceDetails.getPrice();
             }
             InvoiceDetails.printFooter();
+            InvoiceDetails.printTotalAmount(totalAmount);
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
             StatisticsUI.waitEnter();
         } else {
@@ -80,10 +83,13 @@ public class MenuSearchInvoice {
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA KHÁCH HÀNG CÓ TÊN: " + customerName, 90);
             InvoiceDetails.printHeader();
+            double totalAmount = 0;
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
+                totalAmount += invoiceDetails.getQuantity() * invoiceDetails.getPrice();
             }
             InvoiceDetails.printFooter();
+            InvoiceDetails.printTotalAmount(totalAmount);
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
             StatisticsUI.waitEnter();
         } else {
@@ -110,10 +116,13 @@ public class MenuSearchInvoice {
             MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT NGÀY " + invoiceDate.format(dtf), 90);
 
             InvoiceDetails.printHeader();
+            double totalAmount = 0;
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 invoiceDetails.printInvoiceDetailRow();
+                totalAmount += invoiceDetails.getQuantity() * invoiceDetails.getPrice();
             }
             InvoiceDetails.printFooter();
+            InvoiceDetails.printTotalAmount(totalAmount);
             System.out.println("Tổng số: " + invoiceDetailsList.size() + " kết quả");
             StatisticsUI.waitEnter();
         } else {

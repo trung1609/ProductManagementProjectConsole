@@ -11,6 +11,7 @@ public class InvoiceDetails {
     private String product_name;
     private int quantity;
     private double price;
+    private double total;
 
     public InvoiceDetails(int id, int invoice_id, int customerId,
                           String customerName, int product_id, String product_name, int quantity, double price) {
@@ -29,16 +30,16 @@ public class InvoiceDetails {
 
     public static void printHeader() {
         System.out.println(MenuColor.CYAN +
-                "┌─────┬────────────┬─────────────┬───────────────┬──────────────────────┬──────────┬─────────────────┐"
+                "┌─────┬────────────┬─────────────┬───────────────┬──────────────────────┬──────────┬───────────────────┬───────────────────┐"
                 + MenuColor.RESET);
 
         System.out.printf(MenuColor.YELLOW +
-                        "│ %-3s │ %-10s │ %-11s │ %-13s │ %-20s │ %-8s │ %-15s │%n"
+                        "│ %-3s │ %-10s │ %-11s │ %-13s │ %-20s │ %-8s │ %-17s │ %-17s │%n"
                         + MenuColor.RESET,
-                "ID", "Invoice ID", "Customer ID", "Customer Name", "Product Name", "Quantity", "Unit Price");
+                "ID", "Invoice ID", "Cust. ID", "Cust. Name", "Product Name", "Qty", "Unit Price", "Total");
 
         System.out.println(MenuColor.CYAN +
-                "├─────┼────────────┼─────────────┼───────────────┼──────────────────────┼──────────┼─────────────────┤"
+                "├─────┼────────────┼─────────────┼───────────────┼──────────────────────┼──────────┼───────────────────┼───────────────────┤"
                 + MenuColor.RESET);
     }
 
@@ -47,25 +48,39 @@ public class InvoiceDetails {
                 "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-10d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-11d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-20s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13.13s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-20.20s" + MenuColor.RESET +
                         " │ " + MenuColor.GREEN + "%-8d" + MenuColor.RESET +
-                        " │ " + MenuColor.YELLOW + "%,15.0f" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +
                         " │%n",
-                id,
-                invoice_id,
-                customerId,
-                customerName,
-                product_name,
-                quantity,
-                price
+                id, invoice_id, customerId, customerName, product_name, quantity,
+                String.format("%,.0f", price),
+                String.format("%,.0f", quantity * price)
         );
     }
 
     public static void printFooter() {
         System.out.println(MenuColor.CYAN +
-                "└─────┴────────────┴─────────────┴───────────────┴──────────────────────┴──────────┴─────────────────┘"
+                "└─────┴────────────┴─────────────┴───────────────┴──────────────────────┴──────────┴───────────────────┴───────────────────┘"
                 + MenuColor.RESET);
+    }
+
+    public static void printTotalAmount(double totalAmount) {
+        int width = 124;
+        String line = "─".repeat(width - 2);
+
+        System.out.println(MenuColor.CYAN + "┌" + line + "┐" + MenuColor.RESET);
+
+        String label = " TỔNG TIỀN:";
+        String amount = String.format("%,.0f VNĐ ", totalAmount);
+
+        int spaceBetween = width - 2 - label.length() - amount.length();
+
+        System.out.printf("│" + MenuColor.YELLOW + "%s" + MenuColor.RESET + "%" + spaceBetween + "s" + MenuColor.GREEN + "%s" + MenuColor.RESET + "│%n",
+                label, "", amount);
+
+        System.out.println(MenuColor.CYAN + "└" + line + "┘" + MenuColor.RESET);
     }
 
 
@@ -131,5 +146,13 @@ public class InvoiceDetails {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

@@ -55,7 +55,7 @@ begin
     return query select i.id, i.customer_id, c.name as customer_name, i.created_at, i.total_amount
                  from invoice i
                           join customer c on i.customer_id = c.id
-                 order by i.id;
+                 order by i.created_at;
 end;
 $$ language plpgsql;
 
@@ -106,7 +106,8 @@ create or replace function get_invoice_details_by_customer_name(customer_name_in
                 customer_name varchar(255),
                 product_name  varchar(100),
                 quantity      int,
-                unit_price    decimal(12, 2)
+                unit_price    decimal(12, 2),
+                total_amount  decimal(12, 2)
             )
 as
 $$
@@ -118,7 +119,8 @@ begin
                c.name as customer_name,
                p.name as product_name,
                ind.quantity,
-               ind.unit_price
+               ind.unit_price,
+               i.total_amount
         from invoice_details ind
                  join invoice i on ind.invoice_id = i.id
                  join customer c on i.customer_id = c.id
@@ -138,7 +140,8 @@ create or replace function get_invoice_details_by_invoice_date(date_in timestamp
                 customer_name varchar(255),
                 product_name  varchar(100),
                 quantity      int,
-                unit_price    decimal(12, 2)
+                unit_price    decimal(12, 2),
+                total_amount  decimal(12, 2)
             )
 as
 $$
@@ -150,7 +153,8 @@ begin
                c.name as customer_name,
                p.name as product_name,
                id.quantity,
-               id.unit_price
+               id.unit_price,
+               i.total_amount
         from invoice_details id
                  join invoice i on i.id = id.invoice_id
                  join product p on id.product_id = p.id
@@ -180,7 +184,8 @@ create or replace function get_invoice_details_by_id(invoice_id_in int)
                 customer_name varchar(255),
                 product_name  varchar(100),
                 quantity      int,
-                unit_price    decimal(12, 2)
+                unit_price    decimal(12, 2),
+                total_amount  decimal(12, 2)
             )
 as
 $$
@@ -191,7 +196,8 @@ begin
                         c.name as customer_name,
                         p.name as product_name,
                         ind.quantity,
-                        ind.unit_price
+                        ind.unit_price,
+                        i.total_amount
                  from invoice_details ind
                           join invoice i on i.id = ind.invoice_id
                           join product p on ind.product_id = p.id
