@@ -57,13 +57,14 @@ public class RevenueStatistics {
         StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
         LocalDate date;
-
+        String[] revenueMenu = {
+                "Nhập ngày để tính doanh thu",
+                "Doanh thu của tất cả các ngày",
+                "Quay lại"
+        };
         do {
             try {
-                System.out.println("1. Nhập ngày để tính doanh thu");
-                System.out.println("2. Doanh thu của tất cả các ngày");
-                System.out.println("3. Quay lại");
-                System.out.print("Lựa chọn của bạn: ");
+                MenuUtil.printMenu("DOANH THU THEO NGÀY", revenueMenu);
                 int option = Integer.parseInt(sc.nextLine());
                 switch (option) {
                     case 1:
@@ -103,7 +104,7 @@ public class RevenueStatistics {
                     default:
                         MenuUtil.printError("Vui lòng nhập từ 1 đến 3.");
                 }
-            }catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
@@ -115,13 +116,14 @@ public class RevenueStatistics {
         Scanner sc = new Scanner(System.in);
         int month;
         int year;
-
+        String[] revenueMenu = {
+                "Nhập tháng và năm để tính doanh thu",
+                "Liệt kê doanh thu theo tất cả các tháng",
+                "Quay lại"
+        };
         do {
             try {
-                System.out.println("1. Nhập tháng và năm để tính doanh thu");
-                System.out.println("2. Liệt kê doanh thu theo tất cả các tháng");
-                System.out.println("3. Quay lại");
-                System.out.print("Lựa chọn của bạn: ");
+                MenuUtil.printMenu("DOANH THU THEO THÁNG", revenueMenu);
                 int option = Integer.parseInt(sc.nextLine());
                 switch (option) {
                     case 1:
@@ -175,12 +177,14 @@ public class RevenueStatistics {
         StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
         int year;
+        String[] revenueMenu = {
+                "Nhập năm để tính doanh thu",
+                "Liệt kê doanh thu theo tất cả các năm",
+                "Quay lại"
+        };
         do {
             try {
-                System.out.println("1. Nhập năm để tính doanh thu");
-                System.out.println("2. Liệt kê doanh thu theo tất cả các năm");
-                System.out.println("3. Quay lại");
-                System.out.print("Lựa chọn của bạn: ");
+                MenuUtil.printMenu("DOANH THU THEO NĂM", revenueMenu);
                 int option = Integer.parseInt(sc.nextLine());
                 switch (option) {
                     case 1:

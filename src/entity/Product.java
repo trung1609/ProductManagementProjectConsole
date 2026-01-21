@@ -74,41 +74,39 @@ public class Product {
     }
 
     public void printProductHeader() {
+        // Tổng độ rộng mới: 5 + 20 + 15 + 19 + 10 = 69 (cộng các thanh chia)
         System.out.println(MenuColor.CYAN +
-                "┌─────┬────────────────────┬───────────────┬───────────────┬──────────┐"
+                "┌─────┬──────────────────────┬───────────────┬─────────────────────┬──────────┐"
                 + MenuColor.RESET);
 
         System.out.printf(MenuColor.YELLOW +
-                        "│ %-3s │ %-18s │ %-13s │ %-13s │ %-8s │%n"
+                        "│ %-3s │ %-20s │ %-13s │ %-19s │ %-8s │%n"
                         + MenuColor.RESET,
                 "ID", "Name", "Brand", "Price", "Stock");
 
         System.out.println(MenuColor.CYAN +
-                "├─────┼────────────────────┼───────────────┼───────────────┼──────────┤"
+                "├─────┼──────────────────────┼───────────────┼─────────────────────┼──────────┤"
                 + MenuColor.RESET);
     }
 
-
     public void printProductRow(Product p) {
+        // Sử dụng String.format riêng cho tiền để kiểm soát độ rộng 19 ký tự
+        String priceStr = String.format("%,.0f VNĐ", p.getPrice());
+
         System.out.printf(
                 "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-18s" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
-                        " │ " + MenuColor.YELLOW + "%,13.0f" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-20.20s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13.13s" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%19s" + MenuColor.RESET +
                         " │ " + MenuColor.GREEN + "%8d" + MenuColor.RESET +
                         " │%n",
-                p.getId(),
-                p.getName(),
-                p.getBrand(),
-                p.getPrice(),
-                p.getStock()
+                p.getId(), p.getName(), p.getBrand(), priceStr, p.getStock()
         );
     }
 
-
     public void printProductFooter() {
         System.out.println(MenuColor.CYAN +
-                "└─────┴────────────────────┴───────────────┴───────────────┴──────────┘"
+                "└─────┴──────────────────────┴───────────────┴─────────────────────┴──────────┘"
                 + MenuColor.RESET);
     }
 

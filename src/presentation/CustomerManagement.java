@@ -73,7 +73,7 @@ public class CustomerManagement {
             MenuUtil.printError("Chưa có khách hàng được thêm.");
         } else {
             Customer customer = new Customer();
-            MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
+            MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 120);
             customer.printCustomerHeader();
             for (Customer c : customerList) {
                 c.printCustomerRow(c);

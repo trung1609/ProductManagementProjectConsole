@@ -59,6 +59,7 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                     invoiceDetails.setProduct_name(rs.getString("product_name"));
                     invoiceDetails.setQuantity(rs.getInt("quantity"));
                     invoiceDetails.setPrice(rs.getDouble("unit_price"));
+                    invoiceDetails.setTotal(rs.getDouble("total_amount"));
                     invoiceDetailsList.add(invoiceDetails);
                 }
             }
@@ -92,6 +93,7 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                     invoiceDetails.setProduct_name(rs.getString("product_name"));
                     invoiceDetails.setQuantity(rs.getInt("quantity"));
                     invoiceDetails.setPrice(rs.getDouble("unit_price"));
+                    invoiceDetails.setTotal(rs.getDouble("total_amount"));
                     invoiceDetailsList.add(invoiceDetails);
                 }
             }
@@ -125,6 +127,7 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
                     invoiceDetails.setProduct_name(rs.getString("product_name"));
                     invoiceDetails.setQuantity(rs.getInt("quantity"));
                     invoiceDetails.setPrice(rs.getDouble("unit_price"));
+                    invoiceDetails.setTotal(rs.getDouble("total_amount"));
                     invoiceDetailsList.add(invoiceDetails);
                 }
             }
