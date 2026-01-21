@@ -6,7 +6,7 @@ import entity.Invoice;
 import entity.ProductStatistics;
 import presentation.MainMenu;
 import presentation.menu_util.MenuUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

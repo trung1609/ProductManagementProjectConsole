@@ -3,7 +3,7 @@ package dao.impl.invoice;
 import dao.interfaceDao.IInvoiceDAO;
 import entity.Invoice;
 import util.DBUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

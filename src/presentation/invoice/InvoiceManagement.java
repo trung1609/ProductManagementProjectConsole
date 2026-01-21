@@ -10,7 +10,7 @@ import entity.Product;
 import presentation.MainMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.util.*;
 import java.util.List;

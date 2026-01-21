@@ -5,7 +5,7 @@ import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import dao.interfaceDao.IInvoiceDetailsDAO;
 import entity.InvoiceDetails;
 import util.DBUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

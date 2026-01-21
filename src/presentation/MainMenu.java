@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.RevenueStatistics;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 public class MainMenu {
     public static void main(String[] args) {

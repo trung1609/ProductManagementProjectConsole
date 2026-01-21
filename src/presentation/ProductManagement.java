@@ -4,7 +4,7 @@ import business.impl.product.ProductServiceImpl;
 import entity.Product;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.util.List;
 import java.util.Scanner;

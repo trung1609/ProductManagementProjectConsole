@@ -1,7 +1,7 @@
 package presentation;
 
 import presentation.menu_util.MenuUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.util.Scanner;
 

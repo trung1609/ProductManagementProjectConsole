@@ -4,7 +4,7 @@ import business.impl.customer.CustomerServiceImpl;
 import dao.interfaceDao.ICustomerDAO;
 import entity.Customer;
 import util.DBUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

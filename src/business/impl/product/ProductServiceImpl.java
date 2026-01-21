@@ -4,7 +4,7 @@ import business.interfaceService.IProductService;
 import dao.impl.product.ProductDAOImpl;
 import entity.Product;
 import util.DBUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;

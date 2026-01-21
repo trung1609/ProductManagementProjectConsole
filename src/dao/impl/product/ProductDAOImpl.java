@@ -3,7 +3,7 @@ package dao.impl.product;
 import dao.interfaceDao.IProductDAO;
 import entity.Product;
 import util.DBUtil;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
