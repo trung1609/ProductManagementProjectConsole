@@ -23,6 +23,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
             conn.setAutoCommit(false);
             InvoiceDAOImpl invoiceDAO = new InvoiceDAOImpl();
             InvoiceDetailsDAOImpl invoiceDetailsDAO = new InvoiceDetailsDAOImpl();
+            //Trả ra 1 invoice id
             int invoiceId = invoiceDAO.addInvoice(customerId);
             if (invoiceId == 0) {
                 return false;

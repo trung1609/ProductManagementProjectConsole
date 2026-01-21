@@ -74,7 +74,7 @@ public class Customer {
         this.address = address;
     }
 
-    public void printCustomerHeader() {
+    public static void printCustomerHeader() {
         System.out.println(MenuColor.CYAN +
                 "┌─────┬──────────────────┬───────────────┬──────────────────────────────┬─────────────────────────────────────────────┐"
                 + MenuColor.RESET);
@@ -89,7 +89,7 @@ public class Customer {
                 + MenuColor.RESET);
     }
 
-    public void printCustomerRow(Customer c) {
+    public static void printCustomerRow(Customer c) {
         System.out.printf(
                 "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-16.16s" + MenuColor.RESET +
@@ -97,15 +97,15 @@ public class Customer {
                         " │ " + MenuColor.WHITE + "%-28.28s" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-43.43s" + MenuColor.RESET +
                         " │%n",
-                c.getId(),
-                c.getName(),
-                c.getPhone(),
-                c.getEmail(),
-                c.getAddress()
+                c.id,
+                c.name,
+                c.phone,
+                c.email,
+                c.address
         );
     }
 
-    public void printCustomerFooter() {
+    public static void printCustomerFooter() {
         System.out.println(MenuColor.CYAN +
                 "└─────┴──────────────────┴───────────────┴──────────────────────────────┴─────────────────────────────────────────────┘"
                 + MenuColor.RESET);

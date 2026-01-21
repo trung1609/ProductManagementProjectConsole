@@ -70,20 +70,19 @@ public class InvoiceManagement {
         MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         List<Customer> customers = customerService.findAllCustomers();
-        if (customers.isEmpty() || customers == null) {
+        if (customers == null || customers.isEmpty()) {
             MenuUtil.printError("Chưa có khách hàng");
             return;
         }
-        Customer customer = new Customer();
-        customer.printCustomerHeader();
+        Customer.printCustomerHeader();
         for (Customer c : customers) {
             c.printCustomerRow(c);
         }
-        customer.printCustomerFooter();
+        Customer.printCustomerFooter();
+
         System.out.print("Nhập mã khách hàng: ");
         int customerId = Integer.parseInt(sc.nextLine());
-
-        customer = customerService.findCustomerById(customerId);
+        Customer customer = customerService.findCustomerById(customerId);
         if (customer == null) {
             MenuUtil.printError("Không tìm thấy mã khách hàng.");
             return;
@@ -96,6 +95,7 @@ public class InvoiceManagement {
             MenuUtil.printError("Không có sản phẩm nào!");
             return;
         }
+
         Product p_print = new Product();
         p_print.printProductHeader();
         for (Product p : productList) {
@@ -113,24 +113,31 @@ public class InvoiceManagement {
         List<Integer> quantities = new ArrayList<>();
         List<Double> prices = new ArrayList<>();
         double totalAmount = 0;
+
         do {
             System.out.print("Chọn id sản phẩm cần thêm hoặc nhập 0 để dừng chọn: ");
             int productId = Integer.parseInt(sc.nextLine());
             if (productId == 0) {
                 break;
             }
+
             Product checkProductId = productService.findProductById(productId);
             if (checkProductId == null) {
                 MenuUtil.printError("Không tìm thấy id sản phẩm");
                 continue;
             }
+
             System.out.print("Nhập số lượng: ");
             int quantity = Integer.parseInt(sc.nextLine());
+            if (quantity <= 0) {
+                MenuUtil.printError("Số lượng phải lớn hơn 0.");
+                continue;
+            }
 
             int availableStock = stockTmp.get(productId);
 
             if (quantity > availableStock) {
-                MenuUtil.printError("Số lượng trong kho không đủ.");
+                MenuUtil.printError("Số lượng trong kho không đủ. Còn lại: " + availableStock);
                 continue;
             }
 
@@ -144,6 +151,7 @@ public class InvoiceManagement {
                     break;
                 }
             }
+
             if (!isExist) {
                 productIds.add(productId);
                 quantities.add(quantity);
@@ -151,15 +159,16 @@ public class InvoiceManagement {
             }
             double subTotal = quantity * checkProductId.getPrice();
             totalAmount += subTotal;
-            System.out.println("Đã thêm: " + checkProductId.getName() + " x" + quantity + " = " + subTotal);
+            System.out.println("✓ Đã thêm: " + checkProductId.getName() + " x" + quantity + " = " + String.format("%,.0f", subTotal) + " VNĐ");
         } while (true);
-
         if (productIds.isEmpty()) {
             MenuUtil.printError("Chưa chọn sản phẩm nào.");
             return;
         }
 
-        System.out.println("Tổng tiền: " + totalAmount);
+        System.out.println("=".repeat(50));
+        System.out.println("TỔNG TIỀN: " + String.format("%,.0f", totalAmount) + " VNĐ");
+        System.out.println("=".repeat(50));
         System.out.print("Xác nhận tạo hóa đơn? (Y/N): ");
         String confirm = sc.nextLine();
 
@@ -172,7 +181,7 @@ public class InvoiceManagement {
         boolean result = invoiceService.createInvoice(customerId, productIds, quantities, prices);
 
         if (result) {
-            MenuUtil.printSuccess("Tạo hóa đơn thành công!.");
+            MenuUtil.printSuccess("Tạo hóa đơn thành công!");
         } else {
             MenuUtil.printError("Tạo hóa đơn thất bại!");
         }
