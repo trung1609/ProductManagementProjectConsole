@@ -100,3 +100,54 @@ begin
                  order by f_year;
 end;
 $$ language plpgsql;
+
+/*get top selling product*/
+create or replace function get_top_selling_product(limit_in int)
+    returns table
+            (
+                product_id    int,
+                product_name  varchar(255),
+                total_sold    bigint,
+                total_revenue numeric
+            )
+as
+$$
+begin
+    return query select p.id                             as product_id,
+                        p.name                           as product_name,
+                        sum(id.quantity)                 as total_sold,
+                        sum(id.quantity * id.unit_price) as total_revenue
+                 from invoice_details id
+                          join invoice i on id.invoice_id = i.id
+                          join product p on id.product_id = p.id
+                 where i.created_at >= now() - interval '30 days'
+                 group by p.id, p.name
+                 order by sum(id.quantity) desc
+                 limit limit_in;
+end;
+$$ language plpgsql;
+
+/*top customer VIP*/
+create or replace function get_top_customers_vip(limit_in int)
+    returns table
+            (
+                customer_id   int,
+                customer_name varchar(255),
+                total_orders  bigint,
+                total_spent   numeric
+            )
+as
+$$
+begin
+    return query select c.id                as customer_id,
+                        c.name              as customer_name,
+                        count(i.id)         as total_orders,
+                        sum(i.total_amount) as total_spent
+                 from invoice_details id
+                          join invoice i on id.invoice_id = i.id
+                          join customer c on i.customer_id = c.id
+                 group by c.id, c.name
+                 order by sum(i.total_amount) desc
+                 limit limit_in;
+end;
+$$ language plpgsql;

@@ -2,7 +2,9 @@ package business.impl.statistics;
 
 import business.interfaceService.IStatisticsService;
 import dao.impl.revenue.StatisticsRevenueDAOImpl;
+import entity.CustomerStatistics;
 import entity.Invoice;
+import entity.ProductStatistics;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -48,5 +50,17 @@ public class StatisticsServiceImpl implements IStatisticsService {
     public List<Invoice> totalRevenueEachYear() {
         StatisticsRevenueDAOImpl statisticsRevenueDAO = new StatisticsRevenueDAOImpl();
         return statisticsRevenueDAO.totalRevenueEachYear();
+    }
+
+    @Override
+    public List<ProductStatistics> getTopSellingProducts(int limit) {
+        StatisticsRevenueDAOImpl statisticsRevenueDAO = new StatisticsRevenueDAOImpl();
+        return statisticsRevenueDAO.getTopSellingProducts(limit);
+    }
+
+    @Override
+    public List<CustomerStatistics> getTopCustomers(int limit) {
+        StatisticsRevenueDAOImpl statisticsRevenueDAO = new StatisticsRevenueDAOImpl();
+        return statisticsRevenueDAO.getTopCustomers(limit);
     }
 }

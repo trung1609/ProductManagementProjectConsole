@@ -1,7 +1,9 @@
 package presentation.statistics;
 
 import business.impl.statistics.StatisticsServiceImpl;
+import entity.CustomerStatistics;
 import entity.Invoice;
+import entity.ProductStatistics;
 import presentation.MainMenu;
 import presentation.menu_util.MenuUtil;
 import util.ExceptionHandler;
@@ -20,6 +22,8 @@ public class RevenueStatistics {
                 "Doanh thu theo ngày",
                 "Doanh thu theo tháng",
                 "Doanh thu theo năm",
+                "Top sản phẩm bán chạy",
+                "Top khách hàng thân thiết",
                 "Quay lại menu chính"
         };
 
@@ -40,10 +44,16 @@ public class RevenueStatistics {
                         revenueByYear();
                         break;
                     case 4:
+                        topSellingProducts30Days();
+                        break;
+                    case 5:
+                        topCustomerVIP();
+                        break;
+                    case 6:
                         MainMenu.main(args);
                         break;
                     default:
-                        MenuUtil.printError("Vui lòng nhập từ 1 đến 4.");
+                        MenuUtil.printError("Vui lòng nhập từ 1 đến 6.");
                 }
             } catch (NumberFormatException e) {
                 ExceptionHandler.handleNumberFormatException();
@@ -221,6 +231,60 @@ public class RevenueStatistics {
                 ExceptionHandler.handleNumberFormatException();
             }
         } while (true);
+    }
+
+    public static void topSellingProducts30Days() {
+        Scanner sc = new Scanner(System.in);
+        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
+        int limit;
+        do {
+            try {
+                System.out.print("Nhập số lượng sản phẩm bán chạy muốn xem: ");
+                limit = Integer.parseInt(sc.nextLine());
+                if (limit <= 0) {
+                    MenuUtil.printError("Vui lòng nhập số lớn hơn 0.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
+            }
+        } while (true);
+        List<ProductStatistics> productStatistics = statisticsService.getTopSellingProducts(limit);
+        ProductStatistics.printHeader();
+        for (ProductStatistics ps : productStatistics) {
+            ps.printRow();
+        }
+        ProductStatistics.printFooter();
+        System.out.println("Tổng số sản phẩm bán chạy được hiển thị: " + productStatistics.size());
+        StatisticsUI.waitEnter();
+    }
+
+    public static void topCustomerVIP() {
+        Scanner sc = new Scanner(System.in);
+        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
+        int limit;
+        do {
+            try {
+                System.out.print("Nhập số lượng khách hàng VIP muốn xem: ");
+                limit = Integer.parseInt(sc.nextLine());
+                if (limit <= 0) {
+                    MenuUtil.printError("Vui lòng nhập số lớn hơn 0.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                ExceptionHandler.handleNumberFormatException();
+            }
+        } while (true);
+        List<CustomerStatistics> customerStatistics = statisticsService.getTopCustomers(limit);
+        CustomerStatistics.printHeader();
+        for (CustomerStatistics cs : customerStatistics) {
+            cs.printRow();
+        }
+        CustomerStatistics.printFooter();
+        System.out.println("Tổng số sản phẩm bán chạy được hiển thị: " + customerStatistics.size());
+        StatisticsUI.waitEnter();
     }
 
 }

@@ -1,7 +1,9 @@
 package dao.impl.revenue;
 
 import dao.interfaceDao.IStatisticsRevenueDAO;
+import entity.CustomerStatistics;
 import entity.Invoice;
+import entity.ProductStatistics;
 import util.DBUtil;
 import util.ExceptionHandler;
 
@@ -176,5 +178,65 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenueDAO {
         }
 
         return totalRevenueList;
+    }
+
+    @Override
+    public List<ProductStatistics> getTopSellingProducts(int limit) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<ProductStatistics> topSellingProducts = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_top_selling_product(?)}");
+            callSt.setInt(1, limit);
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                topSellingProducts = new ArrayList<>();
+                while (rs.next()) {
+                    ProductStatistics productStats = new ProductStatistics();
+                    productStats.setProductId(rs.getInt("product_id"));
+                    productStats.setProductName(rs.getString("product_name"));
+                    productStats.setTotalSold(rs.getInt("total_sold"));
+                    productStats.setTotalRevenue(rs.getDouble("total_revenue"));
+                    topSellingProducts.add(productStats);
+                }
+            }
+        }catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy danh sách sản phẩm bán chạy");
+        }finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return topSellingProducts;
+    }
+
+    @Override
+    public List<CustomerStatistics> getTopCustomers(int limit) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<CustomerStatistics> topCustomers = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_top_customers_vip(?)}");
+            callSt.setInt(1, limit);
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                topCustomers = new ArrayList<>();
+                while (rs.next()) {
+                    CustomerStatistics customerStats = new CustomerStatistics();
+                    customerStats.setCustomerId(rs.getInt("customer_id"));
+                    customerStats.setCustomerName(rs.getString("customer_name"));
+                    customerStats.setTotalOrders(rs.getInt("total_orders"));
+                    customerStats.setTotalSpent(rs.getDouble("total_spent"));
+                    topCustomers.add(customerStats);
+                }
+            }
+        }catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy danh sách khách hàng thân thiết");
+        }finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return  topCustomers;
     }
 }
