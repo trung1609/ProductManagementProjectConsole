@@ -26,16 +26,16 @@ public class Invoice {
 
     public static void printHeader() {
         System.out.println(MenuColor.CYAN +
-                "┌─────┬─────────────┬────────────────────┬───────────────┬─────────────────┐"
+                "┌─────┬─────────────┬────────────────────┬───────────────┬──────────────────────┐"
                 + MenuColor.RESET);
 
         System.out.printf(MenuColor.YELLOW +
-                        "│ %-3s │ %-11s │ %-18s │ %-13s │ %-15s │%n"
+                        "│ %-3s │ %-11s │ %-18s │ %-13s │ %-20s │%n"
                         + MenuColor.RESET,
                 "ID", "Customer ID", "Customer Name", "Created At", "Total Amount");
 
         System.out.println(MenuColor.CYAN +
-                "├─────┼─────────────┼────────────────────┼───────────────┼─────────────────┤"
+                "├─────┼─────────────┼────────────────────┼───────────────┼──────────────────────┤"
                 + MenuColor.RESET);
     }
 
@@ -47,7 +47,7 @@ public class Invoice {
                         " │ " + MenuColor.WHITE + "%-11d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-18s" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
-                        " │ " + MenuColor.YELLOW + "%,15.0f" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%,16.0f VNĐ" + MenuColor.RESET +
                         " │%n",
                 id,
                 customerId,
@@ -59,7 +59,7 @@ public class Invoice {
 
     public static void printFooter() {
         System.out.println(MenuColor.CYAN +
-                "└─────┴─────────────┴────────────────────┴───────────────┴─────────────────┘"
+                "└─────┴─────────────┴────────────────────┴───────────────┴──────────────────────┘"
                 + MenuColor.RESET);
     }
 

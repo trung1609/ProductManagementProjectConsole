@@ -72,8 +72,14 @@ public class MenuUtil {
     public static void printLoginHeader(String title) {
         int width = 55;
         printLine(width, '┌', '┐');
-        printCentered(color(MenuColor.CYAN) + title + color(MenuColor.RESET), width);
-        printLine(width, '├', '┤');
+        printCenteredColor(title, width, MenuColor.CYAN);
+        printLine(width, '└', '┘');
+    }
+    public static void printCenteredColor(String text, int width, String color) {
+        int padding = (width - 2 - text.length()) / 2;
+        String format = "│" + " ".repeat(padding) + color + "%s" + MenuColor.RESET
+                + " ".repeat(width - 2 - padding - text.length()) + "│%n";
+        System.out.printf(format, text);
     }
 
     public static void printError(String message) {

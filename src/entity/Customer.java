@@ -76,26 +76,26 @@ public class Customer {
 
     public void printCustomerHeader() {
         System.out.println(MenuColor.CYAN +
-                "┌─────┬───────────────┬───────────────┬───────────────────────────┬───────────────────────────┐"
+                "┌─────┬──────────────────┬───────────────┬──────────────────────────────┬─────────────────────────────────────────────┐"
                 + MenuColor.RESET);
 
         System.out.printf(MenuColor.YELLOW +
-                        "│ %-3s │ %-13s │ %-13s │ %-25s │ %-25s │%n"
+                        "│ %-3s │ %-16s │ %-13s │ %-28s │ %-43s │%n"
                         + MenuColor.RESET,
                 "ID", "Name", "Phone", "Email", "Address");
 
         System.out.println(MenuColor.CYAN +
-                "├─────┼───────────────┼───────────────┼───────────────────────────┼───────────────────────────┤"
+                "├─────┼──────────────────┼───────────────┼──────────────────────────────┼─────────────────────────────────────────────┤"
                 + MenuColor.RESET);
     }
 
     public void printCustomerRow(Customer c) {
         System.out.printf(
                 "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-13s" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-25s" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-25s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-16.16s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13.13s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-28.28s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-43.43s" + MenuColor.RESET +
                         " │%n",
                 c.getId(),
                 c.getName(),
@@ -107,7 +107,7 @@ public class Customer {
 
     public void printCustomerFooter() {
         System.out.println(MenuColor.CYAN +
-                "└─────┴───────────────┴───────────────┴───────────────────────────┴───────────────────────────┘"
+                "└─────┴──────────────────┴───────────────┴──────────────────────────────┴─────────────────────────────────────────────┘"
                 + MenuColor.RESET);
     }
 
