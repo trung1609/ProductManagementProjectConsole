@@ -84,22 +84,20 @@ public class MenuSearchInvoice {
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             MenuUtil.printListItems("KẾT QUẢ TÌM KIẾM HÓA ĐƠN CỦA KHÁCH HÀNG: " + customerName, 120);
 
-            // Nhóm invoice details theo invoice_id
-            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>();
+            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>(); // sử dụng linkedhashmap để giữ thứ tự insert
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
-                groupedByInvoice.computeIfAbsent(invoiceDetails.getInvoice_id(), k -> new ArrayList<>()).add(invoiceDetails);
+                groupedByInvoice.computeIfAbsent(invoiceDetails.getInvoice_id(), k -> new ArrayList<>()).add(invoiceDetails); //kiem tra xem key đã tồn tại chưa, nếu chưa thì tạo mới
             }
 
-            double subTotal = 0;
+            double totalAmount = 0;
             int invoiceCount = 0;
-
             // Hiển thị từng hóa đơn riêng biệt
             for (Map.Entry<Integer, List<InvoiceDetails>> entry : groupedByInvoice.entrySet()) {
-                invoiceCount++;
+                invoiceCount ++;
                 int invoiceId = entry.getKey();
-                List<InvoiceDetails> details = entry.getValue();
+                List<InvoiceDetails> invoiceDetails = entry.getValue();
 
-                InvoiceDetails firstDetail = details.getFirst();
+                InvoiceDetails firstDetail = invoiceDetails.getFirst(); // Lấy 1 dòng đại diện vì mọi dòng trong cùng hóa đơn đều thuộc cùng 1 khách hàng
 
                 System.out.println("\n" + MenuColor.CYAN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
                 System.out.println(MenuColor.YELLOW + "  HÓA ĐƠN #" + invoiceId + " - Khách hàng: " + firstDetail.getCustomerName() + " (ID: " + firstDetail.getCustomerId() + ")" + MenuColor.RESET);
@@ -107,20 +105,20 @@ public class MenuSearchInvoice {
 
                 InvoiceDetails.printHeader();
                 double invoiceTotal = 0;
-                for (InvoiceDetails detail : details) {
+                for (InvoiceDetails detail : invoiceDetails) {
                     detail.printInvoiceDetailRow();
                     invoiceTotal += detail.getQuantity() * detail.getPrice();
                 }
                 InvoiceDetails.printFooter();
                 InvoiceDetails.printTotalAmount(invoiceTotal);
 
-                subTotal += invoiceTotal;
+                totalAmount += invoiceTotal;
             }
 
             // Hiển thị tổng kết
             System.out.println("\n" + MenuColor.GREEN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
             System.out.println(MenuColor.YELLOW + "  TỔNG KẾT: Tìm thấy " + invoiceCount + " hóa đơn với tổng cộng " + invoiceDetailsList.size() + " sản phẩm" + MenuColor.RESET);
-            System.out.println(MenuColor.GREEN + "  TỔNG TIỀN TẤT CẢ HÓA ĐƠN: " + MenuColor.RESET + MenuColor.YELLOW + String.format("%,.0f VNĐ", subTotal) + MenuColor.RESET);
+            System.out.println(MenuColor.GREEN + "  TỔNG TIỀN TẤT CẢ HÓA ĐƠN: " + MenuColor.RESET + MenuColor.YELLOW + String.format("%,.0f VNĐ", totalAmount) + MenuColor.RESET);
             System.out.println(MenuColor.GREEN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
 
             StatisticsUI.waitEnter();
@@ -147,23 +145,22 @@ public class MenuSearchInvoice {
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceDate(invoiceDate);
 
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
-            MenuUtil.printListItems("KẾT QUẢ TÌM KIẾM HÓA ĐƠN NGÀY " + invoiceDate.format(dtf), 120);
+            MenuUtil.printListItems("KẾT QUẢ TÌM KIẾM HÓA ĐƠN NGÀY: " + invoiceDate.format(dtf), 120);
 
-            // Nhóm invoice details theo invoice_id
-            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>();
-            for (InvoiceDetails detail : invoiceDetailsList) {
-                groupedByInvoice.computeIfAbsent(detail.getInvoice_id(), k -> new ArrayList<>()).add(detail);
+            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>(); // sử dụng linkedhashmap để giữ thứ tự insert
+            for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
+                groupedByInvoice.computeIfAbsent(invoiceDetails.getInvoice_id(), k -> new ArrayList<>()).add(invoiceDetails); //kiem tra xem key đã tồn tại chưa, nếu chưa thì tạo mới
             }
 
-            double subTotal = 0;
+            double totalAmount = 0;
             int invoiceCount = 0;
             // Hiển thị từng hóa đơn riêng biệt
             for (Map.Entry<Integer, List<InvoiceDetails>> entry : groupedByInvoice.entrySet()) {
-                invoiceCount++;
+                invoiceCount ++;
                 int invoiceId = entry.getKey();
-                List<InvoiceDetails> details = entry.getValue();
+                List<InvoiceDetails> invoiceDetails = entry.getValue();
 
-                InvoiceDetails firstDetail = details.getFirst();
+                InvoiceDetails firstDetail = invoiceDetails.getFirst(); // Lấy 1 dòng đại diện vì mọi dòng trong cùng hóa đơn đều thuộc cùng 1 khách hàng
 
                 System.out.println("\n" + MenuColor.CYAN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
                 System.out.println(MenuColor.YELLOW + "  HÓA ĐƠN #" + invoiceId + " - Khách hàng: " + firstDetail.getCustomerName() + " (ID: " + firstDetail.getCustomerId() + ")" + MenuColor.RESET);
@@ -171,20 +168,20 @@ public class MenuSearchInvoice {
 
                 InvoiceDetails.printHeader();
                 double invoiceTotal = 0;
-                for (InvoiceDetails detail : details) {
+                for (InvoiceDetails detail : invoiceDetails) {
                     detail.printInvoiceDetailRow();
                     invoiceTotal += detail.getQuantity() * detail.getPrice();
                 }
                 InvoiceDetails.printFooter();
                 InvoiceDetails.printTotalAmount(invoiceTotal);
 
-                subTotal += invoiceTotal;
+                totalAmount += invoiceTotal;
             }
 
             // Hiển thị tổng kết
             System.out.println("\n" + MenuColor.GREEN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
             System.out.println(MenuColor.YELLOW + "  TỔNG KẾT: Tìm thấy " + invoiceCount + " hóa đơn với tổng cộng " + invoiceDetailsList.size() + " sản phẩm" + MenuColor.RESET);
-            System.out.println(MenuColor.GREEN + "  TỔNG TIỀN TẤT CẢ HÓA ĐƠN: " + MenuColor.RESET + MenuColor.YELLOW + String.format("%,.0f VNĐ", subTotal) + MenuColor.RESET);
+            System.out.println(MenuColor.GREEN + "  TỔNG TIỀN TẤT CẢ HÓA ĐƠN: " + MenuColor.RESET + MenuColor.YELLOW + String.format("%,.0f VNĐ", totalAmount) + MenuColor.RESET);
             System.out.println(MenuColor.GREEN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
 
             StatisticsUI.waitEnter();
