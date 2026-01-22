@@ -139,4 +139,5 @@ public class InvoiceDetailsDAOImpl implements IInvoiceDetailsDAO {
         return invoiceDetailsList;
     }
 
+
 }

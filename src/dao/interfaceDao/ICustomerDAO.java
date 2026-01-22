@@ -12,4 +12,10 @@ public interface ICustomerDAO {
     boolean deleteCustomer(int index);
 
     List<Customer> getAllCustomers();
+
+    boolean checkEmail(String email);
+
+    boolean checkPhone(String phone);
+
+    Customer findCustomerById(int id);
 }

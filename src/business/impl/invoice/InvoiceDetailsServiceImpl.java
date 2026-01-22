@@ -33,35 +33,6 @@ public class InvoiceDetailsServiceImpl implements IInvoiceDetailsService {
     }
 
     @Override
-    public InvoiceDetails findInvoiceDetailsByProductId(int productId) {
-        Connection conn = null;
-        CallableStatement callSt = null;
-        InvoiceDetails invoiceDetails = null;
-        try {
-            conn = DBUtil.openConnection();
-            callSt = conn.prepareCall("{call find_invoice_detail_by_product_id(?)}");
-            callSt.setInt(1, productId);
-            boolean hasData = callSt.execute();
-            if (hasData) {
-                ResultSet rs = callSt.getResultSet();
-                if (rs.next()) {
-                    invoiceDetails = new InvoiceDetails();
-                    invoiceDetails.setId(rs.getInt("id"));
-                    invoiceDetails.setInvoice_id(rs.getInt("invoice_id"));
-                    invoiceDetails.setProduct_id(rs.getInt("product_id"));
-                    invoiceDetails.setQuantity(rs.getInt("quantity"));
-                    invoiceDetails.setPrice(rs.getDouble("unit_price"));
-                }
-            }
-        } catch (Exception e) {
-            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm chi tiết hóa đơn theo ID sản phẩm");
-        } finally {
-            DBUtil.closeConnection(conn, callSt);
-        }
-        return invoiceDetails;
-    }
-
-    @Override
     public List<InvoiceDetails> getAllInvoiceDetailsByInvoiceId(int invoiceId) {
         IInvoiceDetailsDAO invoiceDetailsDAOImpl = new InvoiceDetailsDAOImpl();
         return invoiceDetailsDAOImpl.getAllInvoiceDetailsByInvoiceId(invoiceId);

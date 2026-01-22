@@ -80,4 +80,32 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
         }
         return false;
     }
+
+    @Override
+    public Invoice findInvoiceByCustomerId(int customerId) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        Invoice invoice = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call find_invoice_by_customer_id(?)}");
+            callSt.setInt(1, customerId);
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                if (rs.next()) {
+                    invoice = new Invoice();
+                    invoice.setId(rs.getInt("id"));
+                    invoice.setCustomerId(rs.getInt("customer_id"));
+                    invoice.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime().toLocalDate());
+                    invoice.setTotalAmount(rs.getDouble("total_amount"));
+                }
+            }
+        } catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm hóa đơn theo ID khách hàng");
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return invoice;
+    }
 }

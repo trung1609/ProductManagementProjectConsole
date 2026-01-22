@@ -2,9 +2,9 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/database/add_database.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/database/auth.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/database/customer.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/database/invoice.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/database/login.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/database/product.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/database/statistics_revenue.sql" dialect="PostgreSQL" />
   </component>

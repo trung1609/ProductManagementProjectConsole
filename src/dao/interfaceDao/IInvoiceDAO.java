@@ -10,4 +10,6 @@ public interface IInvoiceDAO {
     List<Invoice> getAllInvoices();
 
     boolean deleteInvoicesByCustomerId(int customerId);
+
+    Invoice findInvoiceByCustomerId(int customerId);
 }

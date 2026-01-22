@@ -59,42 +59,6 @@ begin
 end;
 $$ language plpgsql;
 
-/*find invoice by customer id*/
-create or replace function find_invoice_by_customer_id(customer_id_in int)
-    returns table
-            (
-                id           int,
-                customer_id  int,
-                created_at   timestamp,
-                total_amount decimal(12, 2)
-            )
-as
-$$
-begin
-    return query select i.id, i.customer_id, i.created_at, i.total_amount
-                 from invoice i
-                 where i.customer_id = customer_id_in;
-end;
-$$ language plpgsql;
-
-/*find invoice detail by product id*/
-create or replace function find_invoice_detail_by_product_id(product_id_in int)
-    returns table
-            (
-                id         int,
-                invoice_id int,
-                product_id int,
-                quantity   int,
-                unit_price decimal(12, 2)
-            )
-as
-$$
-begin
-    return query select ind.id, ind.invoice_id, ind.product_id, ind.quantity, ind.unit_price
-                 from invoice_details ind
-                 where ind.product_id = product_id_in;
-end;
-$$ language plpgsql;
 
 /*get_invoice_details_by_customer_name*/
 create or replace function get_invoice_details_by_customer_name(customer_name_in varchar(255))

@@ -12,7 +12,6 @@ public interface IInvoiceDetailsService {
 
     List<InvoiceDetails> getAllInvoiceDetailsByInvoiceDate(LocalDate invoiceDate);
 
-    InvoiceDetails findInvoiceDetailsByProductId(int productId);
 
     List<InvoiceDetails> getAllInvoiceDetailsByInvoiceId(int invoiceId);
 }

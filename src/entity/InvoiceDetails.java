@@ -30,27 +30,27 @@ public class InvoiceDetails {
 
     public static void printHeader() {
         System.out.println(MenuColor.CYAN +
-                "┌─────┬────────────┬─────────────┬───────────────┬──────────────────────┬──────────┬───────────────────┬───────────────────┐"
+                "┌─────┬────────────┬─────────────┬────────────────────┬──────────────────────┬──────────┬───────────────────┬───────────────────┐"
                 + MenuColor.RESET);
 
         System.out.printf(MenuColor.YELLOW +
-                        "│ %-3s │ %-10s │ %-11s │ %-13s │ %-20s │ %-8s │ %-17s │ %-17s │%n"
+                        "│ %-3s │ %-10s │ %-11s │ %-18s │ %-20s │ %-8s │ %-17s │ %-17s │%n"
                         + MenuColor.RESET,
-                "ID", "Invoice ID", "Cust. ID", "Cust. Name", "Product Name", "Qty", "Unit Price", "Total");
+                "ID", "Invoice ID", "Customer ID", "Customer Name", "Product Name", "Qty", "Unit Price", "Total");
 
         System.out.println(MenuColor.CYAN +
-                "├─────┼────────────┼─────────────┼───────────────┼──────────────────────┼──────────┼───────────────────┼───────────────────┤"
+                "├─────┼────────────┼─────────────┼────────────────────┼──────────────────────┼──────────┼───────────────────┼───────────────────┤"
                 + MenuColor.RESET);
     }
 
     public static void printFooter() {
         System.out.println(MenuColor.CYAN +
-                "└─────┴────────────┴─────────────┴───────────────┴──────────────────────┴──────────┴───────────────────┴───────────────────┘"
+                "└─────┴────────────┴─────────────┴────────────────────┴──────────────────────┴──────────┴───────────────────┴───────────────────┘"
                 + MenuColor.RESET);
     }
 
     public static void printTotalAmount(double totalAmount) {
-        int width = 124;
+        int width = 129;
         String line = "─".repeat(width - 2);
 
         System.out.println(MenuColor.CYAN + "┌" + line + "┐" + MenuColor.RESET);
@@ -71,7 +71,7 @@ public class InvoiceDetails {
                 "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-10d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-11d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-13.13s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-18.18s" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-20.20s" + MenuColor.RESET +
                         " │ " + MenuColor.GREEN + "%-8d" + MenuColor.RESET +
                         " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +

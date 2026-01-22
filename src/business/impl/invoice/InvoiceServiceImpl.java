@@ -3,32 +3,37 @@ package business.impl.invoice;
 import business.interfaceService.IInvoiceService;
 import dao.impl.invoice.InvoiceDAOImpl;
 import dao.impl.invoice.InvoiceDetailsDAOImpl;
+import dao.interfaceDao.IInvoiceDAO;
 import entity.Invoice;
 import exception.ExceptionHandler;
 import util.DBUtil;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class InvoiceServiceImpl implements IInvoiceService {
+    private final IInvoiceDAO invoiceDAO;
+
+    public InvoiceServiceImpl() {
+        this.invoiceDAO = new InvoiceDAOImpl();
+    }
+
     @Override
     public boolean createInvoice(int customerId, List<Integer> productIds, List<Integer> quantities, List<Double> prices) {
         Connection conn = null;
         try {
             conn = DBUtil.openConnection();
             conn.setAutoCommit(false);
-            InvoiceDAOImpl invoiceDAO = new InvoiceDAOImpl();
-            InvoiceDetailsDAOImpl invoiceDetailsDAO = new InvoiceDetailsDAOImpl();
+            InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
+
             //Trả ra 1 invoice id
             int invoiceId = invoiceDAO.addInvoice(customerId);
             if (invoiceId == 0) {
                 return false;
             }
             for (int i = 0; i < productIds.size(); i++) {
-                boolean result = invoiceDetailsDAO.addInvoiceDetails(
+                boolean result = invoiceDetailsService.addInvoiceDetails(
                         invoiceId,
                         productIds.get(i),
                         quantities.get(i),
@@ -62,43 +67,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     @Override
     public List<Invoice> getAllInvoices() {
-        InvoiceDAOImpl invoiceDAO = new InvoiceDAOImpl();
         return invoiceDAO.getAllInvoices();
     }
 
     @Override
     public Invoice findInvoiceByCustomerId(int customerId) {
-        Connection conn = null;
-        CallableStatement callSt = null;
-        Invoice invoice = null;
-        try {
-            conn = DBUtil.openConnection();
-            callSt = conn.prepareCall("{call find_invoice_by_customer_id(?)}");
-            callSt.setInt(1, customerId);
-            boolean hasData = callSt.execute();
-            if (hasData) {
-                ResultSet rs = callSt.getResultSet();
-                if (rs.next()) {
-                    invoice = new Invoice();
-                    invoice.setId(rs.getInt("id"));
-                    invoice.setCustomerId(rs.getInt("customer_id"));
-                    invoice.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime().toLocalDate());
-                    invoice.setTotalAmount(rs.getDouble("total_amount"));
-                }
-            }
-        } catch (Exception e) {
-            ExceptionHandler.handleDatabaseException(e, "Lỗi khi tìm hóa đơn theo ID khách hàng");
-        } finally {
-            DBUtil.closeConnection(conn, callSt);
-        }
-        return invoice;
+        return invoiceDAO.findInvoiceByCustomerId(customerId);
     }
 
     @Override
     public boolean deleteInvoicesByCustomerId(int customerId) {
-        InvoiceDAOImpl invoiceDAO = new InvoiceDAOImpl();
         return invoiceDAO.deleteInvoicesByCustomerId(customerId);
     }
-
 
 }
