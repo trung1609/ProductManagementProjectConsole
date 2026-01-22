@@ -8,16 +8,15 @@ import entity.Customer;
 import entity.Invoice;
 import entity.Product;
 import entity.Role;
-import presentation.menu_by_role.AdminMenu;
+import exception.ExceptionHandler;
 import presentation.dashboard.MenuDashboard;
+import presentation.menu_by_role.AdminMenu;
 import presentation.menu_by_role.StaffMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
 import util.SessionManager;
-import exception.ExceptionHandler;
 
 import java.util.*;
-import java.util.List;
 
 public class InvoiceManagement {
     public static void main(String[] args) {
@@ -89,7 +88,7 @@ public class InvoiceManagement {
         }
         Customer.printCustomerHeader();
         for (Customer c : customers) {
-            c.printCustomerRow(c);
+            Customer.printCustomerRow(c);
         }
         Customer.printCustomerFooter();
 

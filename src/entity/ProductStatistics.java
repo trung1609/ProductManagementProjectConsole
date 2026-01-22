@@ -33,6 +33,12 @@ public class ProductStatistics {
                 + MenuColor.RESET);
     }
 
+    public static void printFooter() {
+        System.out.println(MenuColor.CYAN +
+                "└──────────────┴────────────────────────────────┴─────────────────┴───────────────────────┘"
+                + MenuColor.RESET);
+    }
+
     public void printRow() {
         String revenueStr = String.format("%,.0f VNĐ", totalRevenue);
 
@@ -46,12 +52,6 @@ public class ProductStatistics {
                 totalSold,
                 revenueStr
         );
-    }
-
-    public static void printFooter() {
-        System.out.println(MenuColor.CYAN +
-                "└──────────────┴────────────────────────────────┴─────────────────┴───────────────────────┘"
-                + MenuColor.RESET);
     }
 
     // Getters and Setters

@@ -43,23 +43,6 @@ public class InvoiceDetails {
                 + MenuColor.RESET);
     }
 
-    public void printInvoiceDetailRow() {
-        System.out.printf(
-                "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-10d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-11d" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-13.13s" + MenuColor.RESET +
-                        " │ " + MenuColor.WHITE + "%-20.20s" + MenuColor.RESET +
-                        " │ " + MenuColor.GREEN + "%-8d" + MenuColor.RESET +
-                        " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +
-                        " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +
-                        " │%n",
-                id, invoice_id, customerId, customerName, product_name, quantity,
-                String.format("%,.0f", price),
-                String.format("%,.0f", quantity * price)
-        );
-    }
-
     public static void printFooter() {
         System.out.println(MenuColor.CYAN +
                 "└─────┴────────────┴─────────────┴───────────────┴──────────────────────┴──────────┴───────────────────┴───────────────────┘"
@@ -83,6 +66,22 @@ public class InvoiceDetails {
         System.out.println(MenuColor.CYAN + "└" + line + "┘" + MenuColor.RESET);
     }
 
+    public void printInvoiceDetailRow() {
+        System.out.printf(
+                "│ " + MenuColor.GREEN + "%-3d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-10d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-11d" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-13.13s" + MenuColor.RESET +
+                        " │ " + MenuColor.WHITE + "%-20.20s" + MenuColor.RESET +
+                        " │ " + MenuColor.GREEN + "%-8d" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +
+                        " │ " + MenuColor.YELLOW + "%13s VNĐ" + MenuColor.RESET +
+                        " │%n",
+                id, invoice_id, customerId, customerName, product_name, quantity,
+                String.format("%,.0f", price),
+                String.format("%,.0f", quantity * price)
+        );
+    }
 
     public int getId() {
         return id;

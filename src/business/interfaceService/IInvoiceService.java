@@ -1,6 +1,5 @@
 package business.interfaceService;
 
-import entity.Customer;
 import entity.Invoice;
 
 import java.util.List;

@@ -1,18 +1,17 @@
 package presentation.main_menu;
 
+import exception.ExceptionHandler;
 import presentation.customers_menu.CustomerManagement;
 import presentation.dashboard.MenuDashboard;
 import presentation.invoice.InvoiceManagement;
-
-import java.util.Scanner;
-
 import presentation.menu_util.MenuUtil;
 import presentation.products_menu.ProductManagement;
 import presentation.statistics.RevenueStatistics;
-import exception.ExceptionHandler;
+
+import java.util.Scanner;
 
 public class MainMenu {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         String[] mainMenu = {

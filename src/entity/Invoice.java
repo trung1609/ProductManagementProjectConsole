@@ -39,6 +39,12 @@ public class Invoice {
                 + MenuColor.RESET);
     }
 
+    public static void printFooter() {
+        System.out.println(MenuColor.CYAN +
+                "└─────┴─────────────┴────────────────────┴───────────────┴──────────────────────┘"
+                + MenuColor.RESET);
+    }
+
     public void printInvoiceRow() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -56,13 +62,6 @@ public class Invoice {
                 totalAmount
         );
     }
-
-    public static void printFooter() {
-        System.out.println(MenuColor.CYAN +
-                "└─────┴─────────────┴────────────────────┴───────────────┴──────────────────────┘"
-                + MenuColor.RESET);
-    }
-
 
     public int getId() {
         return id;

@@ -5,7 +5,7 @@ as
 $$
 begin
     select exists(select 1
-                  from admin a
+                  from "user"
                   where username = user_in
                     and password = password_in)
     into is_true;
@@ -18,7 +18,7 @@ as
 $$
 begin
     select exists(select 1
-                  from admin a
+                  from "user"
                   where username = user_in)
     into is_true;
 end;
@@ -33,7 +33,7 @@ declare
 begin
     select password
     into pass_out
-    from admin a
+    from "user"
     where username = user_in;
     return pass_out;
 end;
@@ -49,7 +49,7 @@ declare
 begin
     select role
     into role_out
-    from admin a
+    from "user"
     where username = user_in;
     return role_out;
 end;

@@ -4,8 +4,8 @@ import dao.interfaceDao.IStatisticsRevenueDAO;
 import entity.CustomerStatistics;
 import entity.Invoice;
 import entity.ProductStatistics;
-import util.DBUtil;
 import exception.ExceptionHandler;
+import util.DBUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -71,9 +71,9 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenueDAO {
                     totalRevenueList.add(invoice);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             ExceptionHandler.handleDatabaseException(e, "Lỗi khi tính doanh thu theo ngày");
-        }finally {
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
 
@@ -202,9 +202,9 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenueDAO {
                     topSellingProducts.add(productStats);
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy danh sách sản phẩm bán chạy");
-        }finally {
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
         return topSellingProducts;
@@ -232,11 +232,11 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenueDAO {
                     topCustomers.add(customerStats);
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy danh sách khách hàng thân thiết");
-        }finally {
+        } finally {
             DBUtil.closeConnection(conn, callSt);
         }
-        return  topCustomers;
+        return topCustomers;
     }
 }

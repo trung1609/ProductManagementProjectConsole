@@ -6,12 +6,12 @@ import entity.Role;
 public class SessionManager {
     private static Admin currentUser = null;
 
-    public static void setCurrentUser(Admin admin) {
-        currentUser = admin;
-    }
-
     public static Admin getCurrentUser() {
         return currentUser;
+    }
+
+    public static void setCurrentUser(Admin admin) {
+        currentUser = admin;
     }
 
     public static Role getCurrentRole() {

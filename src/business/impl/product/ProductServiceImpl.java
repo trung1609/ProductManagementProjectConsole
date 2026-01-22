@@ -3,8 +3,8 @@ package business.impl.product;
 import business.interfaceService.IProductService;
 import dao.impl.product.ProductDAOImpl;
 import entity.Product;
-import util.DBUtil;
 import exception.ExceptionHandler;
+import util.DBUtil;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;

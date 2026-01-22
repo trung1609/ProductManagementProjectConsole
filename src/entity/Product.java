@@ -128,7 +128,7 @@ public class Product {
                     continue;
                 }
                 ProductServiceImpl productService = new ProductServiceImpl();
-                if (productService.checkProductName(this.name)) {
+                if (ProductServiceImpl.checkProductName(this.name)) {
                     MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
                     continue;
                 }

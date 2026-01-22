@@ -59,7 +59,8 @@ $$
 begin
     return query select p.id, p.name, p.brand, p.price, p.stock, p.status
                  from product p
-                 where p.status = true and p.stock > 0
+                 where p.status = true
+                   and p.stock > 0
                  order by p.id;
 end;
 $$ language plpgsql;

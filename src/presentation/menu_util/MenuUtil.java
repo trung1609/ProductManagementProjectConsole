@@ -75,6 +75,7 @@ public class MenuUtil {
         printCenteredColor(title, width, MenuColor.CYAN);
         printLine(width, '└', '┘');
     }
+
     public static void printCenteredColor(String text, int width, String color) {
         int padding = (width - 2 - text.length()) / 2;
         String format = "│" + " ".repeat(padding) + color + "%s" + MenuColor.RESET

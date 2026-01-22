@@ -18,6 +18,27 @@ public class CustomerStatistics {
         this.totalSpent = totalSpent;
     }
 
+    public static void printHeader() {
+        System.out.println(MenuColor.CYAN +
+                "┌──────────────┬────────────────────────────────┬─────────────────┬───────────────────────┐"
+                + MenuColor.RESET);
+
+        System.out.printf(MenuColor.YELLOW +
+                        "│ %-12s │ %-30s │ %-15s │ %-21s │%n"
+                        + MenuColor.RESET,
+                "Customer ID", "Customer Name", "Total Orders", "Total Spent");
+
+        System.out.println(MenuColor.CYAN +
+                "├──────────────┼────────────────────────────────┼─────────────────┼───────────────────────┤"
+                + MenuColor.RESET);
+    }
+
+    public static void printFooter() {
+        System.out.println(MenuColor.CYAN +
+                "└──────────────┴────────────────────────────────┴─────────────────┴───────────────────────┘"
+                + MenuColor.RESET);
+    }
+
     // Getters and Setters
     public int getCustomerId() {
         return customerId;
@@ -51,21 +72,6 @@ public class CustomerStatistics {
         this.totalSpent = totalSpent;
     }
 
-    public static void printHeader() {
-        System.out.println(MenuColor.CYAN +
-                "┌──────────────┬────────────────────────────────┬─────────────────┬───────────────────────┐"
-                + MenuColor.RESET);
-
-        System.out.printf(MenuColor.YELLOW +
-                        "│ %-12s │ %-30s │ %-15s │ %-21s │%n"
-                        + MenuColor.RESET,
-                "Customer ID", "Customer Name", "Total Orders", "Total Spent");
-
-        System.out.println(MenuColor.CYAN +
-                "├──────────────┼────────────────────────────────┼─────────────────┼───────────────────────┤"
-                + MenuColor.RESET);
-    }
-
     public void printRow() {
         String revenueStr = String.format("%,.0f VNĐ", totalSpent);
 
@@ -79,11 +85,5 @@ public class CustomerStatistics {
                 totalOrders,
                 revenueStr
         );
-    }
-
-    public static void printFooter() {
-        System.out.println(MenuColor.CYAN +
-                "└──────────────┴────────────────────────────────┴─────────────────┴───────────────────────┘"
-                + MenuColor.RESET);
     }
 }

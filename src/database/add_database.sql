@@ -45,8 +45,8 @@ create table invoice_details
     unit_price decimal(12, 2) not null
 );
 
-insert into admin (username, password, role)
+insert into "user" (username, password, role)
 values ('admin', '123456', 'ADMIN');
 
-insert into admin (username, password)
+insert into "user" (username, password)
 values ('staff', '123456');

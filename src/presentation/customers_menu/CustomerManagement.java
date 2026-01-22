@@ -3,11 +3,11 @@ package presentation.customers_menu;
 import business.impl.customer.CustomerServiceImpl;
 import entity.Customer;
 import entity.Role;
+import exception.ExceptionHandler;
 import presentation.dashboard.MenuDashboard;
 import presentation.menu_by_role.AdminMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
-import exception.ExceptionHandler;
 import util.SessionManager;
 
 import java.util.List;
@@ -85,11 +85,11 @@ public class CustomerManagement {
         } else {
             Customer customer = new Customer();
             MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 120);
-            customer.printCustomerHeader();
+            Customer.printCustomerHeader();
             for (Customer c : customerList) {
-                c.printCustomerRow(c);
+                Customer.printCustomerRow(c);
             }
-            customer.printCustomerFooter();
+            Customer.printCustomerFooter();
             System.out.println("Tổng số khách hàng: " + customerList.size());
             StatisticsUI.waitEnter();
         }
@@ -107,11 +107,11 @@ public class CustomerManagement {
         MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
         List<Customer> customerList = customerService.findAllCustomers();
         Customer customerDisplay = new Customer();
-        customerDisplay.printCustomerHeader();
+        Customer.printCustomerHeader();
         for (Customer c : customerList) {
-            c.printCustomerRow(c);
+            Customer.printCustomerRow(c);
         }
-        customerDisplay.printCustomerFooter();
+        Customer.printCustomerFooter();
         System.out.print("Nhập mã khách hàng cần cập nhật: ");
         int id = Integer.parseInt(sc.nextLine());
         Customer customer = customerService.findCustomerById(id);
@@ -121,11 +121,11 @@ public class CustomerManagement {
         }
         boolean isExist = true;
         MenuUtil.printListItems("THÔNG TIN KHÁCH HÀNG CẦN CẬP NHẬT", 95);
-        customer.printCustomerHeader();
+        Customer.printCustomerHeader();
         for (int i = 0; i < 1; i++) {
-            customer.printCustomerRow(customer);
+            Customer.printCustomerRow(customer);
         }
-        customer.printCustomerFooter();
+        Customer.printCustomerFooter();
         do {
             try {
                 MenuUtil.printMenu("CẬP NHẬT THÔNG TIN KHÁCH HÀNG", updateCustomerMenu);
@@ -217,11 +217,11 @@ public class CustomerManagement {
         Customer customer = new Customer();
         List<Customer> customerList = customerService.findAllCustomers();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 95);
-        customer.printCustomerHeader();
+        Customer.printCustomerHeader();
         for (Customer c : customerList) {
-            c.printCustomerRow(c);
+            Customer.printCustomerRow(c);
         }
-        customer.printCustomerFooter();
+        Customer.printCustomerFooter();
         System.out.print("Nhập mã khách hàng cần xóa: ");
         int id = Integer.parseInt(sc.nextLine());
         Customer checkCustomerId = customerService.findCustomerById(id);

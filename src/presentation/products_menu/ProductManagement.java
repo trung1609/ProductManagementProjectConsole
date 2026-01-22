@@ -3,12 +3,12 @@ package presentation.products_menu;
 import business.impl.product.ProductServiceImpl;
 import entity.Product;
 import entity.Role;
+import exception.ExceptionHandler;
 import presentation.dashboard.MenuDashboard;
 import presentation.menu_by_role.AdminMenu;
 import presentation.menu_by_role.StaffMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
-import exception.ExceptionHandler;
 import util.SessionManager;
 
 import java.util.List;
@@ -43,10 +43,20 @@ public class ProductManagement {
                         addProduct(sc);
                         break;
                     case 3:
-                        updateProduct();
+                        Role currentRoleUpdate = SessionManager.getCurrentRole();
+                        if (currentRoleUpdate == Role.ADMIN) {
+                            updateProduct();
+                        } else {
+                            MenuUtil.printError("Chức năng này chỉ dành cho ADMIN.");
+                        }
                         break;
                     case 4:
-                        deleteProduct(sc);
+                        Role currentRoleDelete = SessionManager.getCurrentRole();
+                        if (currentRoleDelete == Role.ADMIN) {
+                            deleteProduct(sc);
+                        } else {
+                            MenuUtil.printError("Chức năng này chỉ dành cho ADMIN.");
+                        }
                         break;
                     case 5:
                         searchProductByBrand(sc);
@@ -156,7 +166,7 @@ public class ProductManagement {
                                     MenuUtil.printError("Vui lòng không bỏ trống tên sản phẩm.");
                                     continue;
                                 }
-                                if (productService.checkProductName(newName)) {
+                                if (ProductServiceImpl.checkProductName(newName)) {
                                     MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
                                     continue;
                                 }
