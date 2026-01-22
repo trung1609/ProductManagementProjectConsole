@@ -69,6 +69,12 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<Product> getProductInStock() {
+        ProductDAOImpl productDAO = new ProductDAOImpl();
+        return productDAO.getProductInStock();
+    }
+
+    @Override
     public boolean addProduct(Product product) {
         ProductDAOImpl productDAO = new ProductDAOImpl();
         return productDAO.addProduct(product);

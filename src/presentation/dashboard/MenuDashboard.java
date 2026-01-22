@@ -1,5 +1,6 @@
-package presentation;
+package presentation.dashboard;
 
+import presentation.login.AdminLogin;
 import presentation.menu_util.MenuUtil;
 import exception.ExceptionHandler;
 
@@ -10,7 +11,7 @@ public class MenuDashboard {
         Scanner sc = new Scanner(System.in);
 
         String[] menu = {
-                "Đăng nhập Admin",
+                "Đăng nhập",
                 "Thoát"
         };
         do {

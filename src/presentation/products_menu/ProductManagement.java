@@ -1,16 +1,21 @@
-package presentation;
+package presentation.products_menu;
 
 import business.impl.product.ProductServiceImpl;
 import entity.Product;
+import entity.Role;
+import presentation.dashboard.MenuDashboard;
+import presentation.menu_by_role.AdminMenu;
+import presentation.menu_by_role.StaffMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
 import exception.ExceptionHandler;
+import util.SessionManager;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductManagement {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         String[] productMenu = {
@@ -53,7 +58,16 @@ public class ProductManagement {
                         searchProductByStock(sc);
                         break;
                     case 8:
-                        MainMenu.main(args);
+                        // Quay về menu tương ứng với role
+                        Role currentRole = SessionManager.getCurrentRole();
+                        if (currentRole == Role.ADMIN) {
+                            AdminMenu.showMenu(args);
+                        } else if (currentRole == Role.STAFF) {
+                            StaffMenu.showMenu(args);
+                        } else {
+                            MenuUtil.printError("Phiên đăng nhập đã hết hạn!");
+                            MenuDashboard.main(args);
+                        }
                         return;
                     default:
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");

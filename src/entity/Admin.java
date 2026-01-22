@@ -10,14 +10,16 @@ public class Admin {
     private int id;
     private String username;
     private String password;
+    private Role role;
 
     public Admin() {
     }
 
-    public Admin(int id, String username, String password) {
+    public Admin(int id, String username, String password, Role role) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public int getId() {
@@ -44,6 +46,14 @@ public class Admin {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public void login(Scanner sc) {
         do {
             System.out.print("Nhập username: ");
@@ -63,7 +73,10 @@ public class Admin {
             if (check_exist && checkPassword) {
                 this.username = input_username;
                 this.password = input_password;
-                MenuUtil.printSuccess("Đăng nhập thành công!");
+                // Lấy role của user
+                String roleStr = AdminBusiness.get_role_by_username(input_username);
+                this.role = Role.valueOf(roleStr);
+                MenuUtil.printSuccess("Đăng nhập thành công! Role: " + this.role);
                 break;
             } else {
                 MenuUtil.printError("Sai tài khoản hoặc mật khẩu, vui lòng nhập lại.");

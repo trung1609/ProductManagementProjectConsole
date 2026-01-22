@@ -1,10 +1,13 @@
-package presentation;
+package presentation.main_menu;
 
+import presentation.customers_menu.CustomerManagement;
+import presentation.dashboard.MenuDashboard;
 import presentation.invoice.InvoiceManagement;
 
 import java.util.Scanner;
 
 import presentation.menu_util.MenuUtil;
+import presentation.products_menu.ProductManagement;
 import presentation.statistics.RevenueStatistics;
 import exception.ExceptionHandler;
 

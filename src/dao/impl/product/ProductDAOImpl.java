@@ -104,4 +104,35 @@ public class ProductDAOImpl implements IProductDAO {
         }
         return productList;
     }
+
+    @Override
+    public List<Product> getProductInStock() {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Product> productList = null;
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_product_inStock()}");
+            boolean hasData = callSt.execute();
+            if (hasData) {
+                ResultSet rs = callSt.getResultSet();
+                productList = new ArrayList<>();
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setId(rs.getInt("id"));
+                    product.setName(rs.getString("name"));
+                    product.setBrand(rs.getString("brand"));
+                    product.setPrice(rs.getDouble("price"));
+                    product.setStock(rs.getInt("stock"));
+                    product.setStatus(rs.getBoolean("status"));
+                    productList.add(product);
+                }
+            }
+        } catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy sản phẩm trong kho");
+        } finally {
+            DBUtil.closeConnection(conn, callSt);
+        }
+        return productList;
+    }
 }

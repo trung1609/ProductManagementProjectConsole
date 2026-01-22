@@ -4,8 +4,11 @@ import business.impl.statistics.StatisticsServiceImpl;
 import entity.CustomerStatistics;
 import entity.Invoice;
 import entity.ProductStatistics;
-import presentation.MainMenu;
+import entity.Role;
+import presentation.menu_by_role.AdminMenu;
+import presentation.dashboard.MenuDashboard;
 import presentation.menu_util.MenuUtil;
+import util.SessionManager;
 import exception.ExceptionHandler;
 
 import java.time.LocalDate;
@@ -50,8 +53,15 @@ public class RevenueStatistics {
                         topCustomerVIP();
                         break;
                     case 6:
-                        MainMenu.main(args);
-                        break;
+                        // Quay về menu Admin (chỉ Admin mới vào được RevenueStatistics)
+                        Role currentRole = SessionManager.getCurrentRole();
+                        if (currentRole == Role.ADMIN) {
+                            AdminMenu.showMenu(args);
+                        } else {
+                            MenuUtil.printError("Phiên đăng nhập đã hết hạn!");
+                            MenuDashboard.main(args);
+                        }
+                        return;
                     default:
                         MenuUtil.printError("Vui lòng nhập từ 1 đến 6.");
                 }

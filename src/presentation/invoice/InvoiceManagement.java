@@ -7,9 +7,13 @@ import business.interfaceService.IInvoiceService;
 import entity.Customer;
 import entity.Invoice;
 import entity.Product;
-import presentation.MainMenu;
+import entity.Role;
+import presentation.menu_by_role.AdminMenu;
+import presentation.dashboard.MenuDashboard;
+import presentation.menu_by_role.StaffMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
+import util.SessionManager;
 import exception.ExceptionHandler;
 
 import java.util.*;
@@ -43,7 +47,16 @@ public class InvoiceManagement {
                         MenuSearchInvoice.main(args);
                         break;
                     case 4:
-                        MainMenu.main(args);
+                        // Quay về menu tương ứng với role
+                        Role currentRole = SessionManager.getCurrentRole();
+                        if (currentRole == Role.ADMIN) {
+                            AdminMenu.showMenu(args);
+                        } else if (currentRole == Role.STAFF) {
+                            StaffMenu.showMenu(args);
+                        } else {
+                            MenuUtil.printError("Phiên đăng nhập đã hết hạn!");
+                            MenuDashboard.main(args);
+                        }
                         return;
                     default:
                         MenuUtil.printError("Vui lòng nhập lại lựa chọn phù hợp.");
@@ -90,7 +103,7 @@ public class InvoiceManagement {
 
         ProductServiceImpl productService = new ProductServiceImpl();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
-        List<Product> productList = productService.getALlProducts();
+        List<Product> productList = productService.getProductInStock();
         if (productList == null || productList.isEmpty()) {
             MenuUtil.printError("Không có sản phẩm nào!");
             return;

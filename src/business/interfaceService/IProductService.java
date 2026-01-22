@@ -9,6 +9,8 @@ public interface IProductService {
 
     List<Product> getALlProducts();
 
+    List<Product> getProductInStock();
+
     boolean addProduct(Product product);
 
     boolean updateProduct(Product product);

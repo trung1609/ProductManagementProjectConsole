@@ -63,4 +63,21 @@ public class AdminBusiness {
         }
         return null;
     }
+
+    public static String get_role_by_username(String username) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+
+        try {
+            conn = DBUtil.openConnection();
+            callSt = conn.prepareCall("{call get_role_by_username(?,?)}");
+            callSt.setString(1, username);
+            callSt.registerOutParameter(2, Types.VARCHAR);
+            callSt.execute();
+            return callSt.getString(2);
+        } catch (Exception e) {
+            ExceptionHandler.handleDatabaseException(e, "Lỗi khi lấy quyền người dùng");
+        }
+        return null;
+    }
 }

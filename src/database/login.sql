@@ -38,3 +38,20 @@ begin
     return pass_out;
 end;
 $$;
+
+create or replace function get_role_by_username(user_in varchar(50))
+    returns varchar(20)
+    language plpgsql
+as
+$$
+declare
+    role_out varchar(20);
+begin
+    select role
+    into role_out
+    from admin a
+    where username = user_in;
+    return role_out;
+end;
+$$;
+

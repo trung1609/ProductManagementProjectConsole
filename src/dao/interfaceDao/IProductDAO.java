@@ -13,5 +13,5 @@ public interface IProductDAO {
 
     List<Product> displayAllProducts();
 
-
+    List<Product> getProductInStock();
 }

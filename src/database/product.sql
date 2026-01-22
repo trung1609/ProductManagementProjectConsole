@@ -43,6 +43,27 @@ begin
 end;
 $$ language plpgsql;
 
+/*Display all product instock*/
+create or replace function get_product_inStock()
+    returns table
+            (
+                id     int,
+                name   varchar(100),
+                brand  varchar(50),
+                price  decimal(12, 2),
+                stock  int,
+                status boolean
+            )
+as
+$$
+begin
+    return query select p.id, p.name, p.brand, p.price, p.stock, p.status
+                 from product p
+                 where p.status = true and p.stock > 0
+                 order by p.id;
+end;
+$$ language plpgsql;
+
 /* find_product_by_id */
 create or replace function find_product_by_id(id_in int)
     returns table

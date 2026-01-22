@@ -2,7 +2,8 @@ create table admin
 (
     id       serial primary key,
     username varchar(50)  not null unique,
-    password varchar(255) not null
+    password varchar(255) not null,
+    role     varchar(20)  not null default 'STAFF' check (role in ('ADMIN', 'STAFF'))
 );
 
 
@@ -44,5 +45,8 @@ create table invoice_details
     unit_price decimal(12, 2) not null
 );
 
+insert into admin (username, password, role)
+values ('admin', '123456', 'ADMIN');
+
 insert into admin (username, password)
-values ('admin', '123456');
+values ('staff', '123456');

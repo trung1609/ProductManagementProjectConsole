@@ -1,17 +1,21 @@
-package presentation;
+package presentation.customers_menu;
 
 import business.impl.customer.CustomerServiceImpl;
 import entity.Customer;
+import entity.Role;
+import presentation.dashboard.MenuDashboard;
+import presentation.menu_by_role.AdminMenu;
 import presentation.menu_util.MenuUtil;
 import presentation.statistics.StatisticsUI;
 import exception.ExceptionHandler;
+import util.SessionManager;
 
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class CustomerManagement {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         String[] customerMenu = {
@@ -42,7 +46,14 @@ public class CustomerManagement {
                         deleteCustomer(sc);
                         break;
                     case 5:
-                        MainMenu.main(args);
+                        // Quay về menu Admin (chỉ Admin mới vào được CustomerManagement)
+                        Role currentRole = SessionManager.getCurrentRole();
+                        if (currentRole == Role.ADMIN) {
+                            AdminMenu.showMenu(args);
+                        } else {
+                            MenuUtil.printError("Phiên đăng nhập đã hết hạn!");
+                            MenuDashboard.main(args);
+                        }
                         return;
                     default:
                         MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
