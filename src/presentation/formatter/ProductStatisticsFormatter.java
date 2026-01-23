@@ -1,22 +1,9 @@
-package entity;
+package presentation.formatter;
 
+import dto.ProductStatistics;
 import presentation.menu_util.MenuColor;
 
-public class ProductStatistics {
-    private int productId;
-    private String productName;
-    private int totalSold;
-    private double totalRevenue;
-
-    public ProductStatistics() {
-    }
-
-    public ProductStatistics(int productId, String productName, int totalSold, double totalRevenue) {
-        this.productId = productId;
-        this.productName = productName;
-        this.totalSold = totalSold;
-        this.totalRevenue = totalRevenue;
-    }
+public class ProductStatisticsFormatter {
 
     public static void printHeader() {
         System.out.println(MenuColor.CYAN +
@@ -39,51 +26,18 @@ public class ProductStatistics {
                 + MenuColor.RESET);
     }
 
-    public void printRow() {
-        String revenueStr = String.format("%,.0f VNĐ", totalRevenue);
+    public static void printRow(ProductStatistics stats) {
+        String revenueStr = String.format("%,.0f VNĐ", stats.getTotalRevenue());
 
         System.out.printf(
                 "│ " + MenuColor.GREEN + "%-12d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-30.30s" + MenuColor.RESET +
                         " │ " + MenuColor.CYAN + "%15d" + MenuColor.RESET +
                         " │ " + MenuColor.YELLOW + "%21s" + MenuColor.RESET + " │%n",
-                productId,
-                productName,
-                totalSold,
+                stats.getProductId(),
+                stats.getProductName(),
+                stats.getTotalSold(),
                 revenueStr
         );
-    }
-
-    // Getters and Setters
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public int getTotalSold() {
-        return totalSold;
-    }
-
-    public void setTotalSold(int totalSold) {
-        this.totalSold = totalSold;
-    }
-
-    public double getTotalRevenue() {
-        return totalRevenue;
-    }
-
-    public void setTotalRevenue(double totalRevenue) {
-        this.totalRevenue = totalRevenue;
     }
 }

@@ -73,7 +73,7 @@ public class Product {
         this.status = status;
     }
 
-    public void printProductHeader() {
+    public static void printProductHeader() {
         // Tổng độ rộng mới: 5 + 20 + 15 + 19 + 10 = 69 (cộng các thanh chia)
         System.out.println(MenuColor.CYAN +
                 "┌─────┬──────────────────────┬───────────────┬─────────────────────┬──────────┐"
@@ -104,7 +104,7 @@ public class Product {
         );
     }
 
-    public void printProductFooter() {
+    public static void printProductFooter() {
         System.out.println(MenuColor.CYAN +
                 "└─────┴──────────────────────┴───────────────┴─────────────────────┴──────────┘"
                 + MenuColor.RESET);
@@ -128,7 +128,7 @@ public class Product {
                     continue;
                 }
                 ProductServiceImpl productService = new ProductServiceImpl();
-                if (ProductServiceImpl.checkProductName(this.name)) {
+                if (productService.checkProductName(this.name)) {
                     MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
                     continue;
                 }

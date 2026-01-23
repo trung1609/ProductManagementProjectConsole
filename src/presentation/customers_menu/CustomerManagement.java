@@ -15,7 +15,10 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class CustomerManagement {
+    private static final CustomerServiceImpl customerService = new CustomerServiceImpl();
+
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
 
         String[] customerMenu = {
@@ -68,7 +71,6 @@ public class CustomerManagement {
         Scanner sc = new Scanner(System.in);
         Customer customer = new Customer();
         customer.input(sc);
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         boolean result = customerService.createCustomer(customer);
         if (result) {
             MenuUtil.printSuccess("Thêm khách hàng thành công.");
@@ -78,12 +80,10 @@ public class CustomerManagement {
     }
 
     public static void getAllCustomers() {
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         List<Customer> customerList = customerService.findAllCustomers();
         if (customerList.isEmpty()) {
             MenuUtil.printError("Chưa có khách hàng được thêm.");
         } else {
-            Customer customer = new Customer();
             MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 120);
             Customer.printCustomerHeader();
             for (Customer c : customerList) {
@@ -103,10 +103,8 @@ public class CustomerManagement {
                 "Cập nhật địa chỉ khách hàng",
                 "Thoát"
         };
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
         List<Customer> customerList = customerService.findAllCustomers();
-        Customer customerDisplay = new Customer();
         Customer.printCustomerHeader();
         for (Customer c : customerList) {
             Customer.printCustomerRow(c);
@@ -171,8 +169,7 @@ public class CustomerManagement {
                                 MenuUtil.printError("Vui lòng nhập đúng định dạng email.");
                                 continue;
                             }
-                            CustomerServiceImpl customerServiceUpdate = new CustomerServiceImpl();
-                            boolean isEmailExist = customerServiceUpdate.checkEmail(newEmail);
+                            boolean isEmailExist = customerService.checkEmail(newEmail);
                             if (isEmailExist) {
                                 MenuUtil.printError("Email đã tồn tại. Vui lòng nhập lại.");
                                 continue;
@@ -213,8 +210,6 @@ public class CustomerManagement {
     }
 
     public static void deleteCustomer(Scanner sc) {
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
-        Customer customer = new Customer();
         List<Customer> customerList = customerService.findAllCustomers();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 95);
         Customer.printCustomerHeader();

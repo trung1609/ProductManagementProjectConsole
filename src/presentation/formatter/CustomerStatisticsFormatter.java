@@ -1,22 +1,9 @@
-package entity;
+package presentation.formatter;
 
+import dto.CustomerStatistics;
 import presentation.menu_util.MenuColor;
 
-public class CustomerStatistics {
-    private int customerId;
-    private String customerName;
-    private int totalOrders;
-    private double totalSpent;
-
-    public CustomerStatistics() {
-    }
-
-    public CustomerStatistics(int customerId, String customerName, int totalOrders, double totalSpent) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.totalOrders = totalOrders;
-        this.totalSpent = totalSpent;
-    }
+public class CustomerStatisticsFormatter {
 
     public static void printHeader() {
         System.out.println(MenuColor.CYAN +
@@ -39,51 +26,18 @@ public class CustomerStatistics {
                 + MenuColor.RESET);
     }
 
-    // Getters and Setters
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public int getTotalOrders() {
-        return totalOrders;
-    }
-
-    public void setTotalOrders(int totalOrders) {
-        this.totalOrders = totalOrders;
-    }
-
-    public double getTotalSpent() {
-        return totalSpent;
-    }
-
-    public void setTotalSpent(double totalSpent) {
-        this.totalSpent = totalSpent;
-    }
-
-    public void printRow() {
-        String revenueStr = String.format("%,.0f VNĐ", totalSpent);
+    public static void printRow(CustomerStatistics stats) {
+        String spentStr = String.format("%,.0f VNĐ", stats.getTotalSpent());
 
         System.out.printf(
                 "│ " + MenuColor.GREEN + "%-12d" + MenuColor.RESET +
                         " │ " + MenuColor.WHITE + "%-30.30s" + MenuColor.RESET +
                         " │ " + MenuColor.CYAN + "%15d" + MenuColor.RESET +
                         " │ " + MenuColor.YELLOW + "%21s" + MenuColor.RESET + " │%n",
-                customerId,
-                customerName,
-                totalOrders,
-                revenueStr
+                stats.getCustomerId(),
+                stats.getCustomerName(),
+                stats.getTotalOrders(),
+                spentStr
         );
     }
 }

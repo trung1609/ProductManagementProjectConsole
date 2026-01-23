@@ -7,6 +7,8 @@ import java.util.List;
 public interface IProductService {
     Product findProductById(int productId);
 
+    boolean checkProductName(String productName);
+
     List<Product> getALlProducts();
 
     List<Product> getProductInStock();

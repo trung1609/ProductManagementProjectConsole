@@ -12,6 +12,8 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class MenuSearchInvoice {
+    private static final InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -52,9 +54,10 @@ public class MenuSearchInvoice {
 
     public static void getAllInvoiceDetailsByInvoiceId() {
         Scanner sc = new Scanner(System.in);
-        InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         System.out.print("Nhập mã hóa đơn cần xem chi tiết: ");
         int invoiceId = Integer.parseInt(sc.nextLine());
+
+        // Lấy danh sách chi tiết hóa đơn từ service
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByInvoiceId(invoiceId);
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             MenuUtil.printListItems("DANH SÁCH HÓA ĐƠN CHI TIẾT CỦA MÃ HÓA ĐƠN: " + invoiceId, 120);
@@ -76,17 +79,23 @@ public class MenuSearchInvoice {
 
     public static void searchByCustomerName() {
         Scanner sc = new Scanner(System.in);
-        InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         System.out.print("Nhập tên khách hàng cần tìm: ");
         String customerName = sc.nextLine();
+
+        // Lấy danh sách chi tiết hóa đơn từ service theo tên khách hàng
         List<InvoiceDetails> invoiceDetailsList = invoiceDetailsService.getAllInvoiceDetailsByCustomerName(customerName);
 
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             MenuUtil.printListItems("KẾT QUẢ TÌM KIẾM HÓA ĐƠN CỦA KHÁCH HÀNG: " + customerName, 120);
 
-            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>(); // sử dụng linkedhashmap để giữ thứ tự insert
+            // Nhóm các chi tiết hóa đơn theo mã hóa đơn
+            // Sử dụng LinkedHashMap để giữ thứ tự insert
+            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
-                groupedByInvoice.computeIfAbsent(invoiceDetails.getInvoice_id(), k -> new ArrayList<>()).add(invoiceDetails); //kiem tra xem key đã tồn tại chưa, nếu chưa thì tạo mới
+                groupedByInvoice.computeIfAbsent(
+                        invoiceDetails.getInvoice_id(),
+                        // kiểm tra xem key đã tồn tại chưa, nếu chưa thì tạo mới
+                        k -> new ArrayList<>()).add(invoiceDetails);
             }
 
             double totalAmount = 0;
@@ -96,8 +105,8 @@ public class MenuSearchInvoice {
                 invoiceCount++;
                 int invoiceId = entry.getKey();
                 List<InvoiceDetails> invoiceDetails = entry.getValue();
-
-                InvoiceDetails firstDetail = invoiceDetails.getFirst(); // Lấy 1 dòng đại diện vì mọi dòng trong cùng hóa đơn đều thuộc cùng 1 khách hàng
+                // Lấy 1 dòng đại diện vì mọi dòng trong cùng hóa đơn đều thuộc cùng 1 khách hàng
+                InvoiceDetails firstDetail = invoiceDetails.getFirst();
 
                 System.out.println("\n" + MenuColor.CYAN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
                 System.out.println(MenuColor.YELLOW + "  HÓA ĐƠN #" + invoiceId + " - Khách hàng: " + firstDetail.getCustomerName() + " (ID: " + firstDetail.getCustomerId() + ")" + MenuColor.RESET);
@@ -130,7 +139,6 @@ public class MenuSearchInvoice {
     public static void searchByinvoiceDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         Scanner sc = new Scanner(System.in);
-        InvoiceDetailsServiceImpl invoiceDetailsService = new InvoiceDetailsServiceImpl();
         LocalDate invoiceDate;
         do {
             try {
@@ -147,7 +155,9 @@ public class MenuSearchInvoice {
         if (invoiceDetailsList != null && !invoiceDetailsList.isEmpty()) {
             MenuUtil.printListItems("KẾT QUẢ TÌM KIẾM HÓA ĐƠN NGÀY: " + invoiceDate.format(dtf), 120);
 
-            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>(); // sử dụng linkedhashmap để giữ thứ tự insert
+            // Nhóm các chi tiết hóa đơn theo mã hóa đơn
+            // Sử dụng LinkedHashMap để giữ thứ tự insert
+            Map<Integer, List<InvoiceDetails>> groupedByInvoice = new LinkedHashMap<>();
             for (InvoiceDetails invoiceDetails : invoiceDetailsList) {
                 groupedByInvoice.computeIfAbsent(invoiceDetails.getInvoice_id(), k -> new ArrayList<>()).add(invoiceDetails); //kiem tra xem key đã tồn tại chưa, nếu chưa thì tạo mới
             }
@@ -160,7 +170,8 @@ public class MenuSearchInvoice {
                 int invoiceId = entry.getKey();
                 List<InvoiceDetails> invoiceDetails = entry.getValue();
 
-                InvoiceDetails firstDetail = invoiceDetails.getFirst(); // Lấy 1 dòng đại diện vì mọi dòng trong cùng hóa đơn đều thuộc cùng 1 khách hàng
+                // Lấy 1 dòng đại diện vì mọi dòng trong cùng hóa đơn đều thuộc cùng 1 khách hàng
+                InvoiceDetails firstDetail = invoiceDetails.getFirst();
 
                 System.out.println("\n" + MenuColor.CYAN + "═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════" + MenuColor.RESET);
                 System.out.println(MenuColor.YELLOW + "  HÓA ĐƠN #" + invoiceId + " - Khách hàng: " + firstDetail.getCustomerName() + " (ID: " + firstDetail.getCustomerId() + ")" + MenuColor.RESET);

@@ -1,12 +1,14 @@
 package presentation.statistics;
 
 import business.impl.statistics.StatisticsServiceImpl;
-import entity.CustomerStatistics;
+import dto.CustomerStatistics;
 import entity.Invoice;
-import entity.ProductStatistics;
+import dto.ProductStatistics;
 import entity.Role;
 import exception.ExceptionHandler;
 import presentation.dashboard.MenuDashboard;
+import presentation.formatter.CustomerStatisticsFormatter;
+import presentation.formatter.ProductStatisticsFormatter;
 import presentation.menu_by_role.AdminMenu;
 import presentation.menu_util.MenuUtil;
 import util.SessionManager;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RevenueStatistics {
+    private final static StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -74,7 +77,6 @@ public class RevenueStatistics {
 
     public static void revenueByDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
         LocalDate date;
         String[] revenueMenu = {
@@ -129,7 +131,6 @@ public class RevenueStatistics {
 
 
     public static void revenueByMonth() {
-        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
         int month;
         int year;
@@ -199,7 +200,6 @@ public class RevenueStatistics {
 
 
     public static void revenueByYear() {
-        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         Scanner sc = new Scanner(System.in);
         int year;
         String[] revenueMenu = {
@@ -254,7 +254,6 @@ public class RevenueStatistics {
 
     public static void topSellingProducts30Days() {
         Scanner sc = new Scanner(System.in);
-        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         int limit;
         do {
             try {
@@ -270,18 +269,17 @@ public class RevenueStatistics {
             }
         } while (true);
         List<ProductStatistics> productStatistics = statisticsService.getTopSellingProducts(limit);
-        ProductStatistics.printHeader();
+        ProductStatisticsFormatter.printHeader();
         for (ProductStatistics ps : productStatistics) {
-            ps.printRow();
+            ProductStatisticsFormatter.printRow(ps);
         }
-        ProductStatistics.printFooter();
+        ProductStatisticsFormatter.printFooter();
         System.out.println("Tổng số sản phẩm bán chạy được hiển thị: " + productStatistics.size());
         StatisticsUI.waitEnter();
     }
 
     public static void topCustomerVIP() {
         Scanner sc = new Scanner(System.in);
-        StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
         int limit;
         do {
             try {
@@ -297,11 +295,11 @@ public class RevenueStatistics {
             }
         } while (true);
         List<CustomerStatistics> customerStatistics = statisticsService.getTopCustomers(limit);
-        CustomerStatistics.printHeader();
+        CustomerStatisticsFormatter.printHeader();
         for (CustomerStatistics cs : customerStatistics) {
-            cs.printRow();
+            CustomerStatisticsFormatter.printRow(cs);
         }
-        CustomerStatistics.printFooter();
+        CustomerStatisticsFormatter.printFooter();
         System.out.println("Tổng số sản phẩm bán chạy được hiển thị: " + customerStatistics.size());
         StatisticsUI.waitEnter();
     }

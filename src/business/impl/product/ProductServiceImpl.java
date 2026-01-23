@@ -14,7 +14,8 @@ public class ProductServiceImpl implements IProductService {
         this.productDAO = new ProductDAOImpl();
     }
 
-    public static boolean checkProductName(String productName) {
+    @Override
+    public boolean checkProductName(String productName) {
         IProductDAO productDAO = new ProductDAOImpl();
         return productDAO.checkProductName(productName);
     }

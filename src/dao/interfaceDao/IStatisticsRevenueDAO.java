@@ -1,8 +1,8 @@
 package dao.interfaceDao;
 
-import entity.CustomerStatistics;
+import dto.CustomerStatistics;
 import entity.Invoice;
-import entity.ProductStatistics;
+import dto.ProductStatistics;
 
 import java.time.LocalDate;
 import java.util.List;

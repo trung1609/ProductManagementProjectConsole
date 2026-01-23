@@ -1,9 +1,9 @@
 package dao.impl.revenue;
 
 import dao.interfaceDao.IStatisticsRevenueDAO;
-import entity.CustomerStatistics;
+import dto.CustomerStatistics;
 import entity.Invoice;
-import entity.ProductStatistics;
+import dto.ProductStatistics;
 import exception.ExceptionHandler;
 import util.DBUtil;
 

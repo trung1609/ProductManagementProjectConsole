@@ -2,9 +2,9 @@ package business.impl.statistics;
 
 import business.interfaceService.IStatisticsService;
 import dao.impl.revenue.StatisticsRevenueDAOImpl;
-import entity.CustomerStatistics;
+import dto.CustomerStatistics;
 import entity.Invoice;
-import entity.ProductStatistics;
+import dto.ProductStatistics;
 
 import java.time.LocalDate;
 import java.util.List;

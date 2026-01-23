@@ -19,6 +19,9 @@ import util.SessionManager;
 import java.util.*;
 
 public class InvoiceManagement {
+    private static final InvoiceServiceImpl invoiceService = new InvoiceServiceImpl();
+    private static final CustomerServiceImpl customerService = new CustomerServiceImpl();
+    private static final ProductServiceImpl productService = new ProductServiceImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -80,7 +83,6 @@ public class InvoiceManagement {
 
     public static void addInvoice(Scanner sc) {
         MenuUtil.printListItems("DANH SÁCH KHÁCH HÀNG", 95);
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         List<Customer> customers = customerService.findAllCustomers();
         if (customers == null || customers.isEmpty()) {
             MenuUtil.printError("Chưa có khách hàng");
@@ -100,7 +102,6 @@ public class InvoiceManagement {
             return;
         }
 
-        ProductServiceImpl productService = new ProductServiceImpl();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
         List<Product> productList = productService.getProductInStock();
         if (productList == null || productList.isEmpty()) {
@@ -145,7 +146,7 @@ public class InvoiceManagement {
                 MenuUtil.printError("Số lượng phải lớn hơn 0.");
                 continue;
             }
-
+            // Kiểm tra số lượng trong kho
             int availableStock = stockTmp.get(productId);
 
             if (quantity > availableStock) {
@@ -154,7 +155,7 @@ public class InvoiceManagement {
             }
 
             stockTmp.put(productId, availableStock - quantity);
-
+            // Kiểm tra sản phẩm đã tồn tại trong danh sách chưa
             boolean isExist = false;
             for (int i = 0; i < productIds.size(); i++) {
                 if (productIds.get(i) == productId) {
@@ -163,7 +164,7 @@ public class InvoiceManagement {
                     break;
                 }
             }
-
+            // Nếu chưa tồn tại thì thêm mới
             if (!isExist) {
                 productIds.add(productId);
                 quantities.add(quantity);
@@ -189,7 +190,7 @@ public class InvoiceManagement {
             return;
         }
 
-        InvoiceServiceImpl invoiceService = new InvoiceServiceImpl();
+        // Thêm hóa đơn
         boolean result = invoiceService.createInvoice(customerId, productIds, quantities, prices);
 
         if (result) {
@@ -200,7 +201,6 @@ public class InvoiceManagement {
     }
 
     public static void getAllInvoices() {
-        IInvoiceService invoiceService = new InvoiceServiceImpl();
         List<Invoice> invoices = invoiceService.getAllInvoices();
         if (invoices == null || invoices.isEmpty()) {
             MenuUtil.printError("Không có hóa đơn nào trong hệ thống.");

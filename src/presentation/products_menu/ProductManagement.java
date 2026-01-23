@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductManagement {
+    private final static ProductServiceImpl productService = new ProductServiceImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -91,7 +92,6 @@ public class ProductManagement {
     public static void addProduct(Scanner sc) {
         Product product = new Product();
         product.input(sc);
-        ProductServiceImpl productService = new ProductServiceImpl();
         boolean result = productService.addProduct(product);
         if (result) {
             MenuUtil.printSuccess("Thêm sản phẩm thành công");
@@ -101,7 +101,6 @@ public class ProductManagement {
     }
 
     public static void displayAllProducts() {
-        ProductServiceImpl productService = new ProductServiceImpl();
         List<Product> productList = productService.getALlProducts();
         if (productList.isEmpty()) {
             MenuUtil.printError("Chưa có sản phẩm.");
@@ -119,6 +118,7 @@ public class ProductManagement {
     }
 
     public static void updateProduct() {
+        Scanner sc = new Scanner(System.in);
         String[] productUpdateMenu = {
                 "Cập nhật tên sản phẩm",
                 "Cập nhật thương hiệu sản phẩm",
@@ -126,16 +126,14 @@ public class ProductManagement {
                 "Cập nhật số lượng tồn kho",
                 "Thoát"
         };
-        List<Product> productList = new ProductServiceImpl().getALlProducts();
+        List<Product> productList = productService.getALlProducts();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
-        Product productDisplay = new Product();
-        productDisplay.printProductHeader();
+        Product.printProductHeader();
         for (Product p : productList) {
             p.printProductRow(p);
         }
-        productDisplay.printProductFooter();
-        ProductServiceImpl productService = new ProductServiceImpl();
-        Scanner sc = new Scanner(System.in);
+        Product.printProductFooter();
+
         System.out.print("Nhập id sản phẩm cần cập nhật: ");
         int id = Integer.parseInt(sc.nextLine());
         Product product = productService.findProductById(id);
@@ -145,11 +143,11 @@ public class ProductManagement {
         }
 
         MenuUtil.printListItems("THÔNG TIN SẢN PHẨM CẦN CẬP NHẬT", 70);
-        product.printProductHeader();
+        Product.printProductHeader();
         for (int i = 0; i < 1; i++) {
             product.printProductRow(product);
         }
-        product.printProductFooter();
+        Product.printProductFooter();
         boolean isExist = true;
         do {
 
@@ -166,7 +164,7 @@ public class ProductManagement {
                                     MenuUtil.printError("Vui lòng không bỏ trống tên sản phẩm.");
                                     continue;
                                 }
-                                if (ProductServiceImpl.checkProductName(newName)) {
+                                if (productService.checkProductName(newName)) {
                                     MenuUtil.printError("Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
                                     continue;
                                 }
@@ -243,15 +241,14 @@ public class ProductManagement {
     }
 
     public static void deleteProduct(Scanner sc) {
-        ProductServiceImpl productService = new ProductServiceImpl();
         Product product = new Product();
         List<Product> productList = productService.getALlProducts();
         MenuUtil.printListItems("DANH SÁCH SẢN PHẨM", 70);
-        product.printProductHeader();
+        Product.printProductHeader();
         for (Product p : productList) {
             p.printProductRow(p);
         }
-        product.printProductFooter();
+        Product.printProductFooter();
         System.out.print("Nhập id sản phẩm cần xóa: ");
         int id = Integer.parseInt(sc.nextLine());
         Product checkProductId = productService.findProductById(id);
@@ -274,7 +271,6 @@ public class ProductManagement {
     }
 
     public static void searchProductByBrand(Scanner sc) {
-        ProductServiceImpl productService = new ProductServiceImpl();
         System.out.print("Nhập sản phẩm có thương hiệu cần tìm: ");
         String brand = sc.nextLine();
         List<Product> productList = productService.searchProductByBrand(brand);
@@ -283,18 +279,17 @@ public class ProductManagement {
         } else {
             Product product = new Product();
             MenuUtil.printListItems("DANH SÁCH SẢN PHẨM CÓ TÊN THƯƠNG HIỆU LÀ: " + brand, 70);
-            product.printProductHeader();
+            Product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);
             }
-            product.printProductFooter();
+            Product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
             StatisticsUI.waitEnter();
         }
     }
 
     public static void searchProductByPrice(Scanner sc) {
-        ProductServiceImpl productService = new ProductServiceImpl();
         double price_from;
         double price_to;
         System.out.println("Nhập sản phẩm có khoảng giá sản phẩm cần tìm: ");
@@ -324,26 +319,25 @@ public class ProductManagement {
                 ExceptionHandler.handleNumberFormatException("Vui lòng nhập đúng định dạng giá bán.");
             }
         } while (true);
+        // Danh sách sản phẩm trong khoảng giá
         List<Product> productList = productService.searchProductByPrice(price_from, price_to);
         if (productList.isEmpty()) {
             String message = String.format("Không tìm thấy sản phẩm có giá từ %,.0f đến %,.0f", price_from, price_to);
             MenuUtil.printError(message);
         } else {
-            Product product = new Product();
             String message = String.format("DANH SÁCH SẢN PHẨM CÓ GIÁ TỪ %,.0f ĐẾN %,.0f LÀ: ", price_from, price_to);
             MenuUtil.printListItems(message, 73);
-            product.printProductHeader();
+            Product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);
             }
-            product.printProductFooter();
+            Product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
             StatisticsUI.waitEnter();
         }
     }
 
     public static void searchProductByStock(Scanner sc) {
-        ProductServiceImpl productService = new ProductServiceImpl();
         System.out.print("Nhập tên sản phẩm cần tìm: ");
         String product_name = sc.nextLine();
         List<Product> productList = productService.searchProductByStock(product_name);
@@ -352,11 +346,11 @@ public class ProductManagement {
         } else {
             Product product = new Product();
             MenuUtil.printListItems("DANH SÁCH SẢN PHẨM TÊN LÀ: " + product_name, 70);
-            product.printProductHeader();
+            Product.printProductHeader();
             for (Product p : productList) {
                 p.printProductRow(p);
             }
-            product.printProductFooter();
+            Product.printProductFooter();
             System.out.println("Tổng số sản phẩm: " + productList.size());
             StatisticsUI.waitEnter();
         }
