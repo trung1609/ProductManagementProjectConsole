@@ -1,4 +1,3 @@
-
 /*check username exist*/
 create or replace procedure check_ex_username(user_in varchar(50), out is_true boolean)
     language plpgsql

@@ -93,7 +93,7 @@ public class MenuSearchInvoice {
             int invoiceCount = 0;
             // Hiển thị từng hóa đơn riêng biệt
             for (Map.Entry<Integer, List<InvoiceDetails>> entry : groupedByInvoice.entrySet()) {
-                invoiceCount ++;
+                invoiceCount++;
                 int invoiceId = entry.getKey();
                 List<InvoiceDetails> invoiceDetails = entry.getValue();
 
@@ -156,7 +156,7 @@ public class MenuSearchInvoice {
             int invoiceCount = 0;
             // Hiển thị từng hóa đơn riêng biệt
             for (Map.Entry<Integer, List<InvoiceDetails>> entry : groupedByInvoice.entrySet()) {
-                invoiceCount ++;
+                invoiceCount++;
                 int invoiceId = entry.getKey();
                 List<InvoiceDetails> invoiceDetails = entry.getValue();
 

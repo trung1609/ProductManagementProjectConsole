@@ -2,7 +2,6 @@ package business.impl.invoice;
 
 import business.interfaceService.IInvoiceService;
 import dao.impl.invoice.InvoiceDAOImpl;
-import dao.impl.invoice.InvoiceDetailsDAOImpl;
 import dao.interfaceDao.IInvoiceDAO;
 import entity.Invoice;
 import exception.ExceptionHandler;
@@ -71,14 +70,5 @@ public class InvoiceServiceImpl implements IInvoiceService {
         return invoiceDAO.getAllInvoices();
     }
 
-    @Override
-    public Invoice findInvoiceByCustomerId(int customerId) {
-        return invoiceDAO.findInvoiceByCustomerId(customerId);
-    }
-
-    @Override
-    public boolean deleteInvoicesByCustomerId(int customerId) {
-        return invoiceDAO.deleteInvoicesByCustomerId(customerId);
-    }
 
 }

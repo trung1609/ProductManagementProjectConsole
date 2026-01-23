@@ -119,17 +119,6 @@ begin
 end;
 $$ language plpgsql;
 
-/*delete customer invoice*/
-create or replace procedure delete_customer_invoices(customer_id_in int)
-    language plpgsql
-as
-$$
-begin
-    delete from invoice_details where invoice_id in (select id from invoice where customer_id = customer_id_in);
-    delete from invoice where customer_id = customer_id_in;
-end;
-$$;
-
 /*get invoice details by id*/
 create or replace function get_invoice_details_by_id(invoice_id_in int)
     returns table
