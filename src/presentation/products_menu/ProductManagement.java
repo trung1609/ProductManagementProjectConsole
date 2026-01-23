@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductManagement {
-    private final static ProductServiceImpl productService = new ProductServiceImpl();
+    private static final ProductServiceImpl productService = new ProductServiceImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RevenueStatistics {
-    private final static StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
+    private static final StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
