@@ -114,6 +114,7 @@ public class StatisticsRevenueDAOImpl implements IStatisticsRevenueDAO {
                 ResultSet rs = callSt.getResultSet();
                 while (rs.next()) {
                     Invoice invoice = new Invoice();
+                    // Lấy tháng và năm từ kết quả truy vấn
                     int month = rs.getInt("f_month");
                     int year = rs.getInt("f_year");
                     //Gán ngày đại diện cho tháng và năm là ngày đầu tiên của tháng đó

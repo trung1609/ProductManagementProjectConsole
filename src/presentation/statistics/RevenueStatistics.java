@@ -108,12 +108,9 @@ public class RevenueStatistics {
                         StatisticsUI.waitEnter();
                         break;
                     case 2:
-                        double totalAllDate = statisticsService.totalRevenueAllDate();
-
                         List<Invoice> totalRevenueEachDate = statisticsService.totalRevenueEachDate();
                         StatisticsUI.printRevenueEachDateResult(
                                 "Doanh thu của tất cả các ngày",
-                                totalAllDate,
                                 totalRevenueEachDate,
                                 dtf
                         );
@@ -151,6 +148,10 @@ public class RevenueStatistics {
                             try {
                                 System.out.print("Nhập tháng: ");
                                 month = Integer.parseInt(sc.nextLine());
+                                if (month < 1 || month > 12) {
+                                    MenuUtil.printError("Vui lòng nhập tháng từ 1 đến 12.");
+                                    continue;
+                                }
                                 break;
                             } catch (NumberFormatException e) {
                                 ExceptionHandler.handleNumberFormatException();
@@ -161,6 +162,10 @@ public class RevenueStatistics {
                             try {
                                 System.out.print("Nhập năm: ");
                                 year = Integer.parseInt(sc.nextLine());
+                                if (year < 1 || year > 2027) {
+                                    MenuUtil.printError("Vui lòng nhập năm hợp lệ.");
+                                    continue;
+                                }
                                 break;
                             } catch (NumberFormatException e) {
                                 ExceptionHandler.handleNumberFormatException();
@@ -212,6 +217,10 @@ public class RevenueStatistics {
                             try {
                                 System.out.print("Nhập năm: ");
                                 year = Integer.parseInt(sc.nextLine());
+                                if (year < 1 || year > 2027) {
+                                    MenuUtil.printError("Vui lòng nhập năm hợp lệ.");
+                                    continue;
+                                }
                                 break;
                             } catch (NumberFormatException e) {
                                 ExceptionHandler.handleNumberFormatException();

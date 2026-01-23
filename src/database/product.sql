@@ -134,7 +134,8 @@ begin
     return query select p.id, p.name, p.brand, p.price, p.stock, p.status
                  from product p
                  where p.brand ilike brand_search
-                   and p.status = true;
+                   and p.status = true
+                 order by p.id;
 end;
 $$
     language plpgsql;
@@ -183,7 +184,8 @@ begin
     return query select p.id, p.name, p.brand, p.price, p.stock, p.status
                  from product p
                  where p.name ilike produc_name_search
-                   and p.status = true;
+                   and p.status = true
+                 order by p.id;
 end;
 $$
     language plpgsql;

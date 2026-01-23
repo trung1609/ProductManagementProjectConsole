@@ -23,9 +23,7 @@ public class Admin {
         this.role = role;
     }
 
-    public static boolean checkPassword(String plainPassword, String hashedPassword) {
-        return BCrypt.checkpw(plainPassword, hashedPassword);
-    }
+
 
     public int getId() {
         return id;
@@ -68,7 +66,7 @@ public class Admin {
             System.out.print("Nhập password: ");
             String input_password = sc.nextLine();
 
-            boolean check_exist = adminService.checkExistAdmin(input_username);
+            boolean check_exist = adminService.checkExistUser(input_username);
             String hashPass = null;
             boolean checkPassword = false;
 
@@ -92,5 +90,8 @@ public class Admin {
                 MenuUtil.printError("Sai tài khoản hoặc mật khẩu, vui lòng nhập lại.");
             }
         } while (true);
+    }
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }

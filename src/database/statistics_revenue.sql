@@ -8,16 +8,6 @@ begin
 end;
 $$;
 
-/*revenue all date*/
-create or replace procedure revenue_all_date(out total_revenue numeric)
-    language plpgsql
-as
-$$
-begin
-    select coalesce(sum(total_amount), 0) into total_revenue from invoice i;
-end;
-$$;
-
 /*revenue each date*/
 create or replace function revenue_each_date()
     returns table
@@ -147,7 +137,7 @@ begin
                           join invoice i on id.invoice_id = i.id
                           join customer c on i.customer_id = c.id
                  group by c.id, c.name
-                 order by sum(i.total_amount) desc
+                 order by sum(i.total_amount) desc, count(i.id) desc
                  limit limit_in;
 end;
 $$ language plpgsql;

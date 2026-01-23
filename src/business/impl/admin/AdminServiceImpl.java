@@ -11,29 +11,16 @@ public class AdminServiceImpl implements IAdminService {
         this.adminDAO = new AdminDAOImpl();
     }
 
-    @Override
-    public boolean loginAdmin(String username, String password) {
-
-        if (username == null || username.trim().isEmpty()) {
-            return false;
-        }
-        if (password == null || password.trim().isEmpty()) {
-            return false;
-        }
-
-
-        return adminDAO.loginAdmin(username, password);
-    }
 
     @Override
-    public boolean checkExistAdmin(String username) {
+    public boolean checkExistUser(String username) {
 
         if (username == null || username.trim().isEmpty()) {
             return false;
         }
 
 
-        return adminDAO.checkExistAdmin(username);
+        return adminDAO.checkExistUser(username);
     }
 
     @Override

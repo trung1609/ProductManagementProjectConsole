@@ -32,6 +32,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
             if (invoiceId == 0) {
                 return false;
             }
+
             for (int i = 0; i < productIds.size(); i++) {
                 boolean result = invoiceDetailsService.addInvoiceDetails(
                         invoiceId,

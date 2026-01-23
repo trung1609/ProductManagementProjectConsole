@@ -11,27 +11,7 @@ import java.sql.Types;
 public class AdminDAOImpl implements IAdminDAO {
 
     @Override
-    public boolean loginAdmin(String username, String password) {
-        Connection conn = null;
-        CallableStatement callSt = null;
-        try {
-            conn = DBUtil.openConnection();
-            callSt = conn.prepareCall("call check_login(?,?,?)");
-            callSt.setString(1, username);
-            callSt.setString(2, password);
-            callSt.registerOutParameter(3, Types.BOOLEAN);
-            callSt.execute();
-            return callSt.getBoolean(3);
-        } catch (Exception e) {
-            ExceptionHandler.handleDatabaseException(e, "Lỗi khi đăng nhập");
-        } finally {
-            DBUtil.closeConnection(conn, callSt);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean checkExistAdmin(String username) {
+    public boolean checkExistUser(String username) {
         Connection conn = null;
         CallableStatement callSt = null;
         try {

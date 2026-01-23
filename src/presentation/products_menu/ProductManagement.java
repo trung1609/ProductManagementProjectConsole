@@ -226,6 +226,8 @@ public class ProductManagement {
                     case 5:
                         isExist = false;
                         break;
+                    default:
+                        MenuUtil.printError("Vui lòng nhập lựa chọn phù hợp.");
                 }
             } catch (NumberFormatException e) {
                 ExceptionHandler.handleNumberFormatException();
@@ -302,6 +304,7 @@ public class ProductManagement {
                 price_from = Double.parseDouble(sc.nextLine());
                 if (price_from <= 0) {
                     MenuUtil.printError("Vui lòng nhập giá lớn hơn 0.");
+                    continue;
                 }
                 break;
             } catch (NumberFormatException e) {
@@ -314,6 +317,7 @@ public class ProductManagement {
                 price_to = Double.parseDouble(sc.nextLine());
                 if (price_to <= 0) {
                     MenuUtil.printError("Vui lòng nhập giá lớn hơn 0.");
+                    continue;
                 }
                 break;
             } catch (NumberFormatException e) {

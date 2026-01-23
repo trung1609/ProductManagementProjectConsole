@@ -21,14 +21,6 @@ declare
 begin
     select stock into current_stock from product p where p.id = product_id_in for update;
 
-    if current_stock is null then
-        raise exception 'Sản phẩm không tồn tại';
-    end if;
-
-    if (quantity_in > current_stock) then
-        raise exception 'Không đủ hàng trong kho';
-    end if;
-
     insert into invoice_details (invoice_id, product_id, quantity, unit_price)
     values (invoice_id_in, product_id_in, quantity_in, price_in);
     update invoice
@@ -166,6 +158,7 @@ begin
                           join invoice i on i.id = ind.invoice_id
                           join product p on ind.product_id = p.id
                           join customer c on i.customer_id = c.id
-                 where ind.invoice_id = invoice_id_in;
+                 where ind.invoice_id = invoice_id_in
+                 order by i.id;
 end;
 $$ language plpgsql;

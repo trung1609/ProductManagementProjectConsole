@@ -50,7 +50,7 @@ public class StatisticsUI {
         new Scanner(System.in).nextLine();
     }
 
-    public static void printRevenueEachDateResult(String title, double totalAllDate, List<Invoice> totalRevenueEachDate, DateTimeFormatter dtf) {
+    public static void printRevenueEachDateResult(String title, List<Invoice> totalRevenueEachDate, DateTimeFormatter dtf) {
         int width = 50;
 
         DateTimeFormatter fmt = dtf != null ? dtf : DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -95,6 +95,10 @@ public class StatisticsUI {
 
 
         String totalLabel = "TỔNG";
+        double totalAllDate = 0.0;
+        for (Invoice inv : totalRevenueEachDate) {
+            totalAllDate += inv.getTotalAmount();
+        }
         String totalContent = String.format("%-20s : %,15.0f", totalLabel, totalAllDate);
         int paddingRight = width - totalContent.length() - 4;
         System.out.printf("│ %s%" + paddingRight + "s │%n", totalContent, "");
@@ -105,21 +109,13 @@ public class StatisticsUI {
 
 
     public static void printRevenueEachMonthResult(String title, List<Invoice> monthlyList) {
-        double total = 0.0;
-        if (monthlyList != null) {
-            for (Invoice inv : monthlyList) total += inv.getTotalAmount();
-        }
         DateTimeFormatter monthFmt = DateTimeFormatter.ofPattern("MM-yyyy");
-        printRevenueEachDateResult(title, total, monthlyList, monthFmt);
+        printRevenueEachDateResult(title, monthlyList, monthFmt);
     }
 
 
     public static void printRevenueEachYearResult(String title, List<Invoice> yearlyList) {
-        double total = 0.0;
-        if (yearlyList != null) {
-            for (Invoice inv : yearlyList) total += inv.getTotalAmount();
-        }
         DateTimeFormatter yearFmt = DateTimeFormatter.ofPattern("yyyy");
-        printRevenueEachDateResult(title, total, yearlyList, yearFmt);
+        printRevenueEachDateResult(title, yearlyList, yearFmt);
     }
 }
