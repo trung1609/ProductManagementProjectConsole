@@ -16,7 +16,7 @@ public class AdminDAOImpl implements IAdminDAO {
         CallableStatement callSt = null;
         try {
             conn = DBUtil.openConnection();
-            callSt = conn.prepareCall("call check_ex_username(?,?)");
+            callSt = conn.prepareCall("call check_exist_username(?,?)");
             callSt.setString(1, username);
             callSt.registerOutParameter(2, Types.BOOLEAN);
             callSt.execute();
