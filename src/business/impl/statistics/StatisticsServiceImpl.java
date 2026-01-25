@@ -17,12 +17,6 @@ public class StatisticsServiceImpl implements IStatisticsService {
     }
 
     @Override
-    public double totalRevenueAllDate() {
-        StatisticsRevenueDAOImpl statisticsRevenueDAO = new StatisticsRevenueDAOImpl();
-        return statisticsRevenueDAO.totalRevenueAllDate();
-    }
-
-    @Override
     public List<Invoice> totalRevenueEachDate() {
         StatisticsRevenueDAOImpl statisticsRevenueDAO = new StatisticsRevenueDAOImpl();
         return statisticsRevenueDAO.totalRevenueEachDate();

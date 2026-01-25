@@ -47,6 +47,7 @@ begin
     return query select i.id, i.customer_id, c.name as customer_name, i.created_at, i.total_amount
                  from invoice i
                           join customer c on i.customer_id = c.id
+                    where c.status = true
                  order by i.created_at;
 end;
 $$ language plpgsql;
